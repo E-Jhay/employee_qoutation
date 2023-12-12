@@ -6,7 +6,7 @@
       <!-- Sidebar -->
       <?php require_once('partials/sidebar.php') ?>
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-         <main class="pt-6 px-4">
+         <main class="pt-6 px-4 lg:px-8">
             <?php require_once('partials/banner.php') ?>
             <div>
                <!-- <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">

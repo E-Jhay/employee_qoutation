@@ -5,6 +5,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 $routes = [
     '/' => 'controllers/index.php',
     '/users' => 'controllers/users.php',
+    '/user/show' => 'controllers/user-show.php',
 ];
 
 function abort($code = 404) {
