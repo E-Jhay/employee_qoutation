@@ -12,7 +12,7 @@
                <div class="flex justify-end gap-2 mb-4 -mt-12">
                   <a title="Export" href="" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-file-download-line"></i></a>
                   <a title="Import" href="" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-file-line"></i></a>
-                  <a title="Create" href="" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></a>
+                  <a title="Create" href="/user/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></a>
                </div>
                <div class="shadow overflow-hidden border-b sm:rounded-lg py-8">
                   <div class="flex flex-col">
@@ -32,10 +32,10 @@
                                              Phone
                                           </th>
                                           <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Email
+                                             Address
                                           </th>
                                           <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Phone
+                                             Role
                                           </th>
                                           <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
                                           </th>
@@ -54,14 +54,16 @@
                                                 <?= $user['phone'] ?>
                                              </td>
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $user['email'] ?>
+                                                <?= $user['address'] ?>
                                              </td>
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $user['phone'] ?>
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                   <?= $user['role'] ?>
+                                                </span>
                                              </td>
                                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <a href="/user/show?id=<?= $user['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
-                                                <a href="/user/show?id=<?= $user['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
+                                                <a href="/user/edit?id=<?= $user['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
                                                 <form class="inline-block" action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
                                                       <input type="hidden" name="_method" value="DELETE">
                                                       <input type="hidden" name="_token" value="{{ csrf_token() }}">

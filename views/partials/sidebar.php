@@ -32,7 +32,7 @@
                         <span class="bg-gray-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">Pro</span>
                     </a>
                 </li> -->
-                <li class="group <?= urlIs(['/users', '/user/create', '/user/show']) ? 'active' : '' ?>">
+                <li class="group <?= urlIs(['/users', '/user/create', '/user/show', '/user/edit']) ? 'active' : '' ?>">
                     <a href="/users" class="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white">
                         <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 group-[.active]:text-white transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>

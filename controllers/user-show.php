@@ -7,9 +7,8 @@ $heading = "User";
 
 
 
-$id = $_GET['id'];
-$query = "SELECT * FROM user WHERE id = :id";
-
-$user = $db->query($query, [':id' => $id])->fetch();
+$user = $db->query("SELECT * FROM user WHERE id = :id",
+            ['id' => $_GET['id']
+        ])->find();
 
 require "views/user-show.view.php";
