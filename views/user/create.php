@@ -12,7 +12,7 @@
             </div>
             <?php require base_path('views/partials/banner.php') ?>
             <!-- component -->
-            <form method="POST">
+            <form method="POST" action="/user">
                <div class="bg-white rounded shadow-lg p-4 px-2 md:p-8 mb-6">
                   <div class="lg:col-span-2">
                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">

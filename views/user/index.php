@@ -15,7 +15,7 @@
                   <a title="Create" href="/user/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></a>
                </div>
                <?php if(isset($_SESSION['success'])): ?>
-                  <div id="message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                  <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative message-alert" role="alert">
                      <!-- <strong class="font-bold">Holy smokes!</strong> -->
                      <span class="block sm:inline"><?= $_SESSION['success'] ?></span>
                      <span onclick="removeMessage()" class="absolute top-0 bottom-0 right-0 px-4 py-3">
@@ -73,12 +73,13 @@
                                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <a href="/user/show?id=<?= $user['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                 <a href="/user/edit?id=<?= $user['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
-                                                <a onclick="deleteUser(<?= $user['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a>
-                                                <!-- <form class="inline-block" action="/user/" method="DELETE" onsubmit="return confirm('Are you sure?');">
+                                                <!-- <a onclick="deleteUser(<?= $user['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                <form class="inline-block" action="/user/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                       <input type="hidden" name="_method" value="DELETE">
-                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                      <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                      <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                       <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
-                                                </form> -->
+                                                </form>
                                              </td>
                                           </tr>
                                     <?php endforeach ?>
@@ -109,20 +110,12 @@
             </div>
          </main>
 
-<script>
-   // document.getElementById('close-btn').addEventListener('click', () => {
-   //    document.getElementById('message').remove()
-   // })
-
-   function removeMessage() {
-      document.getElementById('message').remove()
-   }
-
+<!-- <script>
    const deleteUser = (id) => {
       if(confirm("Are you sure you want to delete this?")) {
          window.location.href = '/user/delete?id=' + id;
       }
    }
-</script>
+</script> -->
 <!-- Footer -->
 <?php require base_path('views/partials/footer.php') ?>

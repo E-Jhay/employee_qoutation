@@ -7,13 +7,10 @@ $db = new Database($config['database']);
 
 // $heading = "User Information";
 
+authorize('admin' === 'admin');
 
+$db->query("DELETE FROM user WHERE id = :id", ['id' => $_POST['id']]);
 
-if(! $db->query("DELETE FROM user WHERE id = :id",
-            ['id' => $_GET['id']
-])){
-    abort();
-}
-
+$_SESSION['success'] = "User Deleted";
 header('Location: /users');
 exit();
