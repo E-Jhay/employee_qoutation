@@ -1,20 +1,18 @@
 <?php
 
-require "Validator.php";
-$config = require "config.php";
+require base_path("Validator.php");
+$config = require base_path("config.php");
 $db = new Database($config['database']);
 
-$heading = "User Create";
 $roles = $db->query("SELECT id, name FROM role")->get();
 // dd($roles);
+$errors = [];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $errors = [];
-
     $validator = new Validator();
 
-    if(! $validator->string($_POST['name'], 1, 3)) {
+    if(! $validator->string($_POST['name'])) {
         $errors['name'] = "Name is required";
     }
 
@@ -31,6 +29,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password' => $_POST['password'],
             'role_id' => $_POST['role_id'],
         ]);
+
+        $_SESSION['success'] = "User ". $_POST['name'] . " Created";
+        header('Location: /users');
+        exit();
     }
 }
 
@@ -43,4 +45,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // dd("aaaa");
 
-require "views/user-create.view.php";
+view("user/create.php", [
+    'heading' => 'Create User',
+    'roles' => $roles,
+    'errors' => $errors
+]);

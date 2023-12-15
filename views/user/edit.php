@@ -1,13 +1,16 @@
 
-<?php require_once('partials/head.php') ?>
+<?php require base_path('views/partials/head.php') ?>
       <!-- Navbar -->
-   <?php require_once('partials/nav.php') ?>
+   <?php require base_path('views/partials/nav.php') ?>
    <div class="flex overflow-hidden bg-white pt-16">
       <!-- Sidebar -->
-      <?php require_once('partials/sidebar.php') ?>
+      <?php require base_path('views/partials/sidebar.php') ?>
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
          <main class="pt-6 px-2 lg:px-8">
-            <?php require_once('partials/banner.php') ?>
+            <div class="flex justify-start gap-2">
+               <a href="/users" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
+            </div>
+            <?php require base_path('views/partials/banner.php') ?>
             <!-- component -->
             <form method="POST">
                <div class="bg-white rounded shadow-lg p-4 px-2 md:p-8 mb-6">
@@ -39,7 +42,7 @@
                            <select id="role_id" name="role_id" autocomplete="role_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50">
                               <!-- <option value="" selected>-- Select role --</option > -->
                               <?php foreach($roles as $role): ?>
-                                 <option <?php $user['role_id'] === $role['id'] ? 'selected' : '' ?> value="<?= $role['id'] ?>"><?= ucwords($role['name']) ?></option >
+                                 <option <?= $user['role_id'] === $role['id'] ? 'selected' : '' ?> value="<?= $role['id'] ?>"><?= ucwords($role['name']) ?></option >
                               <?php endforeach; ?>
                            </select>
                         </div>
@@ -126,4 +129,4 @@
             </form>
          </main>
 <!-- Footer -->
-<?php require_once('partials/footer.php') ?>
+<?php require base_path('views/partials/footer.php') ?>

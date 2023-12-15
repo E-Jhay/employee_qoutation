@@ -1,9 +1,8 @@
 <?php
 
-$config = require "config.php";
+$config = require base_path("config.php");
 $db = new Database($config['database']);
 
-$heading = "User Edit";
 $roles = $db->query("SELECT id, name FROM role")->get();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,4 +24,8 @@ $user = $db->query("SELECT * FROM user WHERE id = :id",
 
 // dd("aaaa");
 
-require "views/user-edit.view.php";
+view("user/edit.php", [
+    'heading' => "Edit User",
+    'roles' => $roles,
+    'user' => $user
+]);
