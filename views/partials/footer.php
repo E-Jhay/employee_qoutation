@@ -40,8 +40,56 @@
             </p>
          </div>
       </div>
-      <script async defer src="https://buttons.github.io/buttons.js"></script>
-      <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+      <script>
+        document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (item) {
+            item.addEventListener('click', function (e) {
+                e.preventDefault()
+                const parent = item.closest('.group')
+                if (parent.classList.contains('selected')) {
+                    parent.classList.remove('selected')
+                } else {
+                    document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (i) {
+                        i.closest('.group').classList.remove('selected')
+                    })
+                    parent.classList.add('selected')
+                }
+            })
+        })
+      </script>
+
+      <!-- sidebar scripts -->
+        <script>
+            const sidebar = document.getElementById('sidebar');
+
+            const toggleSidebarMobile = (sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose) => {
+                sidebar.classList.toggle('hidden');
+                sidebarBackdrop.classList.toggle('hidden');
+                toggleSidebarMobileHamburger.classList.toggle('hidden');
+                toggleSidebarMobileClose.classList.toggle('hidden');
+            }
+
+            const toggleSidebarMobileEl = document.getElementById('toggleSidebarMobile');
+            const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+            const toggleSidebarMobileHamburger = document.getElementById('toggleSidebarMobileHamburger');
+            const toggleSidebarMobileClose = document.getElementById('toggleSidebarMobileClose');
+            const toggleSidebarMobileSearch = document.getElementById('toggleSidebarMobileSearch');
+
+            toggleSidebarMobileEl.addEventListener('click', () => {
+                toggleSidebarMobile(sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose);
+            });
+
+            sidebarBackdrop.addEventListener('click', () => {
+                toggleSidebarMobile(sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose);
+            });
+        </script>
+
+        <script>
+            function removeMessage() {
+                document.querySelector('.message-alert').remove()
+            }
+        </script>
+      <!-- <script async defer src="https://buttons.github.io/buttons.js"></script>
+      <script src="https://demo.themesberg.com/windster/app.bundle.js"></script> -->
    </div>
 </body>
 </html>
