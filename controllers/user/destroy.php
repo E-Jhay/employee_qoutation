@@ -1,11 +1,7 @@
 <?php
 
-use Core\Database;
-
-$config = require base_path("config.php");
-$db = new Database($config['database']);
-
-// $heading = "User Information";
+use Core\App;
+$db = App::container()->resolve('Core\Database');
 
 authorize('admin' === 'admin');
 

@@ -1,11 +1,10 @@
 <?php
 
-use Core\Database;
+use Core\App;
 use Core\Validator;
 
 require base_path("Core/Validator.php");
-$config = require base_path("config.php");
-$db = new Database($config['database']);
+$db = App::container()->resolve('Core\Database');
 
 $roles = $db->query("SELECT id, name FROM role")->get();
 // dd($roles);
