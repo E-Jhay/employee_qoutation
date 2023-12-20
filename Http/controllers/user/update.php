@@ -1,6 +1,8 @@
 <?php
 
 use Core\App;
+use Core\Session;
+
 $db = App::resolve('Core\Database');
 
 $roles = $db->query("SELECT id, name FROM role")->get();
@@ -17,7 +19,7 @@ $user = $db->query("UPDATE user SET name = :name, email = :email, address = :add
 ]);
 
 if($user) {
-    $_SESSION['success'] = "User Updated.";
+    Session::flash('success', "User '{$_POST["full_name"]}' Updated.");
 }
 
 redirect('/users');

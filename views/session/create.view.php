@@ -19,7 +19,7 @@
             <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                 <div class="mt-2">
-                    <input id="email" name="email" type="email" autocomplete="email" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= $_POST['email'] ?? '' ?>">
+                    <input id="email" name="email" type="email" autocomplete="email" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= old('email') ?>">
                 </div>
                 <?php if(isset($errors['email'])): ?>
                     <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
@@ -34,7 +34,7 @@
                 </div>
                 </div>
                 <div class="mt-2">
-                    <input id="password" name="password" type="password" autocomplete="current-password" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['password']) ? 'border-red-500' : '' ?>" value="<?= $_POST['password'] ?? '' ?>">
+                    <input id="password" name="password" type="password" autocomplete="current-password" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['password']) ? 'border-red-500' : '' ?>">
                 </div>
                 <?php if(isset($errors['password'])): ?>
                     <span class="text-red-500 text-xs"><?= $errors['password'] ?></span>

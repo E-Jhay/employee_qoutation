@@ -1,6 +1,7 @@
 <?php
 
 use Core\App;
+use Core\Session;
 use Core\Validator;
 
 require base_path("Core/Validator.php");
@@ -21,7 +22,7 @@ if(! $validator->email($_POST['email'])) {
 }
 
 if(! empty($errors)) {
-    return view("user/create.php", [
+    return view("user/create.view.php", [
         'heading' => 'Create User',
         'roles' => $roles,
         'errors' => $errors
@@ -36,6 +37,6 @@ $db->query("INSERT INTO user(name, email, address, phone, password, role_id) VAL
     'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
     'role_id' => $_POST['role_id'],
 ]);
-
-$_SESSION['success'] = "User ". $_POST['name'] . " Created";
+Session::flash('success', "User '{$_POST["name"]}' Created.");
+// $_SESSION['success'] = "User ". $_POST['name'] . " Created";
 redirect('/users');
