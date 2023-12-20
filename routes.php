@@ -10,7 +10,7 @@
 // ];
 
 $router->get('/', 'controllers/index.php');
-$router->get('/users', 'controllers/user/index.php');
+$router->get('/users', 'controllers/user/index.php')->only('guest');
 $router->get('/user/show', 'controllers/user/show.php');
 $router->delete('/user/delete', 'controllers/user/destroy.php');
 $router->get('/user/create', 'controllers/user/create.php');

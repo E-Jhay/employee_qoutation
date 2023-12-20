@@ -33,7 +33,7 @@ $db->query("INSERT INTO user(name, email, address, phone, password, role_id) VAL
     'email' => $_POST['email'],
     'address' => $_POST['address'],
     'phone' => $_POST['phone'],
-    'password' => $_POST['password'],
+    'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
     'role_id' => $_POST['role_id'],
 ]);
 
