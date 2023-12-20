@@ -7,7 +7,7 @@ $user = $db->query("SELECT user.*, role.name as role FROM user JOIN role ON user
             ['id' => $_GET['id']
         ])->find();
 
-view("user/show.php", [
+view("user/show.view.php", [
     'heading' => "User Information",
     'user' => $user
 ]);

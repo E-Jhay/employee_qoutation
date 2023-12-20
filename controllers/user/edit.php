@@ -12,7 +12,7 @@ $user = $db->query("SELECT * FROM user WHERE id = :id",
 
 // dd("aaaa");
 
-view("user/edit.php", [
+view("user/edit.view.php", [
     'heading' => "Edit User",
     'roles' => $roles,
     'user' => $user
