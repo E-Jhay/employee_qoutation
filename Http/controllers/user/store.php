@@ -38,5 +38,4 @@ $db->query("INSERT INTO user(name, email, address, phone, password, role_id) VAL
 ]);
 
 $_SESSION['success'] = "User ". $_POST['name'] . " Created";
-header('Location: /users');
-exit();
+redirect('/users');

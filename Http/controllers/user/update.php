@@ -20,5 +20,4 @@ if($user) {
     $_SESSION['success'] = "User Updated.";
 }
 
-header("Location: /users");
-exit();
+redirect('/users');

@@ -8,5 +8,4 @@ authorize('admin' === 'admin');
 $db->query("DELETE FROM role WHERE id = :id", ['id' => $_POST['id']]);
 
 $_SESSION['success'] = "Role Deleted";
-header('Location: /roles');
-exit();
+redirect('/roles');

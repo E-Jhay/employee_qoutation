@@ -8,5 +8,4 @@ authorize('admin' === 'admin');
 $db->query("DELETE FROM user WHERE id = :id", ['id' => $_POST['id']]);
 
 $_SESSION['success'] = "User Deleted";
-header('Location: /users');
-exit();
+redirect('/users');

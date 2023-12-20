@@ -8,10 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="flex min-h-full flex-col justify-center px-6 py-32 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+        <h2 class="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -19,7 +19,7 @@
             <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                 <div class="mt-2">
-                    <input id="email" name="email" type="email" autocomplete="email" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['email']) ? 'border-red-500' : '' ?>"" value="<?= $_POST['email'] ?? '' ?>">
+                    <input id="email" name="email" type="email" autocomplete="email" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= $_POST['email'] ?? '' ?>">
                 </div>
                 <?php if(isset($errors['email'])): ?>
                     <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
@@ -34,7 +34,7 @@
                 </div>
                 </div>
                 <div class="mt-2">
-                    <input id="password" name="password" type="password" autocomplete="current-password" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['password']) ? 'border-red-500' : '' ?>"">
+                    <input id="password" name="password" type="password" autocomplete="current-password" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['password']) ? 'border-red-500' : '' ?>" value="<?= $_POST['password'] ?? '' ?>">
                 </div>
                 <?php if(isset($errors['password'])): ?>
                     <span class="text-red-500 text-xs"><?= $errors['password'] ?></span>

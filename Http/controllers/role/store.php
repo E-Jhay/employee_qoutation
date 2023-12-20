@@ -25,5 +25,4 @@ $db->query("INSERT INTO role(name) VALUES(:name)", [
 ]);
 
 $_SESSION['success'] = "Role ". $_POST['name'] . " Created";
-header('Location: /roles');
-exit();
+redirect('/roles');

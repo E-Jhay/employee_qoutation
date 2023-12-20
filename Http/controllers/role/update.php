@@ -13,5 +13,4 @@ if($role) {
     $_SESSION['success'] = "Role Updated.";
 }
 
-header("Location: /roles");
-exit();
+redirect('/roles');
