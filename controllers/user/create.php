@@ -1,7 +1,7 @@
 <?php
 
 use Core\App;
-$db = App::container()->resolve('Core\Database');
+$db = App::resolve('Core\Database');
 
 $roles = $db->query("SELECT id, name FROM role")->get();
 

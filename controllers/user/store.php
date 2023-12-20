@@ -4,7 +4,7 @@ use Core\App;
 use Core\Validator;
 
 require base_path("Core/Validator.php");
-$db = App::container()->resolve('Core\Database');
+$db = App::resolve('Core\Database');
 
 $roles = $db->query("SELECT id, name FROM role")->get();
 // dd($roles);
