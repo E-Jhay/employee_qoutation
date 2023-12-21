@@ -1,0 +1,16 @@
+{
+    "name": "ejhay/employee_qoutation",
+    "authors": [
+        {
+            "name": "E-Jhay",
+            "email": "bumacodejhay@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/",
+            "Http\\": "Http/"
+        }
+    }
+}
