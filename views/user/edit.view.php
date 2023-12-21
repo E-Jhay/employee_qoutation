@@ -28,43 +28,61 @@
                   <div class="lg:col-span-2">
                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
                         <div class="md:col-span-3">
-                           <label for="full_name">Full Name</label>
-                           <input type="text" name="full_name" id="full_name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="<?= $user['name'] ?>" />
+                           <label for="name">Full Name</label>
+                           <input type="text" name="name" id="name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['name']) ? 'border-red-500' : '' ?>" value="<?= $user['name'] ?>" />
+                           <?php if(isset($errors['name'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['name'] ?></span>
+                           <?php endif; ?>
                         </div>
 
                         <div class="md:col-span-3">
                            <label for="email">Email Address</label>
-                           <input type="email" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="<?= $user['email'] ?>" placeholder="email@domain.com" />
+                           <input type="email" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= $user['email'] ?>" placeholder="email@domain.com" />
+                           <?php if(isset($errors['email'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
+                           <?php endif; ?>
                         </div>
 
                         <div class="md:col-span-6">
                            <label for="address">Address / Street</label>
                            <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
-                           <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="<?= $user['address'] ?>" placeholder="" />
+                           <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= $user['address'] ?>" placeholder="" />
+                           <?php if(isset($errors['address'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['address'] ?></span>
+                           <?php endif; ?>
                         </div>
 
                         <div class="md:col-span-3">
                            <label for="phone">Phone</label>
-                           <input type="number" name="phone" id="phone" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="<?= $user['phone'] ?>" placeholder="9xxxxxxxxxx" />
+                           <input type="text" name="phone" id="phone" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['phone']) ? 'border-red-500' : '' ?>" value="<?= $user['phone'] ?>" placeholder="09xxxxxxxxxx" />
+                           <?php if(isset($errors['phone'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['phone'] ?></span>
+                           <?php endif; ?>
                         </div>
                         <div class="md:col-span-3">
                            <label for="role">Role</label>
                            <!-- <input type="text" name="role" id="role" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="" placeholder="" /> -->
-                           <select id="role_id" name="role_id" autocomplete="role_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50">
+                           <select id="role_id" name="role_id" autocomplete="role_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['role_id']) ? 'border-red-500' : '' ?>">
                               <!-- <option value="" selected>-- Select role --</option > -->
                               <?php foreach($roles as $role): ?>
                                  <option <?= $user['role_id'] === $role['id'] ? 'selected' : '' ?> value="<?= $role['id'] ?>"><?= ucwords($role['name']) ?></option >
                               <?php endforeach; ?>
                            </select>
+                           <?php if(isset($errors['role_id'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['role_id'] ?></span>
+                           <?php endif; ?>
                         </div>
 
                         <div class="md:col-span-3">
                            <label for="password">Password</label>
-                           <input type="password" name="password" id="password" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="" placeholder="" />
+                           <input type="password" name="password" id="password" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['password']) ? 'border-red-500' : '' ?>" value="" placeholder="" />
+                           <?php if(isset($errors['password'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['password'] ?></span>
+                           <?php endif; ?>
                         </div>
                         <div class="md:col-span-3">
                            <label for="re-type-password">Re-Type Password</label>
-                           <input type="password" name="re-type-password" id="re-type-password" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="" placeholder="" />
+                           <input type="password" name="re-type-password" id="re-type-password" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['password']) ? 'border-red-500' : '' ?>" value="" placeholder="" />
                         </div>
 
                         <!-- <div class="md:col-span-3">

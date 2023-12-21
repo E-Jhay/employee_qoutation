@@ -2,10 +2,28 @@
 
 use Core\App;
 use Core\Session;
+use Http\Forms\UserEditForm;
 
 $db = App::resolve('Core\Database');
 
 $roles = $db->query("SELECT id, name FROM role")->get();
+
+$form = UserEditForm::validate($attributes = [
+    'id' => $_POST['id'],
+    'name' => $_POST['name'],
+    'email' => $_POST['email'],
+    'address' => $_POST['address'],
+    'phone' => $_POST['phone'],
+    'role_id' => $_POST['role_id'],
+]);
+
+if(! empty($form->errors())) {
+    return view("user/edit.view.php", [
+        'heading' => 'Edit User',
+        'roles' => $roles,
+        'errors' => $errors
+    ]);
+}
 
 $user = $db->query("UPDATE user SET name = :name, email = :email, address = :address, phone = :phone, role_id = :role_id, updated_at = :updated_at WHERE id = :id", [
     'id' => $_POST['id'],

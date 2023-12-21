@@ -1,6 +1,8 @@
 <?php
 
 use Core\App;
+use Core\Session;
+
 $db = App::resolve('Core\Database');
 
 $roles = $db->query("SELECT id, name FROM role")->get();
@@ -15,5 +17,6 @@ $user = $db->query("SELECT * FROM user WHERE id = :id",
 view("user/edit.view.php", [
     'heading' => "Edit User",
     'roles' => $roles,
-    'user' => $user
+    'user' => $user,
+    'errors' => Session::get('errors')
 ]);
