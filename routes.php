@@ -35,6 +35,15 @@ $router->post('/role', 'role/store.php')->only('auth');
 $router->get('/role/edit', 'role/edit.php')->only('auth');
 $router->put('/role/update', 'role/update.php')->only('auth');
 
+// Role route
+$router->get('/teams', 'team/index.php')->only('auth');
+$router->get('/team/show', 'team/show.php')->only('auth');
+$router->delete('/team/delete', 'team/destroy.php')->only('auth');
+$router->get('/team/create', 'team/create.php')->only('auth');
+$router->post('/team', 'team/store.php')->only('auth');
+$router->get('/team/edit', 'team/edit.php')->only('auth');
+$router->put('/team/update', 'team/update.php')->only('auth');
+
 //     '/user/create' => 'user/create.php',
 
 // dd($router->routes);

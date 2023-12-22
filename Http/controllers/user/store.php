@@ -41,13 +41,14 @@ if(! empty($form->errors())) {
 }
 
 try {
-    $db->query("INSERT INTO user(name, email, address, phone, password, role_id) VALUES(:name, :email, :address, :phone, :password, :role_id)", [
+    $db->query("INSERT INTO user(name, email, address, phone, password, role_id, team_id) VALUES(:name, :email, :address, :phone, :password, :role_id, :team_id)", [
         'name' => $_POST['name'],
         'email' => $_POST['email'],
         'address' => $_POST['address'],
         'phone' => $_POST['phone'],
         'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
         'role_id' => $_POST['role_id'],
+        'team_id' => $_POST['team_id'] !== '' ? $_POST['team_id'] : NULL,
     ]);
 } catch(Exception $e) {
     throw new Exception('There\'s something wrong happened upon creating user.');
