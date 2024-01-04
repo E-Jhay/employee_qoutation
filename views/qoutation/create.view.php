@@ -96,9 +96,9 @@
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Code
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Product Name
-                                                      </th>
+                                                      </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Product Description
                                                       </th>
@@ -187,13 +187,13 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-6">
+                                 <!-- <div class="col-span-3 md:col-span-6">
                                     <label for="product_name">Product name</label>
                                     <input type="text" name="product_name" id="product_name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_name']) ? 'border-red-500' : '' ?>" value="<?= old('product_name') ?>" required/>
                                     <?php if(isset($errors['product_name'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_name'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
                                  <!-- <div class="md:col-span-3">
                                     <label for="email">Email</label>
@@ -368,7 +368,7 @@
          'product_qty',
          'product_unit',
          'product_code',
-         'product_name',
+         // 'product_name',
          'product_description',
          'stock',
          'comparative_price',
@@ -426,7 +426,7 @@
          'product_qty',
          'product_unit',
          'product_code',
-         'product_name',
+         // 'product_name',
          'product_description',
          'stock',
          'comparative_price',
@@ -467,18 +467,8 @@
       e.preventDefault()
       const formData = new FormData(qoutationForm)
       formData.append("products", JSON.stringify(productLists))
-      // fetch("/qoutation", {
-      //    method: "POST",
-      //    body: formData
-      // })
-      // console.log(1)
+
       sendData(formData)
-      // fetch("/qoutation", {
-      //    method: "POST",
-      //    body: formData,
-      // })
-      // .then((response) => response.json())
-      // .then((json) => console.log(json));
    })
 
    async function sendData(formData) {

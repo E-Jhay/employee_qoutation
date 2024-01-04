@@ -8,12 +8,6 @@ use Http\Forms\UserCreateForm;
 
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
-// dd('aaa');
-// foreach($_POST['products'] as $products) {
-//     echo $product
-// }
-
-// Decode the JSON data
 
 try {
     $db->beginTransaction();
@@ -28,7 +22,7 @@ try {
     $lastInsertId = $db->connection()->lastInsertId();
 
     $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms)", [
-        'control_no' => "0001",
+        'control_no' => rand(1, 1000),
         'created_by' => 3,
         'customer_id' => $lastInsertId,
         'territory' => 'territory',
