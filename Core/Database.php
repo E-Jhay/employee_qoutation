@@ -21,6 +21,26 @@ class Database {
         ]);
     }
 
+    public function beginTransaction()
+    {
+        $this->connection->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->connection->commit();
+    }
+
+    public function rollback()
+    {
+        $this->connection->rollBack();
+    }
+
+    public function connection()
+    {
+        return $this->connection;
+    }
+
     public function query($query, $params = [])
     {
         $this->statement = $this->connection->prepare($query);

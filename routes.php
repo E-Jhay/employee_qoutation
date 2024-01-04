@@ -44,6 +44,15 @@ $router->post('/team', 'team/store.php')->only('auth');
 $router->get('/team/edit', 'team/edit.php')->only('auth');
 $router->put('/team/update', 'team/update.php')->only('auth');
 
+// Qoutation route
+$router->get('/qoutations', 'qoutation/index.php')->only('auth');
+$router->get('/qoutation/show', 'qoutation/show.php')->only('auth');
+$router->delete('/qoutation/delete', 'qoutation/destroy.php')->only('auth');
+$router->get('/qoutation/create', 'qoutation/create.php')->only('auth');
+$router->post('/qoutation', 'qoutation/store.php')->only('auth');
+$router->get('/qoutation/edit', 'qoutation/edit.php')->only('auth');
+$router->put('/qoutation/update', 'qoutation/update.php')->only('auth');
+
 //     '/user/create' => 'user/create.php',
 
 // dd($router->routes);
