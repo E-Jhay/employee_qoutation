@@ -63,7 +63,7 @@
                                                 <?= $qoutation['created_by'] ?>
                                              </td>
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $qoutation['customer_id'] ?>
+                                                <?= $qoutation['customer_name'] ?>
                                              </td>
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 <?= $qoutation['created_at'] ?>
