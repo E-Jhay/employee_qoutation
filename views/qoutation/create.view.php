@@ -149,11 +149,11 @@
                </div>
             </form>
 
-            <div id="productModal" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div id="productModal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
                <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                  <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                  <div class="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
                      <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8">
                      <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                         <form id="productForm">
@@ -161,8 +161,8 @@
                               <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
                                  Product Details
                               </h3>
-                              <div class="grid gap-4 gap-y-2 text-sm grid-cols-3 md:grid-cols-6">
-                                 <div class="md:col-span-2">
+                              <div class="grid gap-4 gap-y-2 text-sm grid-cols-6 md:grid-cols-6">
+                                 <div class="col-span-2 md:col-span-2">
                                     <label for="product_qty">Quantity</label>
                                     <input type="hidden" name="id" id="id" value="" />
                                     <input type="text" name="product_qty" id="product_qty" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_qty']) ? 'border-red-500' : '' ?>" value="<?= old('product_qty') ?>" required/>
@@ -171,7 +171,7 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="md:col-span-2">
+                                 <div class="col-span-2 md:col-span-2">
                                     <label for="product_unit">Unit</label>
                                     <input type="text" name="product_unit" id="product_unit" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_unit']) ? 'border-red-500' : '' ?>" value="<?= old('product_unit') ?>" required/>
                                     <?php if(isset($errors['product_unit'])): ?>
@@ -179,7 +179,7 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="md:col-span-2">
+                                 <div class="col-span-2 md:col-span-2">
                                     <label for="product_code">Code</label>
                                     <input type="text" name="product_code" id="product_code" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_code']) ? 'border-red-500' : '' ?>" value="<?= old('product_code') ?>" required/>
                                     <?php if(isset($errors['product_code'])): ?>
@@ -203,7 +203,7 @@
                                     <?php endif; ?>
                                  </div> -->
 
-                                 <div class="col-span-3 md:col-span-6">
+                                 <div class="col-span-6 md:col-span-6">
                                     <label for="product_description">Product description</label>
                                     <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
                                     <!-- <input type="text" name="product_description" id="product_description" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" value="<?= old('product_description') ?>" placeholder="" /> -->
@@ -213,7 +213,7 @@
                                     <?php endif; ?>
                                  </div>
                                  
-                                 <div class="md:col-span-2">
+                                 <div class="col-span-3 md:col-span-2">
                                     <label for="stock">Stock available</label>
                                     <input type="text" name="stock" id="stock" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['stock']) ? 'border-red-500' : '' ?>" value="<?= old('stock') ?>" required/>
                                     <?php if(isset($errors['stock'])): ?>
@@ -221,7 +221,7 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="md:col-span-2">
+                                 <div class="col-span-3 md:col-span-2">
                                     <label for="comparative_price">Comparative price</label>
                                     <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>" required/>
                                     <?php if(isset($errors['comparative_price'])): ?>
@@ -229,7 +229,7 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="md:col-span-2">
+                                 <div class="col-span-3 md:col-span-2">
                                     <label for="catalog_price">Catalog price</label>
                                     <input type="text" name="catalog_price" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
                                     <?php if(isset($errors['catalog_price'])): ?>
@@ -237,7 +237,7 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="md:col-span-3">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="proposed_price">Proposed price / deal</label>
                                     <input type="text" name="proposed_price" id="proposed_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price') ?>" required/>
                                     <?php if(isset($errors['proposed_price'])): ?>
@@ -245,7 +245,7 @@
                                     <?php endif; ?>
                                  </div>
                                  
-                                 <div class="md:col-span-3">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="approved_price">Approved price</label>
                                     <input type="text" name="approved_price" id="approved_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['approved_price']) ? 'border-red-500' : '' ?>" value="<?= old('approved_price') ?>" required/>
                                     <?php if(isset($errors['approved_price'])): ?>
@@ -253,7 +253,7 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="md:col-span-3">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="product_total">Total</label>
                                     <input type="text" name="product_total" id="product_total" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_total']) ? 'border-red-500' : '' ?>" value="<?= old('product_total') ?>" required/>
                                     <?php if(isset($errors['product_total'])): ?>
@@ -261,7 +261,7 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="md:col-span-3">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="deal_equivalent">Deal Equivalent</label>
                                     <input type="text" name="deal_equivalent" id="deal_equivalent" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['deal_equivalent']) ? 'border-red-500' : '' ?>" value="<?= old('deal_equivalent') ?>" required/>
                                     <?php if(isset($errors['deal_equivalent'])): ?>
