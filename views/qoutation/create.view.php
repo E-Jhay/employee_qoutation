@@ -10,6 +10,21 @@
             <div class="flex justify-start gap-2">
                <a href="/qoutations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
             </div>
+
+            <div class="hidden success-panel mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative message-alert" role="alert">
+               <!-- <strong class="font-bold">Holy smokes!</strong> -->
+               <span class="successMessage block sm:inline"></span>
+               <span onclick="removeResponseMessage()" class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                  <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+               </span>
+            </div>
+            <div class="hidden error-panel mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative message-alert" role="alert">
+               <!-- <strong class="font-bold">Holy smokes!</strong> -->
+               <span class="errorMessage block sm:inline"></span>
+               <span onclick="removeResponseMessage()" class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                  <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+               </span>
+            </div>
             <?php require base_path('views/partials/banner.php') ?>
             <!-- component -->
             <form id="qoutationForm">
@@ -336,6 +351,10 @@
       document.getElementById('id').value = ''
       document.getElementById("productForm").reset();
    }
+   const resetQoutationForm = () => {
+      // document.getElementById('id').value = ''
+      document.getElementById("qoutationForm").reset();
+   }
 
    const refreshTableRow = () => {
       document.getElementById('productTableBody').innerHTML = ''
@@ -472,13 +491,28 @@
    })
 
    async function sendData(formData) {
-      // Construct a FormData instance
+      const successPanel = document.querySelector('.success-panel')
+      const errorPanel = document.querySelector('.error-panel')
+      const successMessage = document.querySelector('.successMessage')
+      const errorMessage = document.querySelector('.errorMessage')
       try {
          const response = await fetch("/qoutation", {
             method: "POST",
             body: formData,
          });
-         console.log(await response.json());
+         const data = await response.json()
+         if (data.success) {
+            successPanel.classList.remove('hidden')
+            successMessage.innerText = data.message
+            console.log(successPanel)
+         } else {
+            errorPanel.classList.remove('hidden')
+            errorMessage.innerText = data.message
+         }
+         resetQoutationForm()
+         productLists = []
+         refreshTableRow()
+         // console.log(data.success);
       } catch (e) {
          console.error(e);
       }
