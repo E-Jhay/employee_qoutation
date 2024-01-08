@@ -41,6 +41,9 @@
                                              Customer
                                           </th>
                                           <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                             Status
+                                          </th>
+                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                              Created at
                                           </th>
                                           <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
@@ -64,6 +67,15 @@
                                              </td>
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 <?= $qoutation['customer_name'] ?>
+                                             </td>
+                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                <?php
+                                                   $status_color = 'gray';
+                                                   $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'gray');
+                                                ?>
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-100 text-green-800">
+                                                   <?= $qoutation['status_name'] ?>
+                                                </span>
                                              </td>
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 <?= $qoutation['created_at'] ?>

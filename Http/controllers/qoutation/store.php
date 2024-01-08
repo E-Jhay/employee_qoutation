@@ -1,6 +1,7 @@
 <?php
 
 use Core\App;
+use Core\QoutationStatus;
 use Core\Session;
 use Core\Validator;
 use Http\Forms\TeamCreateForm;
@@ -21,7 +22,7 @@ try {
     ]);
     $lastInsertId = $db->connection()->lastInsertId();
 
-    $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms)", [
+    $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms, status) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms, :status)", [
         'control_no' => rand(1, 1000),
         'created_by' => 3,
         'customer_id' => $lastInsertId,
@@ -30,6 +31,7 @@ try {
         'validity' => 'valid',
         'delivery' => 'delivery',
         'terms' => 'terms',
+        'status' => QoutationStatus::PENDING,
     ]);
     $lastInsertId = $db->connection()->lastInsertId();
     
