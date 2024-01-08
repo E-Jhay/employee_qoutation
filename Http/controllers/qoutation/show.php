@@ -3,11 +3,18 @@
 use Core\App;
 $db = App::resolve('Core\Database');
 
-$team = $db->query("SELECT team.*, region.id as region_id, region.name as region, user.id as user_id, user.name as manager FROM team JOIN region on team.region_id = region.id LEFT JOIN user on team.manager_id = user.id WHERE team.id = :id", [
+$qoutation = $db->query("SELECT qoutation.*, customer.name as customer_name, customer.address as customer_address, customer.position as customer_position, customer.email as customer_email, user.name as created_by, user.email as sales_email, user.phone as sales_phone, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id WHERE qoutation.id = :id", [
     'id' => $_GET['id']
 ])->find();
 
-view("team/show.view.php", [
-    'heading' => "Team Information",
-    'team' => $team
+$products = $db->query("SELECT * FROM product_qoutation WHERE qoutation_id = :id", [
+    'id' => $_GET['id']
+])->get();
+
+// dd($products);
+
+view("qoutation/show.view.php", [
+    'heading' => "Qoutation Information",
+    'qoutation' => $qoutation,
+    'products' => $products,
 ]);

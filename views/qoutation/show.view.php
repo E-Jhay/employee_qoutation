@@ -8,73 +8,136 @@
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
          <main class="pt-6 px-4 lg:px-8">
             <div class="flex justify-start gap-2">
-               <a href="/teams" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
+               <a href="/qoutations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
             </div>
             <?php require base_path('views/partials/banner.php') ?>
             <div class="bg-white rounded shadow-lg p-4 px-2 md:p-8 mb-6">
-               <div class="px-4 sm:px-0">
-                  <p class="max-w-2xl text-sm leading-6 text-gray-500">Team details.</p>
+               <div class="mx-auto p-6 bg-white rounded shadow-sm my-6" id="invoice">
+
+                  <div class="grid grid-cols-2 items-center">
+                     <div>
+                        <!--  Company logo  -->
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="company-logo" height="100" width="100">
+                     </div>
+
+                     <div class="text-right">
+                        <p>
+                           <?= $qoutation['created_by'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm">
+                           <?= $qoutation['sales_email'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm mt-1">
+                           <?= $qoutation['sales_phone'] ?>
+                        </p>
+                        <!-- <p class="text-gray-500 text-sm mt-1">
+                           VAT: 8657671212
+                        </p> -->
+                     </div>
+                  </div>
+
+                  <!-- Client info -->
+                  <div class="grid grid-cols-2 items-center mt-8">
+                     <div>
+                        <p class="font-bold text-gray-800">
+                           Bill to :
+                        </p>
+                        <p class="text-gray-500">
+                           <?= $qoutation['customer_name'] ?>
+                           <br />
+                           <?= $qoutation['customer_address'] ?>
+                        </p>
+                        <p class="text-gray-500">
+                           <?= $qoutation['customer_position'] ?>
+                        </p>
+                        <p class="text-gray-500">
+                           <?= $qoutation['customer_email'] ?>
+                        </p>
+                     </div>
+
+                     <div class="text-right">
+                        <p class="">
+                           Control number:
+                           <span class="text-gray-500">
+                              <?= $qoutation['control_no'] ?>
+                           </span>
+                        </p>
+                        <p>
+                           Qoute created: 
+                           <span class="text-gray-500">
+                              <?= $qoutation['created_at'] ?>
+                           </span>
+                           <br />
+                           Qoute expires:
+                           <span class="text-gray-500">
+                              <?= $qoutation['expired_at'] ?? date('Y-m-d') ?>
+                           </span>
+                        </p>
+                     </div>
+                  </div>
+
+                  <!-- Invoice Items -->
+                  <div class="-mx-4 mt-8 flow-root sm:mx-0">
+                     <table class="min-w-full">
+                        <colgroup>
+                           <col class="w-full sm:w-1/2">
+                           <col class="sm:w-1/6">
+                           <col class="sm:w-1/6">
+                           <col class="sm:w-1/6">
+                        </colgroup>
+                        <thead class="border-b border-gray-300 text-gray-900">
+                           <tr>
+                           <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
+                           <th scope="col" class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
+                           <th scope="col" class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell">Price</th>
+                           <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Amount</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <?php foreach($products as $product) : ?>
+                              <tr class="border-b border-gray-200">
+                                 <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
+                                    <div class="font-medium text-gray-900"><?= $product['description'] ?></div>
+                                    <div class="mt-1 truncate text-gray-500"><?= $product['code'] ?></div>
+                                 </td>
+                                 <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">500.0</td>
+                                 <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">$100.00</td>
+                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">$5,000.00</td>
+                              </tr>
+                           <?php endforeach; ?>
+                        </tbody>
+                        <!-- <tfoot>
+                           <tr>
+                           <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
+                           <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
+                           <td class="pl-3 pr-6 pt-6 text-right text-sm text-gray-500 sm:pr-0">$10,500.00</td>
+                           </tr>
+                           <tr>
+                           <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
+                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
+                           <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">$1,050.00</td>
+                           </tr>
+                           <tr>
+                           <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
+                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
+                           <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">- 10%</td>
+                           </tr>
+                           <tr>
+                           <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0">Total</th>
+                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
+                           <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">$11,550.00</td>
+                           </tr>
+                        </tfoot> -->
+                     </table>
+                  </div>
+
+                  <!--  Footer  -->
+                  <div class="border-t-2 pt-4 text-xs text-gray-500 text-center mt-16">
+                  Please pay the invoice before the due date. You can pay the invoice by logging in to your account from our client portal.
+                  </div>
+
+                  </div>
                </div>
-               <div class="mt-6 border-t border-gray-100">
-                  <dl class="divide-y divide-gray-100">
-                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                     <dt class="text-sm font-medium leading-6 text-gray-900">Team name</dt>
-                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><?= $team['name'] ?></dd>
-                     </div>
-                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt class="text-sm font-medium leading-6 text-gray-900">Region</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><?= $team['region'] ?></dd>
-                     </div>
-                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                     <dt class="text-sm font-medium leading-6 text-gray-900">Address</dt>
-                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><?= $team['address'] ?></dd>
-                     </div>
-                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                     <dt class="text-sm font-medium leading-6 text-gray-900">Manager</dt>
-                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                           <?= ucwords($team['manager']) ?>
-                        </span>
-                     </dd>
-                     </div>
-                     <!-- <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                     <dt class="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
-                     <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
-                           <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                           <div class="flex w-0 flex-1 items-center">
-                              <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                 <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
-                              </svg>
-                              <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                 <span class="truncate font-medium">resume_back_end_developer.pdf</span>
-                                 <span class="flex-shrink-0 text-gray-400">2.4mb</span>
-                              </div>
-                           </div>
-                           <div class="ml-4 flex-shrink-0">
-                              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
-                           </div>
-                           </li>
-                           <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                           <div class="flex w-0 flex-1 items-center">
-                              <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                 <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
-                              </svg>
-                              <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                 <span class="truncate font-medium">coverletter_back_end_developer.pdf</span>
-                                 <span class="flex-shrink-0 text-gray-400">4.5mb</span>
-                              </div>
-                           </div>
-                           <div class="ml-4 flex-shrink-0">
-                              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
-                           </div>
-                           </li>
-                        </ul>
-                     </dd>
-                     </div> -->
-                  </dl>
-               </div>
-            </div>
          </main>
 <!-- Footer -->
 <?php require base_path('views/partials/footer.php') ?>
