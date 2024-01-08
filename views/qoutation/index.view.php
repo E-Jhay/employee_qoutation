@@ -23,106 +23,431 @@
                      </span>
                   </div>
                <?php Core\Session::unflash('success'); endif; ?>
-               <div class="shadow overflow-hidden border-b sm:rounded-lg py-8">
-                  <div class="flex flex-col">
-                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                              <div class="">
-                                 <table class="min-w-full divide-y divide-gray-200 w-full">
-                                    <thead>
-                                       <tr>
-                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Control no
-                                          </th>
-                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Created by
-                                          </th>
-                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Customer
-                                          </th>
-                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Status
-                                          </th>
-                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Created at
-                                          </th>
-                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Needed at
-                                          </th>
-                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                             Released at
-                                          </th>
-                                          <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
-                                          </th>
-                                       </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                    <?php foreach($qoutations as $qoutation): ?>
-                                          <tr>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $qoutation['control_no'] ?>
-                                             </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $qoutation['created_by'] ?>
-                                             </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $qoutation['customer_name'] ?>
-                                             </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?php
-                                                   $status_color = 'gray';
-                                                   $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'gray');
-                                                ?>
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-100 text-green-800">
-                                                   <?= $qoutation['status_name'] ?>
-                                                </span>
-                                             </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $qoutation['created_at'] ?>
-                                             </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $qoutation['needed_at'] ?>
-                                             </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                <?= $qoutation['released_at'] ?>
-                                             </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
-                                                <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
-                                                <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+               <div class="rounded">
+                  <!-- Tabs -->
+                  <ul id="tabs" class="inline-flex w-full px-1 pt-2 ">
+                     <li class="px-4 py-2 -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><a id="default-tab" href="#pending">Pending</a></li>
+                     <li class="px-4 py-2 font-semibold text-gray-800 rounded-t"><a href="#approved">Approved</a></li>
+                     <li class="px-4 py-2 font-semibold text-gray-800 rounded-t"><a href="#disapproved">Disapproved</a></li>
+                     <li class="px-4 py-2 font-semibold text-gray-800 rounded-t"><a href="#all">All</a></li>
+                  </ul>
+
+                  <!-- Tab Contents -->
+                  <div id="tab-contents">
+                     <div id="pending" class="shadow overflow-hidden border-b sm:rounded-lg py-8">
+                        <div class="flex flex-col">
+                           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                              <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                    <div class="">
+                                       <table class="min-w-full divide-y divide-gray-200 w-full">
+                                          <thead>
+                                             <tr>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Control no
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Created by
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Customer
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Status
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Created at
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Needed at
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Released at
+                                                </th>
+                                                <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
+                                                </th>
+                                             </tr>
+                                          </thead>
+                                          <tbody class="bg-white divide-y divide-gray-200">
+                                          <?php if(count($pendingQoutations) <= 0): ?>
+                                             <tr>
+                                                <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                                                   No items
+                                                </td>
+                                             </tr>
+                                          <?php endif; ?>
+                                          <?php foreach($pendingQoutations as $qoutation): ?>
+                                             <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['control_no'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['created_by'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['customer_name'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?php
+                                                      $status_color = 'amber';
+                                                      $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'amber');
+                                                   ?>
+                                                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
+                                                      <?= $qoutation['status_name'] ?>
+                                                   </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= date('Y-m-d', strtotime($qoutation['created_at'])) ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['needed_at'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['released_at'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                   <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
+                                                   <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                         <input type="hidden" name="_method" value="DELETE">
+                                                         <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
+                                                         <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+                                                         <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
+                                                   </form>
+                                                </td>
+                                             </tr>
+                                          <?php endforeach ?>
+                                          <!-- <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   1
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                   <a href="" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <a href="" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
+                                                   <form class="inline-block" action="" method="POST" onsubmit="return confirm('Are you sure?');">
                                                       <input type="hidden" name="_method" value="DELETE">
-                                                      <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
-                                                      <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
-                                                      <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
-                                                </form>
-                                             </td>
-                                          </tr>
-                                    <?php endforeach ?>
-                                    <!-- <tr>
-                                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                             1
-                                          </td>
-                                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                          </td>
-                                          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                             <a href="" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
-                                             <a href="" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
-                                             <form class="inline-block" action="" method="POST" onsubmit="return confirm('Are you sure?');">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
-                                             </form>
-                                          </td>
-                                    </tr> -->
-                                    </tbody>
-                                 </table>
+                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                      <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
+                                                   </form>
+                                                </td>
+                                          </tr> -->
+                                          </tbody>
+                                       </table>
+                                    </div>
                               </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="approved" class="shadow overflow-hidden border-b sm:rounded-lg py-8">
+                        <div class="flex flex-col">
+                           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                              <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                    <div class="">
+                                       <table class="min-w-full divide-y divide-gray-200 w-full">
+                                          <thead>
+                                             <tr>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Control no
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Created by
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Customer
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Status
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Created at
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Needed at
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Released at
+                                                </th>
+                                                <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
+                                                </th>
+                                             </tr>
+                                          </thead>
+                                          <tbody class="bg-white divide-y divide-gray-200">
+                                          <?php if(count($approvedQoutations) <= 0): ?>
+                                             <tr>
+                                                <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                                                   No items
+                                                </td>
+                                             </tr>
+                                          <?php endif; ?>
+                                          <?php foreach($approvedQoutations as $qoutation): ?>
+                                             <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['control_no'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['created_by'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['customer_name'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?php
+                                                      $status_color = 'amber';
+                                                      $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'amber');
+                                                   ?>
+                                                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
+                                                      <?= $qoutation['status_name'] ?>
+                                                   </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= date('Y-m-d', strtotime($qoutation['created_at'])) ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['needed_at'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['released_at'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                   <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
+                                                   <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                         <input type="hidden" name="_method" value="DELETE">
+                                                         <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
+                                                         <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+                                                         <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
+                                                   </form>
+                                                </td>
+                                             </tr>
+                                          <?php endforeach ?>
+                                          <!-- <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   1
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                   <a href="" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <a href="" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
+                                                   <form class="inline-block" action="" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                      <input type="hidden" name="_method" value="DELETE">
+                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                      <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
+                                                   </form>
+                                                </td>
+                                          </tr> -->
+                                          </tbody>
+                                       </table>
+                                    </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="disapproved" class="shadow overflow-hidden border-b sm:rounded-lg py-8">
+                        <div class="flex flex-col">
+                           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                              <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                    <div class="">
+                                       <table class="min-w-full divide-y divide-gray-200 w-full">
+                                          <thead>
+                                             <tr>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Control no
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Created by
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Customer
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Status
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Created at
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Needed at
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Released at
+                                                </th>
+                                                <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
+                                                </th>
+                                             </tr>
+                                          </thead>
+                                          <tbody class="bg-white divide-y divide-gray-200">
+                                          <?php if(count($disapprovedQoutations) <= 0): ?>
+                                             <tr>
+                                                <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                                                   No items
+                                                </td>
+                                             </tr>
+                                          <?php endif; ?>
+                                          <?php foreach($disapprovedQoutations as $qoutation): ?>
+                                             <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['control_no'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['created_by'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['customer_name'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?php
+                                                      $status_color = 'amber';
+                                                      $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'amber');
+                                                   ?>
+                                                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
+                                                      <?= $qoutation['status_name'] ?>
+                                                   </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= date('Y-m-d', strtotime($qoutation['created_at'])) ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['needed_at'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['released_at'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                   <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
+                                                   <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                         <input type="hidden" name="_method" value="DELETE">
+                                                         <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
+                                                         <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+                                                         <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
+                                                   </form>
+                                                </td>
+                                             </tr>
+                                          <?php endforeach ?>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="all" class="shadow overflow-hidden border-b sm:rounded-lg py-8">
+                        <div class="flex flex-col">
+                           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                              <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                    <div class="">
+                                       <table class="min-w-full divide-y divide-gray-200 w-full">
+                                          <thead>
+                                             <tr>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Control no
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Created by
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Customer
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Status
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Created at
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Needed at
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                   Released at
+                                                </th>
+                                                <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
+                                                </th>
+                                             </tr>
+                                          </thead>
+                                          <tbody class="bg-white divide-y divide-gray-200">
+                                          <?php if(count($allQoutations) <= 0): ?>
+                                             <tr>
+                                                <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                                                   No items
+                                                </td>
+                                             </tr>
+                                          <?php endif; ?>
+                                          <?php foreach($allQoutations as $qoutation): ?>
+                                             <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['control_no'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['created_by'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['customer_name'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?php
+                                                      $status_color = 'amber';
+                                                      $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'amber');
+                                                   ?>
+                                                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
+                                                      <?= $qoutation['status_name'] ?>
+                                                   </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= date('Y-m-d', strtotime($qoutation['created_at'])) ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['needed_at'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   <?= $qoutation['released_at'] ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                   <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
+                                                   <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                         <input type="hidden" name="_method" value="DELETE">
+                                                         <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
+                                                         <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+                                                         <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
+                                                   </form>
+                                                </td>
+                                             </tr>
+                                          <?php endforeach ?>
+                                          <!-- <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   1
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                   <a href="" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <a href="" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
+                                                   <form class="inline-block" action="" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                      <input type="hidden" name="_method" value="DELETE">
+                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                      <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
+                                                   </form>
+                                                </td>
+                                          </tr> -->
+                                          </tbody>
+                                       </table>
+                                    </div>
+                              </div>
+                           </div>
                         </div>
                      </div>
                   </div>
                </div>
+
             </div>
          </main>
 
@@ -133,5 +458,35 @@
       }
    }
 </script> -->
+<script>
+   let tabsContainer = document.querySelector("#tabs");
+
+   let tabTogglers = tabsContainer.querySelectorAll("a");
+   console.log(tabTogglers);
+
+   tabTogglers.forEach(function(toggler) {
+   toggler.addEventListener("click", function(e) {
+      e.preventDefault();
+
+      let tabName = this.getAttribute("href");
+
+      let tabContents = document.querySelector("#tab-contents");
+
+      for (let i = 0; i < tabContents.children.length; i++) {
+
+         tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");  tabContents.children[i].classList.remove("hidden");
+         if ("#" + tabContents.children[i].id === tabName) {
+         continue;
+         }
+         tabContents.children[i].classList.add("hidden");
+
+      }
+      e.target.parentElement.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
+   });
+   });
+
+   document.getElementById("default-tab").click();
+
+</script>
 <!-- Footer -->
 <?php require base_path('views/partials/footer.php') ?>
