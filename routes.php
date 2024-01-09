@@ -51,7 +51,8 @@ $router->delete('/qoutation/delete', 'qoutation/destroy.php')->only('auth');
 $router->get('/qoutation/create', 'qoutation/create.php')->only('auth');
 $router->post('/qoutation', 'qoutation/store.php')->only('auth');
 $router->get('/qoutation/edit', 'qoutation/edit.php')->only('auth');
-$router->put('/qoutation/update', 'qoutation/update.php')->only('auth');
+$router->put('/qoutation/update', 'qoutation/update.php')->only('auth'); 
+$router->post('/qoutation/change-status', 'qoutation/changeStatus.php')->only('auth'); 
 
 //     '/user/create' => 'user/create.php',
 

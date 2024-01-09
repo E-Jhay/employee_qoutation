@@ -40,22 +40,35 @@
             </p>
          </div>
       </div>
-      <script>
-        document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (item) {
-            item.addEventListener('click', function (e) {
-                e.preventDefault()
-                const parent = item.closest('.group')
-                if (parent.classList.contains('selected')) {
-                    parent.classList.remove('selected')
-                } else {
-                    document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (i) {
-                        i.closest('.group').classList.remove('selected')
-                    })
-                    parent.classList.add('selected')
-                }
+
+        <!-- modal scripts -->
+        <script>
+            const toggleModal = (modal, text) => {
+                document.getElementById(modal).classList.toggle('hidden')
+                const modalText = document.querySelectorAll('.modalText')
+
+                modalText.forEach(item => {
+                    item.innerHTML = text
+                })
+            }
+        </script>
+
+        <script>
+            document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (item) {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault()
+                    const parent = item.closest('.group')
+                    if (parent.classList.contains('selected')) {
+                        parent.classList.remove('selected')
+                    } else {
+                        document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (i) {
+                            i.closest('.group').classList.remove('selected')
+                        })
+                        parent.classList.add('selected')
+                    }
+                })
             })
-        })
-      </script>
+        </script>
 
       <!-- sidebar scripts -->
         <script>
