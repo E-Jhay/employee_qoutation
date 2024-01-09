@@ -24,7 +24,7 @@ try {
 
     $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms, status) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms, :status)", [
         'control_no' => rand(1, 1000),
-        'created_by' => 3,
+        'created_by' => $_SESSION['user']['id'],
         'customer_id' => $lastInsertId,
         'territory' => 'territory',
         'tel_no' => '09123456789',
