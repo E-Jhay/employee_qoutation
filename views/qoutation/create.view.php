@@ -330,7 +330,7 @@
       resetForm()
       toggleProductModal()
 
-      // console.log(productLists)
+      console.log(productLists)
       // console.log(JSON.stringify(productLists))
    })
 

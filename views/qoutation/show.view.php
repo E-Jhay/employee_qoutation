@@ -115,6 +115,13 @@ use Core\Role;
                            </tr>
                         </thead>
                         <tbody>
+                           <?php if(count($products) <= 0): ?>
+                              <tr class="border-b border-gray-200">
+                                 <td colspan="11" class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">
+                                    No products selected
+                                 </td>
+                              </tr>
+                           <?php endif; ?>
                            <?php foreach($products as $product) : ?>
                               <tr class="border-b border-gray-200">
                                  <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
@@ -168,6 +175,12 @@ use Core\Role;
                   <div class="flex justify-end gap-2 mt-4">
                      <button type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
                      <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
+                     <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+                  </div>
+                  <?php endif; ?>
+                  <?php if(($qoutation['status'] == QoutationStatus::PENDING || $qoutation['status'] == QoutationStatus::DISAPPROVED) && $_SESSION['user']['role_id'] == Role::SALES) : ?>
+                  <div class="flex justify-end gap-2 mt-4">
+                     <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
                      <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                   </div>
                   <?php endif; ?>

@@ -1,43 +1,77 @@
 <?php
 
 use Core\App;
+use Core\QoutationStatus;
 use Core\Session;
 use Http\Forms\TeamCreateForm;
 
 $db = App::resolve('Core\Database');
 
-$managers = $db->query("SELECT id, name FROM user WHERE role_id = :role_id", [
-    'role_id' => 2
-])->get();
-$regions = $db->query("SELECT id, name FROM region")->get();
+// $response = array('success' => true, 'message' => $_POST['email']);
+// echo json_encode($response);
 
-$form = TeamCreateForm::validate($attributes = [
-    'id' => $_POST['id'],
-    'name' => $_POST['name'],
-    'address' => $_POST['address'],
-    'region_id' => $_POST['region_id'],
-    'manager_id' => $_POST['manager_id'],
-]);
-
-if(! empty($form->errors())) {
-    return view("team/create.view.php", [
-        'heading' => 'Create Team',
-        'managers' => $managers,
-        'regions' => $regions
-    ]);
-}
 
 try {
-    $db->query("UPDATE team SET name = :name, address = :address, region_id = :region_id, manager_id = :manager_id WHERE id = :id", [
-        'id' => $_POST['id'],
-        'name' => $_POST['name'],
-        'address' => $_POST['address'],
-        'region_id' => $_POST['region_id'],
-        'manager_id' => $_POST['manager_id'] !== '' ? $_POST['manager_id'] : NULL,
-    ]);
-} catch(Exception $e) {
-    throw new Exception('There\'s something wrong happened upon updating team.');
-}
+    $db->beginTransaction();
 
-Session::flash('success', "Team '{$_POST["name"]}' Created.");
-redirect('/teams');
+    $qoutation = $db->query("SELECT * FROM qoutation WHERE id = :id", [
+        'id' => $_POST['qoutation_id']
+    ])->findOrFail();
+
+    $db->query("UPDATE customer SET name = :name, address = :address, contact_person = :contact_person, position = :position, email = :email WHERE id = :id", [
+        'id' => $qoutation['customer_id'],
+        'name' => $_POST['customer_name'],
+        'email' => $_POST['email'],
+        'address' => $_POST['address'],
+        'contact_person' => $_POST['contact_person'],
+        'position' => $_POST['position'],
+    ]);
+    
+    // $lastInsertId = $db->connection()->lastInsertId();
+
+    $db->query("UPDATE qoutation SET created_by = :created_by, territory = :territory, tel_no = :tel_no, validity = :validity, delivery = :delivery, terms = :terms WHERE id = :id", [
+        'id' => $_POST['qoutation_id'],
+        'created_by' => $_SESSION['user']['id'],
+        'territory' => 'territory2',
+        'tel_no' => '091234567892',
+        'validity' => 'valid2',
+        'delivery' => 'delivery2',
+        'terms' => 'terms2'
+    ]);
+    // $lastInsertId = $db->connection()->lastInsertId();
+    
+    
+    $db->query("DELETE FROM product_qoutation WHERE qoutation_id = :qoutation_id", [
+        'qoutation_id' => $_POST['qoutation_id']
+    ]);
+    
+    $products = json_decode($_POST['products'], true);
+    foreach($products as $product) {
+        $db->query("INSERT INTO product_qoutation (qoutation_id, unit, code, description, quantity, stock, comparative_price, catalog_price, proposed_price, approved_price, total, deal_equivalent) VALUES(:qoutation_id, :unit, :code, :description, :quantity, :stock, :comparative_price, :catalog_price, :proposed_price, :approved_price, :total, :deal_equivalent)", [
+            'qoutation_id' => $_POST['qoutation_id'],
+            'unit' => $product['product_unit'],
+            'code' => $product['product_code'],
+            'description' => $product['product_description'],
+            'quantity' => $product['product_qty'],
+            'stock' => $product['stock'],
+            'comparative_price' => $product['comparative_price'],
+            'catalog_price' => $product['catalog_price'],
+            'proposed_price' => $product['proposed_price'],
+            'approved_price' => $product['approved_price'],
+            'total' => $product['product_total'],
+            'deal_equivalent' => $product['deal_equivalent'],
+        ]);
+    }
+
+    $db->commit();
+    $response = array('success' => true, 'message' => 'Qoutation updated');
+    echo json_encode($response);
+} catch(Exception $e) {
+    // An error occurred, rollback the transaction
+    if ($db->connection() !== null) {
+        $db->rollback();
+    }
+    $response = array('success' => false, 'message' => $e->getMessage());
+    echo json_encode($response);
+    // throw new Exception('There\'s something wrong happened upon creating team.');
+}
