@@ -81,7 +81,7 @@
                                                    <?= $qoutation['control_no'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['created_by'] ?>
+                                                   <?= $qoutation['created_by_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?= $qoutation['customer_name'] ?>
@@ -188,7 +188,7 @@
                                                    <?= $qoutation['control_no'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['created_by'] ?>
+                                                   <?= $qoutation['created_by_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?= $qoutation['customer_name'] ?>
@@ -295,7 +295,7 @@
                                                    <?= $qoutation['control_no'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['created_by'] ?>
+                                                   <?= $qoutation['created_by_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?= $qoutation['customer_name'] ?>
@@ -385,7 +385,7 @@
                                                    <?= $qoutation['control_no'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['created_by'] ?>
+                                                   <?= $qoutation['created_by_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?= $qoutation['customer_name'] ?>
