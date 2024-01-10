@@ -30,10 +30,10 @@ use Core\Role;
                <div class="rounded">
                   <!-- Tabs -->
                   <ul id="tabs" class="inline-flex w-full px-1 pt-2 ">
-                     <li class="px-4 py-2 -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><a id="default-tab" href="#pending">Pending</a></li>
-                     <li class="px-4 py-2 font-semibold text-gray-800 rounded-t"><a href="#approved">Approved</a></li>
-                     <li class="px-4 py-2 font-semibold text-gray-800 rounded-t"><a href="#disapproved">Disapproved</a></li>
-                     <li class="px-4 py-2 font-semibold text-gray-800 rounded-t"><a href="#all">All</a></li>
+                     <li class="px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><a id="default-tab" href="#pending">Pending</a></li>
+                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><a href="#approved">Approved</a></li>
+                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><a href="#disapproved">Disapproved</a></li>
+                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><a href="#all">All</a></li>
                   </ul>
 
                   <!-- Tab Contents -->
