@@ -63,6 +63,13 @@ try {
         ]);
     }
 
+    if($qoutation['status'] === QoutationStatus::DISAPPROVED) {
+        $db->query("UPDATE qoutation SET status = :status WHERE id = :id", [
+            'id' => $qoutation['id'],
+            'status' => QoutationStatus::PENDING,
+        ]);
+    }
+
     $db->commit();
     $response = array('success' => true, 'message' => 'Qoutation updated');
     echo json_encode($response);

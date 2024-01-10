@@ -1,5 +1,9 @@
 
-<?php require base_path('views/partials/head.php') ?>
+<?php
+
+use Core\QoutationStatus;
+
+ require base_path('views/partials/head.php') ?>
       <!-- Navbar -->
    <?php require base_path('views/partials/nav.php') ?>
    <div class="flex overflow-hidden bg-white pt-16">
@@ -143,7 +147,7 @@
                   
                         <div class="mt-4 md:col-span-6 text-left">
                            <div class="inline-flex items-end">
-                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">Submit</button>
+                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $qoutation['status'] === QoutationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
                            </div>
                         </div>
 
