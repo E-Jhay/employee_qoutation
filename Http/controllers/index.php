@@ -2,6 +2,8 @@
 
 use Core\App;
 use Core\Database;
+use Core\QoutationStatus;
+use Core\Role;
 
 $db = App::resolve(Database::class);
 
@@ -18,15 +20,25 @@ $heading = "Dashboard";
 //     OR
 //     (YEAR(created_at) = YEAR(CURDATE()) - 1 AND MONTH(created_at) = 12 AND MONTH(CURDATE()) = 1);
 
+$currentUserTeamId = $db->query("SELECT id FROM team WHERE manager_id = :manager_id", [
+    'manager_id' => $_SESSION['user']['id']
+])->find()['id'];
+
 $salesThisMonth = $db->query("SELECT SUM(approved_price) as total FROM product_qoutation LEFT JOIN qoutation ON 
-product_qoutation.qoutation_id = qoutation.id WHERE qoutation.team_id = 2 AND qoutation.status = 1 AND
-MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE())")->find()['total'];
+product_qoutation.qoutation_id = qoutation.id WHERE qoutation.team_id = :team_id AND qoutation.status = :status AND
+MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE())", [
+    'team_id' => $currentUserTeamId,
+    'status' => QoutationStatus::APPROVED,
+])->find()['total'];
 
 $salesLastMonth = $db->query("SELECT SUM(approved_price) as total FROM product_qoutation LEFT JOIN qoutation ON 
-product_qoutation.qoutation_id = qoutation.id WHERE qoutation.team_id = 2 AND qoutation.status = 1 AND
+product_qoutation.qoutation_id = qoutation.id WHERE qoutation.team_id = :team_id AND qoutation.status = :status AND
 (YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE()) - 1)
 OR
-(YEAR(created_at) = YEAR(CURDATE()) - 1 AND MONTH(created_at) = 12 AND MONTH(CURDATE()) = 1)")->find()['total'] ?? 0;
+(YEAR(created_at) = YEAR(CURDATE()) - 1 AND MONTH(created_at) = 12 AND MONTH(CURDATE()) = 1)", [
+    'team_id' => $currentUserTeamId,
+    'status' => QoutationStatus::APPROVED,
+])->find()['total'] ?? 0;
 
 
 function calculatePercentageIncrease($oldValue, $newValue) {
@@ -39,8 +51,18 @@ function calculatePercentageIncrease($oldValue, $newValue) {
     }
 }
 
+$pendingQoutations = $db->query("SELECT COUNT(*) as count FROM qoutation WHERE team_id = :team_id AND status = :status",[
+    'team_id' => $currentUserTeamId,
+    'status' => QoutationStatus::PENDING,
+])->find()['count'];
 
-// dd(calculatePercentageIncrease(2000, $salesThisMonth));
+$agentsCount = $db->query("SELECT COUNT(*) as count FROM user WHERE team_id = :team_id AND role_id = :role_id",[
+    'team_id' => $currentUserTeamId,
+    'role_id' => Role::SALES,
+])->find()['count'];
+
+
+// dd($pendingQoutations);
 
 $percentageIncrease = calculatePercentageIncrease($salesLastMonth, $salesThisMonth);
 
@@ -49,5 +71,7 @@ view("index.view.php", [
     'heading' => $heading,
     'salesThisMonth' => number_format($salesThisMonth, 2, '.', ','),
     'percentageIncrease' => number_format($percentageIncrease, 2) . '%',
-    'isPositive' => $percentageIncrease >= 0 ? 1 : 0
+    'isPositive' => $percentageIncrease >= 0 ? 1 : 0,
+    'pendingQoutations' => $pendingQoutations,
+    'agentsCount' => $agentsCount,
 ]);
