@@ -1,5 +1,9 @@
 
-<?php require base_path('views/partials/head.php') ?>
+<?php
+
+use Core\Role;
+
+ require base_path('views/partials/head.php') ?>
       <!-- Navbar -->
    <?php require base_path('views/partials/nav.php') ?>
    <div class="flex overflow-hidden bg-white pt-16">
@@ -63,7 +67,7 @@
                                                 <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                                    Released at
                                                 </th>
-                                                <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
+                                                <th scope="col" width="100" class="px-6 py-3 bg-gray-100">
                                                 </th>
                                              </tr>
                                           </thead>
@@ -108,12 +112,14 @@
                                                    <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES): ?>
                                                    <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
                                                          <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                          <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
                                                    </form>
+                                                   <?php endif; ?>
                                                 </td>
                                              </tr>
                                           <?php endforeach ?>
@@ -170,7 +176,7 @@
                                                 <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                                    Released at
                                                 </th>
-                                                <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
+                                                <th scope="col" width="100" class="px-6 py-3 bg-gray-100">
                                                 </th>
                                              </tr>
                                           </thead>
@@ -215,12 +221,14 @@
                                                    <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES): ?>
                                                    <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
                                                          <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                          <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
                                                    </form>
+                                                   <?php endif; ?>
                                                 </td>
                                              </tr>
                                           <?php endforeach ?>
@@ -277,7 +285,7 @@
                                                 <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                                    Released at
                                                 </th>
-                                                <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
+                                                <th scope="col" width="100" class="px-6 py-3 bg-gray-100">
                                                 </th>
                                              </tr>
                                           </thead>
@@ -322,12 +330,14 @@
                                                    <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES): ?>
                                                    <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
                                                          <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                          <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
                                                    </form>
+                                                   <?php endif; ?>
                                                 </td>
                                              </tr>
                                           <?php endforeach ?>
@@ -367,7 +377,7 @@
                                                 <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                                    Released at
                                                 </th>
-                                                <th scope="col" width="200" class="px-6 py-3 bg-gray-100">
+                                                <th scope="col" width="100" class="px-6 py-3 bg-gray-100">
                                                 </th>
                                              </tr>
                                           </thead>
@@ -412,12 +422,14 @@
                                                    <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES): ?>
                                                    <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
                                                          <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                          <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
                                                    </form>
+                                                   <?php endif; ?>
                                                 </td>
                                              </tr>
                                           <?php endforeach ?>
