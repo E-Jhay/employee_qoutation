@@ -1,6 +1,7 @@
 
 <?php
 
+use Core\QoutationStatus;
 use Core\Role;
 
  require base_path('views/partials/head.php') ?>
@@ -93,7 +94,7 @@ use Core\Role;
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?php
                                                       $status_color = 'amber';
-                                                      $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'amber');
+                                                      $qoutation['status'] == QoutationStatus::APPROVED ? $status_color = 'green' : ($qoutation['status'] == QoutationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
                                                    ?>
                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
                                                       <?= $qoutation['status_name'] ?>
@@ -112,7 +113,7 @@ use Core\Role;
                                                    <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === \Core\QoutationStatus::PENDING): ?>
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === QoutationStatus::PENDING): ?>
                                                    <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
@@ -202,7 +203,7 @@ use Core\Role;
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?php
                                                       $status_color = 'amber';
-                                                      $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'amber');
+                                                      $qoutation['status'] == QoutationStatus::APPROVED ? $status_color = 'green' : ($qoutation['status'] == QoutationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
                                                    ?>
                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
                                                       <?= $qoutation['status_name'] ?>
@@ -221,7 +222,7 @@ use Core\Role;
                                                    <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === \Core\QoutationStatus::PENDING): ?>
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === QoutationStatus::PENDING): ?>
                                                    <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
@@ -311,7 +312,7 @@ use Core\Role;
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?php
                                                       $status_color = 'amber';
-                                                      $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'amber');
+                                                      $qoutation['status'] == QoutationStatus::APPROVED ? $status_color = 'green' : ($qoutation['status'] == QoutationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
                                                    ?>
                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
                                                       <?= $qoutation['status_name'] ?>
@@ -330,7 +331,7 @@ use Core\Role;
                                                    <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === \Core\QoutationStatus::PENDING): ?>
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === QoutationStatus::PENDING): ?>
                                                    <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
@@ -403,7 +404,7 @@ use Core\Role;
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?php
                                                       $status_color = 'amber';
-                                                      $qoutation['status'] == 2 ? $status_color = 'green' : ($qoutation['status'] == 3 ? $status_color = 'red' : $status_color = 'amber');
+                                                      $qoutation['status'] == QoutationStatus::APPROVED ? $status_color = 'green' : ($qoutation['status'] == QoutationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
                                                    ?>
                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
                                                       <?= $qoutation['status_name'] ?>
@@ -422,7 +423,7 @@ use Core\Role;
                                                    <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === \Core\QoutationStatus::PENDING): ?>
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === QoutationStatus::PENDING): ?>
                                                    <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
