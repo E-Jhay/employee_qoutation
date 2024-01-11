@@ -56,13 +56,24 @@ $pendingQoutations = $db->query("SELECT COUNT(*) as count FROM qoutation WHERE t
     'status' => QoutationStatus::PENDING,
 ])->find()['count'];
 
+$approvedQoutations = $db->query("SELECT COUNT(*) as count FROM qoutation WHERE team_id = :team_id AND status = :status AND
+MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())",[
+    'team_id' => $currentUserTeamId,
+    'status' => QoutationStatus::APPROVED,
+])->find()['count'];
+
 $agentsCount = $db->query("SELECT COUNT(*) as count FROM user WHERE team_id = :team_id AND role_id = :role_id",[
     'team_id' => $currentUserTeamId,
     'role_id' => Role::SALES,
 ])->find()['count'];
 
+$latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id WHERE team_id = :team_id AND status = :status ORDER BY customer.id DESC LIMIT 5",[
+    'team_id' => $currentUserTeamId,
+    'status' => QoutationStatus::APPROVED,
+])->get();
 
-// dd($pendingQoutations);
+
+// dd($latestCustomers);
 
 $percentageIncrease = calculatePercentageIncrease($salesLastMonth, $salesThisMonth);
 
@@ -73,5 +84,7 @@ view("index.view.php", [
     'percentageIncrease' => number_format($percentageIncrease, 2) . '%',
     'isPositive' => $percentageIncrease >= 0 ? 1 : 0,
     'pendingQoutations' => $pendingQoutations,
+    'approvedQoutations' => $approvedQoutations,
     'agentsCount' => $agentsCount,
+    'latestCustomers' => $latestCustomers,
 ]);
