@@ -1,13 +1,13 @@
 
-<?php require_once('partials/head.php') ?>
+<?php require_once base_path('views/partials/head.php') ?>
       <!-- Navbar -->
-   <?php require_once('partials/nav.php') ?>
+   <?php require_once base_path('views/partials/nav.php') ?>
    <div class="flex overflow-hidden bg-white pt-16">
       <!-- Sidebar -->
-      <?php require_once('partials/sidebar.php') ?>
+      <?php require_once base_path('views/partials/sidebar.php') ?>
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
          <main class="pt-6 px-4 lg:px-8">
-            <?php require_once('partials/banner.php') ?>
+            <?php require_once base_path('views/partials/banner.php') ?>
             <div>
                <!-- <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
                   <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
@@ -165,7 +165,7 @@
                            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"><?= $pendingQoutations ?></span>
                            <h3 class="text-base font-normal text-gray-500">Pending qoutations</h3>
                         </div>
-                        <div class="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold">
+                        <div class="ml-5 w-0 flex items-center justify-end flex-1 text-amber-500 text-base font-bold">
                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z" fill="currentColor"></path></svg>
                         </div>
                      </div>
@@ -318,7 +318,7 @@
                                  <td class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4"><?= $agent['total'] ?></td>
                                  <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                       <span class="mr-2 text-xs font-medium"><?= $agent['percentage'] = number_format($agent['percentage'], 2) ?>%</span>
+                                       <span class="basis-1/2 sm:mr-0 mr-2 text-xs font-medium"><?= $agent['percentage'] = number_format($agent['percentage'], 2) ?>%</span>
                                        <div class="relative w-full">
                                           <div class="w-full bg-gray-200 rounded-sm h-2">
                                              <div class="bg-cyan-600 h-2 rounded-sm" style="width: <?= $agent['percentage'] ?>%"></div>
@@ -407,7 +407,7 @@
                   <div class="flex items-center justify-between mb-4">
                      <div class="flex-shrink-0">
                         <!-- <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$45,385</span> -->
-                        <h3 class="text-base font-normal text-gray-500">Sales this <?= date('Y') ?></h3>
+                        <h3 class="text-xl font-bold leading-none text-gray-900">Sales this <?= date('Y') ?></h3>
                      </div>
                      <!-- <div class="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
                         12.5%
@@ -421,7 +421,7 @@
             </div>
          </main>
 <!-- Footer -->
-<?php require_once('partials/footer.php') ?>
+<?php require_once base_path('views/partials/footer.php') ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
    const ctx = document.getElementById('main-chart')

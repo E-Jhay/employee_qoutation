@@ -3,6 +3,7 @@
 use Core\App;
 use Core\Authenticator;
 use Core\Database;
+use Core\Role;
 use Http\Forms\LoginForm;
 
 $db = App::resolve(Database::class);
@@ -22,4 +23,8 @@ if(!$signedIn) {
     )->throw();
 }
 
-return redirect('/');
+if($_SESSION['user']['role_id'] === Role::SALES_MANAGER) {
+    return redirect('/dashboard');
+} elseif($_SESSION['user']['role_id'] === Role::SALES) {
+    return redirect('/');
+}
