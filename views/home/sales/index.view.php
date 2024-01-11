@@ -85,40 +85,36 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
    const ctx = document.getElementById('main-chart')
-   console.log(<?= $salesThisYear ?>)
-   const salesThisYear = <?= $salesThisYear ?>
-   // Separate total and month_name
-   const totals = salesThisYear.map(item => item.total);
-   const monthNames = salesThisYear.map(item => item.month_name);
-   function getMonthName(monthNumber) {
-      const monthNames = [
-         "January", "February", "March", "April", "May", "June",
-         "July", "August", "September", "October", "November", "December"
-      ];
-
-      // Ensure the monthNumber is within a valid range (1 to 12)
-      const validMonthNumber = Math.min(Math.max(parseInt(monthNumber, 10), 1), 12);
-
-      const monthName = new Date(2022, validMonthNumber - 1, 1).toLocaleString('en-US', { month: 'long' });
-
-      return monthName;
+   let sales = {
+      "January" : 0,
+      "February" : 0,
+      "March" : 0,
+      "April" : 0,
+      "May" : 0,
+      "June" : 0,
+      "July" : 0,
+      "August" : 0,
+      "September" : 0,
+      "October" : 0,
+      "November" : 0,
+      "December" : 0
    }
-   for(let i = monthNames.length + 1; i <= 12; i++) {
-      totals.push(0)
-      monthNames.push(getMonthName(i))
-   }
-   console.log(totals, monthNames)
+   let salesThisYear = <?= $salesThisYear ?>
+
+   salesThisYear.reduce((acc, { total, month_name }) => {
+      sales[month_name] = total
+   }, {})
 
    new Chart(ctx, {
    type: 'line',
    data: {
-      labels: monthNames,
+      labels: Object.keys(sales),
       datasets: [{
          label: 'Monthly Sales',
          backgroundColor: 'rgba(75, 192, 192, 0.2)',
          borderColor: 'rgba(75, 192, 192, 1)',
          borderWidth: 2,
-         data: totals,
+         data: Object.values(sales),
          // borderWidth: 1
       }]
    },
@@ -126,7 +122,7 @@
          scales: {
             x: {
                type: 'category',
-               labels: monthNames,
+               labels: Object.keys(sales),
             },
             y: {
                beginAtZero: true
