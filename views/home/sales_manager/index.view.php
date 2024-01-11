@@ -441,9 +441,15 @@
    }
    let salesThisYear = <?= $salesThisYear ?>
 
-   salesThisYear.reduce((acc, { total, month_name }) => {
-      sales[month_name] = total
-   }, {})
+   // salesThisYear.reduce((acc, { total, month_name }) => {
+   //    sales[month_name] = total
+   // }, {})
+
+   // console.log(salesThisYear)
+   salesThisYear.forEach(sale => {
+      sales[sale.month_name] = sale.total
+   });
+
 
    new Chart(ctx, {
    type: 'line',
