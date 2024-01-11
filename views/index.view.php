@@ -139,7 +139,7 @@
                      </div>
                   </div>
                </div> -->
-               <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+               <div class="my-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                   <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                      <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -318,10 +318,10 @@
                                  <td class="border-t-0 px-4 align-middle text-xs font-medium text-gray-900 whitespace-nowrap p-4"><?= $agent['total'] ?></td>
                                  <td class="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
                                     <div class="flex items-center">
-                                       <span class="mr-2 text-xs font-medium"><?= number_format($agent['percentage'], 2) ?>%</span>
+                                       <span class="mr-2 text-xs font-medium"><?= $agent['percentage'] = number_format($agent['percentage'], 2) ?>%</span>
                                        <div class="relative w-full">
                                           <div class="w-full bg-gray-200 rounded-sm h-2">
-                                             <div class="bg-cyan-600 h-2 rounded-sm" style="width: <?= number_format($agent['percentage'], 2) ?>%"></div>
+                                             <div class="bg-cyan-600 h-2 rounded-sm" style="width: <?= $agent['percentage'] ?>%"></div>
                                           </div>
                                        </div>
                                     </div>
@@ -403,7 +403,75 @@
                      </div>
                   </div>
                </div>
+               <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+                  <div class="flex items-center justify-between mb-4">
+                     <div class="flex-shrink-0">
+                        <!-- <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$45,385</span> -->
+                        <h3 class="text-base font-normal text-gray-500">Sales this <?= date('Y') ?></h3>
+                     </div>
+                     <!-- <div class="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
+                        12.5%
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                           <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                     </div> -->
+                  </div>
+                  <canvas id="main-chart" width="400" height="150"></canvas>
+               </div>
             </div>
          </main>
 <!-- Footer -->
 <?php require_once('partials/footer.php') ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+   const ctx = document.getElementById('main-chart')
+   console.log(<?= $salesThisYear ?>)
+   const salesThisYear = <?= $salesThisYear ?>
+   // Separate total and month_name
+   const totals = salesThisYear.map(item => item.total);
+   const monthNames = salesThisYear.map(item => item.month_name);
+   function getMonthName(monthNumber) {
+      const monthNames = [
+         "January", "February", "March", "April", "May", "June",
+         "July", "August", "September", "October", "November", "December"
+      ];
+
+      // Ensure the monthNumber is within a valid range (1 to 12)
+      const validMonthNumber = Math.min(Math.max(parseInt(monthNumber, 10), 1), 12);
+
+      const monthName = new Date(2022, validMonthNumber - 1, 1).toLocaleString('en-US', { month: 'long' });
+
+      return monthName;
+   }
+   for(let i = monthNames.length + 1; i <= 12; i++) {
+      totals.push(0)
+      monthNames.push(getMonthName(i))
+   }
+   console.log(totals, monthNames)
+
+   new Chart(ctx, {
+   type: 'line',
+   data: {
+      labels: monthNames,
+      datasets: [{
+         label: 'Monthly Sales',
+         backgroundColor: 'rgba(75, 192, 192, 0.2)',
+         borderColor: 'rgba(75, 192, 192, 1)',
+         borderWidth: 2,
+         data: totals,
+         // borderWidth: 1
+      }]
+   },
+   options: {
+         scales: {
+            x: {
+               type: 'category',
+               labels: monthNames,
+            },
+            y: {
+               beginAtZero: true
+            }
+         }
+   }
+   });
+</script>
