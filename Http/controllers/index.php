@@ -72,8 +72,20 @@ $latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address
     'status' => QoutationStatus::APPROVED,
 ])->get();
 
+$totalAmount = $db->query("SELECT SUM(product_qoutation.approved_price) as total FROM qoutation LEFT JOIN product_qoutation ON qoutation.id = product_qoutation.qoutation_id
+                            WHERE qoutation.status = :status AND MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE())", [
+                                'status' =>QoutationStatus::APPROVED
+                            ])->find()['total'];
 
-// dd($latestCustomers);
+$topAgents = $db->query("SELECT customer.name, SUM(product_qoutation.approved_price) as total, (SUM(product_qoutation.approved_price) / :total_amount) * 100 AS percentage FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN product_qoutation ON qoutation.id = product_qoutation.qoutation_id WHERE team_id = :team_id AND status = :status AND
+MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE()) GROUP BY qoutation.created_by ORDER BY total DESC LIMIT 5",[
+    'team_id' => $currentUserTeamId,
+    'status' => QoutationStatus::APPROVED,
+    'total_amount' => $totalAmount,
+])->get();
+
+
+// dd($topAgents);
 
 $percentageIncrease = calculatePercentageIncrease($salesLastMonth, $salesThisMonth);
 
@@ -87,4 +99,5 @@ view("index.view.php", [
     'approvedQoutations' => $approvedQoutations,
     'agentsCount' => $agentsCount,
     'latestCustomers' => $latestCustomers,
+    'topAgents' => $topAgents,
 ]);
