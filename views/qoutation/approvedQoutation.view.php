@@ -1,0 +1,231 @@
+
+<?php
+
+use Core\QoutationStatus;
+use Core\Role;
+
+ require base_path('views/partials/head.php') ?>
+   <div class="flex overflow-hidden bg-white pt-16">
+   <div class="w-full sm:w-3/4 mx-auto p-6 bg-white my-6" id="invoice">
+
+<div class="grid grid-cols-2 items-center">
+   <div>
+      <!--  Company logo  -->
+      <img src="https://pmc.ph/app/static/image/logo.png" alt="company-logo" height="150" width="250">
+   </div>
+
+   <div class="text-right">
+   <p class="font-bold text-gray-800">
+         Quote created by :
+      </p>
+      <p>
+         <?= $qoutation['created_by'] ?>
+      </p>
+      <p class="text-gray-500 text-sm">
+         <?= $qoutation['sales_email'] ?>
+      </p>
+      <p class="text-gray-500 text-sm mt-1">
+         <?= $qoutation['sales_phone'] ?>
+      </p>
+      <!-- <p class="text-gray-500 text-sm mt-1">
+         VAT: 8657671212
+      </p> -->
+   </div>
+</div>
+
+<!-- Client info -->
+<div class="grid grid-cols-2 mt-4">
+   <div>
+      <p class="font-bold text-gray-800">
+         Bill to :
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_name'] ?>
+         <br />
+         <?= $qoutation['customer_address'] ?>
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_position'] ?>
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_email'] ?>
+      </p>
+
+      <p class="font-bold text-gray-800 mt-4">
+         Bill to :
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_name'] ?>
+         <br />
+         <?= $qoutation['customer_address'] ?>
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_position'] ?>
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_email'] ?>
+      </p>
+   </div>
+
+   <div class="text-right">
+      <p class="">
+         Control number:
+         <span class="text-gray-500">
+            <?= $qoutation['control_no'] ?>
+         </span>
+      </p>
+      <p>
+         Qoute created: 
+         <span class="text-gray-500">
+            <?= $qoutation['created_at'] ?>
+         </span>
+         <br />
+         Qoute expires:
+         <span class="text-gray-500">
+            <?= $qoutation['expired_at'] ?? date('Y-m-d') ?>
+         </span>
+      </p>
+   </div>
+</div>
+
+<!-- Invoice Items -->
+<div class="-mx-4 mt-8 flow-root sm:mx-0  overflow-x-auto">
+   <table class="min-w-full">
+      <colgroup>
+         <col class="w-full sm:w-1/5">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+         <col class="sm:w-1/12">
+      </colgroup>
+      <thead class="border-b border-gray-300 text-gray-900">
+         <tr>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Unit</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Price</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Stock available</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Comparative price</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Catalog price</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Proposed price</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Approved price</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Total</th>
+            <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th>
+         </tr>
+      </thead>
+      <tbody>
+         <?php if(count($products) <= 0): ?>
+            <tr class="border-b border-gray-200">
+               <td colspan="11" class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">
+                  No products selected
+               </td>
+            </tr>
+         <?php endif; ?>
+         <?php foreach($products as $product) : ?>
+            <tr class="border-b border-gray-200">
+               <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
+                  <div class="font-medium text-gray-900"><?= $product['description'] ?></div>
+                  <div class="mt-1 truncate text-gray-500"><?= $product['code'] ?></div>
+               </td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">500.0</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">500.0</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
+               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">$5,000.00</td>
+            </tr>
+         <?php endforeach; ?>
+      </tbody>
+      <!-- <tfoot>
+         <tr>
+         <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
+         <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
+         <td class="pl-3 pr-6 pt-6 text-right text-sm text-gray-500 sm:pr-0">$10,500.00</td>
+         </tr>
+         <tr>
+         <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
+         <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
+         <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">$1,050.00</td>
+         </tr>
+         <tr>
+         <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
+         <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
+         <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">- 10%</td>
+         </tr>
+         <tr>
+         <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0">Total</th>
+         <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
+         <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">$11,550.00</td>
+         </tr>
+      </tfoot> -->
+   </table>
+</div>
+
+<!--  Footer  -->
+<!-- <div class="border-t-2 pt-4 text-xs text-gray-500 text-center mt-16">
+Please pay the invoice before the due date. You can pay the invoice by logging in to your account from our client portal.
+</div> -->
+
+<?php if($qoutation['status'] == QoutationStatus::PENDING && $_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
+<div class="flex justify-end gap-2 mt-4">
+   <button type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
+   <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
+   <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+</div>
+<?php endif; ?>
+<?php if(($qoutation['status'] == QoutationStatus::PENDING || $qoutation['status'] == QoutationStatus::DISAPPROVED) && $_SESSION['user']['role_id'] == Role::SALES) : ?>
+<div class="flex justify-end gap-2 mt-4">
+   <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
+   <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+</div>
+<?php endif; ?>
+
+</div>
+</div>
+
+<script>
+   // const updateQoutation = (id) => {
+   //    console.log(id)
+   // }
+
+   async function updateQoutation(id) {
+      const successPanel = document.querySelector('.success-panel')
+      const errorPanel = document.querySelector('.error-panel')
+      const successMessage = document.querySelector('.successMessage')
+      const errorMessage = document.querySelector('.errorMessage')
+      const mode = document.querySelector('.modalText').innerHTML
+      const formData = new FormData()
+      formData.append("id", id)
+      formData.append("mode", mode)
+      try {
+         const response = await fetch("/qoutation/change-status", {
+            method: "POST",
+            body: formData
+         });
+         const data = await response.json()
+         if (data.success) {
+            successPanel.classList.remove('hidden')
+            successMessage.innerText = data.message
+            toggleModal('qoutationModal')
+         } else {
+            errorPanel.classList.remove('hidden')
+            errorMessage.innerText = data.message
+            toggleModal('qoutationModal')
+         }
+         // console.log(data.success);
+      } catch (e) {
+         console.error(e);
+      }
+   }
+</script>

@@ -57,4 +57,7 @@ $router->post('/qoutation/change-status', 'qoutation/changeStatus.php')->only('a
 
 //     '/user/create' => 'user/create.php',
 
+
+$router->get('/approved-qoutation', 'qoutation/approvedQoutation.php');
+
 // dd($router->routes);
