@@ -61,6 +61,48 @@
                               <span class="text-red-500 text-xs"><?= $errors['position'] ?></span>
                            <?php endif; ?>
                         </div>
+                        <div class="md:col-span-3">
+                           <label for="territory">Territory</label>
+                           <input type="text" name="territory" id="territory" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['territory']) ? 'border-red-500' : '' ?>" value="<?= old('territory') ?>" />
+                           <?php if(isset($errors['territory'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['territory'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-3">
+                           <label for="tel_no">Tel / FAX No</label>
+                           <input type="text" name="tel_no" id="tel_no" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['tel_no']) ? 'border-red-500' : '' ?>" value="<?= old('tel_no') ?>" />
+                           <?php if(isset($errors['tel_no'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['tel_no'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-3">
+                           <label for="validity">Validity</label>
+                           <input type="text" name="validity" id="validity" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['validity']) ? 'border-red-500' : '' ?>" value="<?= old('validity') ?>" />
+                           <?php if(isset($errors['validity'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['validity'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-3">
+                           <label for="delivery">Delivery</label>
+                           <input type="text" name="delivery" id="delivery" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['delivery']) ? 'border-red-500' : '' ?>" value="<?= old('delivery') ?>" />
+                           <?php if(isset($errors['delivery'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['delivery'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-6">
+                           <label for="terms">Terms</label>
+                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
+                           <?php if(isset($errors['terms'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['terms'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-3">
+                           <label for="needed_at">Date Needed</label>
+                           <input type="date" name="needed_at" id="needed_at" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['needed_at']) ? 'border-red-500' : '' ?>" value="<?= old('needed_at') ?>" />
+                           <?php if(isset($errors['needed_at'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['needed_at'] ?></span>
+                           <?php endif; ?>
+                        </div>
                         <div class="md:col-span-6 my-4">
                            <hr>
                         </div>

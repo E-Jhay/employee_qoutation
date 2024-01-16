@@ -2,6 +2,7 @@
 
 use Core\App;
 use Core\QoutationStatus;
+use Core\Role;
 
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
@@ -18,17 +19,26 @@ try {
     ]);
     $lastInsertId = $db->connection()->lastInsertId();
 
-    $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms, status, team_id) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms, :status, :team_id)", [
+    if($_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
+        $team_id = $db->query("SELECT id FROM team WHERE manager_id = :id", [
+            'id' => $_SESSION['user']['id']
+        ])->find()['id'];
+    } else {
+        $team_id = $_SESSION['user']['team_id'];
+    }
+
+    $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms, :status, :team_id, :needed_at)", [
         'control_no' => rand(1, 1000),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $lastInsertId,
-        'territory' => 'territory',
-        'tel_no' => '09123456789',
-        'validity' => 'valid',
-        'delivery' => 'delivery',
-        'terms' => 'terms',
+        'territory' => $_POST['territory'],
+        'tel_no' => $_POST['tel_no'],
+        'validity' => $_POST['validity'],
+        'delivery' => $_POST['delivery'],
+        'terms' => $_POST['terms'],
         'status' => QoutationStatus::PENDING,
-        'team_id' => $_SESSION['user']['team_id'],
+        'team_id' => $team_id,
+        'needed_at' => $_POST['needed_at'],
     ]);
     $lastInsertId = $db->connection()->lastInsertId();
     
