@@ -20,67 +20,84 @@ use Core\Role;
             <div class="bg-white rounded shadow-lg p-4 px-2 md:p-8 mb-6">
                <div class="mx-auto p-6 bg-white rounded shadow-sm my-6" id="invoice">
 
-                  <div class="grid grid-cols-2 items-center">
-                     <div>
-                        <!--  Company logo  -->
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="company-logo" height="100" width="100">
-                     </div>
+               <div class="grid grid-cols-2 items-center mb-8">
+                  <div>
+                     <!--  Company logo  -->
+                     <img src="https://pmc.ph/app/static/image/logo.png" alt="company-logo" height="150" width="250">
+                  </div>
+               </div>
 
-                     <div class="text-right">
-                        <p>
+               <div class="flex justify-between gap-4 mt-2">
+                  <div class="">
+                     <p class="font-bold text-gray-800">
+                        Bill to :
+                     </p>
+                     <p class="text-gray-500">
+                        <?= $qoutation['customer_name'] ?>
+                        <br />
+                        <?= $qoutation['customer_address'] ?>
+                        <br />
+                        <?= $qoutation['tel_no'] ?>
+                     </p>
+                  </div>
+
+                  <div class="text-right">
+                     <p class="">
+                        Quote created by:
+                        <span class="text-gray-500">
                            <?= $qoutation['created_by'] ?>
-                        </p>
-                        <p class="text-gray-500 text-sm">
-                           <?= $qoutation['sales_email'] ?>
-                        </p>
-                        <p class="text-gray-500 text-sm mt-1">
-                           <?= $qoutation['sales_phone'] ?>
-                        </p>
-                        <!-- <p class="text-gray-500 text-sm mt-1">
-                           VAT: 8657671212
-                        </p> -->
-                     </div>
+                        </span>
+                     </p>
+                     <p>
+                        <?= $qoutation['created_by'] ?>
+                     </p>
+                     <p class="text-gray-500 text-sm">
+                        <?= $qoutation['sales_email'] ?>
+                     </p>
+                     <p class="text-gray-500 text-sm mt-1">
+                        <?= $qoutation['sales_phone'] ?>
+                     </p>
                   </div>
+               </div>
 
-                  <!-- Client info -->
-                  <div class="grid grid-cols-2 items-center mt-8">
-                     <div>
-                        <p class="font-bold text-gray-800">
-                           Bill to :
-                        </p>
-                        <p class="text-gray-500">
-                           <?= $qoutation['customer_name'] ?>
-                           <br />
-                           <?= $qoutation['customer_address'] ?>
-                        </p>
-                        <p class="text-gray-500">
-                           <?= $qoutation['customer_position'] ?>
-                        </p>
-                        <p class="text-gray-500">
-                           <?= $qoutation['customer_email'] ?>
-                        </p>
-                     </div>
-
-                     <div class="text-right">
-                        <p class="">
-                           Control number:
-                           <span class="text-gray-500">
-                              <?= $qoutation['control_no'] ?>
-                           </span>
-                        </p>
-                        <p>
-                           Qoute created: 
-                           <span class="text-gray-500">
-                              <?= $qoutation['created_at'] ?>
-                           </span>
-                           <br />
-                           Qoute expires:
-                           <span class="text-gray-500">
-                              <?= $qoutation['expired_at'] ?? date('Y-m-d') ?>
-                           </span>
-                        </p>
-                     </div>
+               <div class="flex justify-between gap-4 mt-2">
+                  <div class="">
+                     <p class="font-bold text-gray-800">
+                        <?= $qoutation['customer_contact_person'] ?>
+                     </p>
+                     <p class="text-gray-500">
+                        <?= $qoutation['customer_position'] ?>
+                     </p>
+                     <p class="text-gray-500">
+                        <?= $qoutation['customer_email'] ?>
+                     </p>
                   </div>
+                  <div class="text-right">
+                     <p class="">
+                        Control number:
+                        <span class="text-gray-500">
+                           <?= $qoutation['control_no'] ?>
+                        </span>
+                     </p>
+                     <p>
+                        Qoute created: 
+                        <span class="text-gray-500">
+                           <?= $qoutation['created_at'] ?>
+                        </span>
+                        <br />
+                        Qoute expires:
+                        <span class="text-gray-500">
+                           <?= $qoutation['expired_at'] ?? date('Y-m-d') ?>
+                        </span>
+                     </p>
+                  </div>
+               </div>
+
+               <div class="mx-auto mt-8">
+                  <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                     Products
+                  </h2>
+               </div>
 
                   <!-- Invoice Items -->
                   <div class="-mx-4 mt-8 flow-root sm:mx-0  overflow-x-auto">
@@ -104,7 +121,6 @@ use Core\Role;
                               <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
                               <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
                               <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Unit</th>
-                              <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Price</th>
                               <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Stock available</th>
                               <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Comparative price</th>
                               <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Catalog price</th>
@@ -128,41 +144,40 @@ use Core\Role;
                                     <div class="font-medium text-gray-900"><?= $product['description'] ?></div>
                                     <div class="mt-1 truncate text-gray-500"><?= $product['code'] ?></div>
                                  </td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">500.0</td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">500.0</td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">$5,000.00</td>
+                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['quantity'] ?></td>
+                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['unit'] ?></td>
+                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['stock'] ?></td>
+                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['comparative_price'] ?></td>
+                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['catalog_price'] ?></td>
+                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['proposed_price'] ?></td>
+                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['approved_price'] ?></td>
+                                 <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['total'] ?></td>
+                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td>
                               </tr>
                            <?php endforeach; ?>
                         </tbody>
-                        <!-- <tfoot>
-                           <tr>
-                           <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
+                        <tfoot>
+                           <!-- <tr>
+                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
                            <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
-                           <td class="pl-3 pr-6 pt-6 text-right text-sm text-gray-500 sm:pr-0">$10,500.00</td>
+                           <td class="pl-3 pr-6 pt-6 text-center text-sm text-gray-500 sm:pr-0">$10,500.00</td>
                            </tr>
                            <tr>
-                           <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
+                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
                            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
-                           <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">$1,050.00</td>
+                           <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">$1,050.00</td>
                            </tr>
                            <tr>
-                           <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
+                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
                            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
-                           <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">- 10%</td>
-                           </tr>
+                           <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
+                           </tr> -->
                            <tr>
-                           <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0">Total</th>
+                           <th scope="row" colspan="8" class="hidden pl-4 sm:pr-11 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell">Total</th>
                            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
-                           <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">$11,550.00</td>
+                           <td class="pl-3 pr-4 pt-4 text-center text-sm font-semibold text-gray-900 sm:pr-0"><?= $product['grand_total'] ?></td>
                            </tr>
-                        </tfoot> -->
+                        </tfoot>
                      </table>
                   </div>
 
@@ -184,6 +199,47 @@ use Core\Role;
                      <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                   </div>
                   <?php endif; ?>
+
+                  <div class="my-8">
+                     <div class="my-4">
+                        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           Terms
+                        </h2>
+                        <p class="text-gray-500">
+                           <?= $qoutation['terms'] ?>
+                        </p>
+                     </div>
+                     <div class="my-4">
+                        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           Validity
+                        </h2>
+                        <p class="text-gray-500">
+                           <?= $qoutation['validity'] ?>
+                        </p>
+                     </div>
+                     <div class="my-4">
+                        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           Delivery
+                        </h2>
+                        <p class="text-gray-500">
+                           <?= $qoutation['delivery'] ?>
+                        </p>
+                     </div>
+                     <div class="my-4">
+                        <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           Questions? Contact me
+                        </h2>
+                        <p class="">
+                           <?= $qoutation['created_by'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm">
+                           <?= $qoutation['sales_email'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm mt-1">
+                           <?= $qoutation['sales_phone'] ?>
+                        </p>
+                     </div>
+                  </div>
 
                   </div>
                </div>
