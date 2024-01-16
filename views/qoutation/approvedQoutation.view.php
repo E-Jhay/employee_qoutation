@@ -162,10 +162,9 @@ require base_path('views/partials/head.php') ?>
       </colgroup>
       <thead class="border-b border-gray-300 text-gray-900">
          <tr>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items & Description</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Unit</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Price</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Stock available</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Comparative price</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Catalog price</th>
@@ -189,41 +188,40 @@ require base_path('views/partials/head.php') ?>
                   <div class="font-medium text-gray-900"><?= $product['description'] ?></div>
                   <div class="mt-1 truncate text-gray-500"><?= $product['code'] ?></div>
                </td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">500.0</td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">500.0</td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell">$100.00</td>
-               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">$5,000.00</td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['quantity'] ?></td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['unit'] ?></td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['stock'] ?></td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['comparative_price'] ?></td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['catalog_price'] ?></td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['proposed_price'] ?></td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['approved_price'] ?></td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['total'] ?></td>
+               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td>
             </tr>
          <?php endforeach; ?>
       </tbody>
-      <!-- <tfoot>
-         <tr>
-         <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
-         <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
-         <td class="pl-3 pr-6 pt-6 text-right text-sm text-gray-500 sm:pr-0">$10,500.00</td>
-         </tr>
-         <tr>
-         <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
-         <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
-         <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">$1,050.00</td>
-         </tr>
-         <tr>
-         <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
-         <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
-         <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">- 10%</td>
-         </tr>
-         <tr>
-         <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0">Total</th>
-         <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
-         <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">$11,550.00</td>
-         </tr>
-      </tfoot> -->
+         <tfoot>
+            <!-- <tr>
+            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
+            <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
+            <td class="pl-3 pr-6 pt-6 text-center text-sm text-gray-500 sm:pr-0">$10,500.00</td>
+            </tr>
+            <tr>
+            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
+            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
+            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">$1,050.00</td>
+            </tr>
+            <tr>
+            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
+            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
+            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
+            </tr> -->
+            <tr>
+            <th scope="row" colspan="8" class="hidden pl-4 sm:pr-11 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell">Total</th>
+            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
+            <td class="pl-3 pr-4 pt-4 text-center text-sm font-semibold text-gray-900 sm:pr-0"><?= $product['grand_total'] ?></td>
+            </tr>
+         </tfoot>
    </table>
 </div>
 
