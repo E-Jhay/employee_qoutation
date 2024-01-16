@@ -3,9 +3,41 @@
 use Core\App;
 use Core\QoutationStatus;
 use Core\Role;
+use Http\Forms\QoutationCreateForm;
 
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
+
+// $form = QoutationCreateForm::validate($attributes = [
+//     'name' => $_POST['customer_name'],
+//     'email' => $_POST['email'],
+//     'address' => $_POST['address'],
+//     'contact_person' => $_POST['contact_person'],
+//     'position' => $_POST['position'],
+// ]);
+
+$attributes = [
+    'name' => $_POST['customer_name'],
+    'email' => $_POST['email'],
+    'address' => $_POST['address'],
+    'contact_person' => $_POST['contact_person'],
+    'position' => $_POST['position'],
+    'territory' => $_POST['territory'],
+    'tel_no' => $_POST['tel_no'],
+    'validity' => $_POST['validity'],
+    'delivery' => $_POST['delivery'],
+    'terms' => $_POST['terms'],
+    'needed_at' => $_POST['needed_at'],
+];
+
+$form = QoutationCreateForm::validate($attributes);
+
+if(count($form->errors()) > 0) {
+    $response = array('success' => false, 'message' => 'Please fill out all required fields.');
+    echo json_encode($response);
+    exit;
+}
+
 
 try {
     $db->beginTransaction();

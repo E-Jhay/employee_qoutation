@@ -100,8 +100,9 @@
             function removeMessage() {
                 document.querySelector('.message-alert').remove()
             }
-            function removeResponseMessage() {
-                document.querySelector('.message-alert').classList.add('hidden')
+            function removeResponseMessage(element) {
+                // console.log(element.parentNode)
+                element.parentNode.classList.add('hidden')
             }
         </script>
       <!-- <script async defer src="https://buttons.github.io/buttons.js"></script>

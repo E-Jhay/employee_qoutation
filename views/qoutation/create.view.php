@@ -91,7 +91,7 @@
                         </div>
                         <div class="md:col-span-6">
                            <label for="terms">Terms</label>
-                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
+                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
                            <?php if(isset($errors['terms'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['terms'] ?></span>
                            <?php endif; ?>
@@ -346,6 +346,10 @@
 
    const productForm = document.getElementById('productForm')
    const productFormBtn = document.getElementById('productFormBtn')
+   const successPanel = document.querySelector('.success-panel')
+   const errorPanel = document.querySelector('.error-panel')
+   const successMessage = document.querySelector('.successMessage')
+   const errorMessage = document.querySelector('.errorMessage')
    let productLists = []
 
    productForm.addEventListener('submit', (e) => {
@@ -520,11 +524,8 @@
    })
 
    async function sendData(formData) {
-      const successPanel = document.querySelector('.success-panel')
-      const errorPanel = document.querySelector('.error-panel')
-      const successMessage = document.querySelector('.successMessage')
-      const errorMessage = document.querySelector('.errorMessage')
       try {
+         hideMessage()
          const response = await fetch("/qoutation", {
             method: "POST",
             body: formData,
@@ -533,10 +534,13 @@
          if (data.success) {
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
-            console.log(successPanel)
+            document.getElementById('main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            successPanel.focus()
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
+            document.getElementById('main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            errorPanel.focus()
          }
          resetQoutationForm()
          productLists = []
@@ -545,6 +549,12 @@
       } catch (e) {
          console.error(e);
       }
+   }
+
+   const hideMessage = () => {
+      successPanel.classList.add('hidden')
+      
+      errorPanel.classList.add('hidden')
    }
 
 </script>
