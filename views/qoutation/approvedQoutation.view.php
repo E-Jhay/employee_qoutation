@@ -4,37 +4,13 @@
 use Core\QoutationStatus;
 use Core\Role;
 
- require base_path('views/partials/head.php') ?>
-   <div class="flex overflow-hidden bg-white pt-16">
-   <div class="w-full sm:w-3/4 mx-auto p-6 bg-white my-6" id="invoice">
+require base_path('views/partials/head.php') ?>
+<div class="flex overflow-hidden bg-white pt-16">
+<div class="w-full sm:w-3/4 mx-auto p-6 bg-white my-6" id="invoice">
 
-<div class="grid grid-cols-2 items-center">
-   <div>
-      <!--  Company logo  -->
-      <img src="https://pmc.ph/app/static/image/logo.png" alt="company-logo" height="150" width="250">
-   </div>
-
-   <div class="text-right">
-   <p class="font-bold text-gray-800">
-         Quote created by :
-      </p>
-      <p>
-         <?= $qoutation['created_by'] ?>
-      </p>
-      <p class="text-gray-500 text-sm">
-         <?= $qoutation['sales_email'] ?>
-      </p>
-      <p class="text-gray-500 text-sm mt-1">
-         <?= $qoutation['sales_phone'] ?>
-      </p>
-      <!-- <p class="text-gray-500 text-sm mt-1">
-         VAT: 8657671212
-      </p> -->
-   </div>
-</div>
 
 <!-- Client info -->
-<div class="grid grid-cols-2 mt-4">
+<!-- <div class="grid grid-cols-2 mt-4">
    <div>
       <p class="font-bold text-gray-800">
          Bill to :
@@ -86,10 +62,89 @@ use Core\Role;
          </span>
       </p>
    </div>
+</div> -->
+
+<div class="grid grid-cols-2 items-center mb-8">
+   <div>
+      <!--  Company logo  -->
+      <img src="https://pmc.ph/app/static/image/logo.png" alt="company-logo" height="150" width="250">
+   </div>
+</div>
+
+<div class="flex justify-between gap-4 mt-2">
+   <div class="">
+      <p class="font-bold text-gray-800">
+         Bill to :
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_name'] ?>
+         <br />
+         <?= $qoutation['customer_address'] ?>
+         <br />
+         <?= $qoutation['tel_no'] ?>
+      </p>
+   </div>
+
+   <div class="text-right">
+      <p class="">
+         Quote created by:
+         <span class="text-gray-500">
+            <?= $qoutation['created_by'] ?>
+         </span>
+      </p>
+      <p>
+         <?= $qoutation['created_by'] ?>
+      </p>
+      <p class="text-gray-500 text-sm">
+         <?= $qoutation['sales_email'] ?>
+      </p>
+      <p class="text-gray-500 text-sm mt-1">
+         <?= $qoutation['sales_phone'] ?>
+      </p>
+   </div>
+</div>
+
+<div class="flex justify-between gap-4 mt-2">
+   <div class="">
+      <p class="font-bold text-gray-800">
+         <?= $qoutation['customer_contact_person'] ?>
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_position'] ?>
+      </p>
+      <p class="text-gray-500">
+         <?= $qoutation['customer_email'] ?>
+      </p>
+   </div>
+   <div class="text-right">
+      <p class="">
+         Control number:
+         <span class="text-gray-500">
+            <?= $qoutation['control_no'] ?>
+         </span>
+      </p>
+      <p>
+         Qoute created: 
+         <span class="text-gray-500">
+            <?= $qoutation['created_at'] ?>
+         </span>
+         <br />
+         Qoute expires:
+         <span class="text-gray-500">
+            <?= $qoutation['expired_at'] ?? date('Y-m-d') ?>
+         </span>
+      </p>
+   </div>
+</div>
+
+<div class="mx-auto mt-8">
+   <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+      Products
+   </h2>
 </div>
 
 <!-- Invoice Items -->
-<div class="-mx-4 mt-8 flow-root sm:mx-0  overflow-x-auto">
+<div class="-mx-4 flow-root sm:mx-0  overflow-x-auto">
    <table class="min-w-full">
       <colgroup>
          <col class="w-full sm:w-1/5">
@@ -107,7 +162,7 @@ use Core\Role;
       </colgroup>
       <thead class="border-b border-gray-300 text-gray-900">
          <tr>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items & Description</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Unit</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Price</th>
@@ -190,6 +245,47 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
    <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
 </div>
 <?php endif; ?>
+
+<div class="my-8">
+   <div class="my-4">
+      <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+         Terms
+      </h2>
+      <p class="text-gray-500">
+         <?= $qoutation['terms'] ?>
+      </p>
+   </div>
+   <div class="my-4">
+      <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+         Validity
+      </h2>
+      <p class="text-gray-500">
+         <?= $qoutation['validity'] ?>
+      </p>
+   </div>
+   <div class="my-4">
+      <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+         Delivery
+      </h2>
+      <p class="text-gray-500">
+         <?= $qoutation['delivery'] ?>
+      </p>
+   </div>
+   <div class="my-4">
+      <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+         Questions? Contact me
+      </h2>
+      <p class="">
+         <?= $qoutation['created_by'] ?>
+      </p>
+      <p class="text-gray-500 text-sm">
+         <?= $qoutation['sales_email'] ?>
+      </p>
+      <p class="text-gray-500 text-sm mt-1">
+         <?= $qoutation['sales_phone'] ?>
+      </p>
+   </div>
+</div>
 
 </div>
 </div>
