@@ -12,6 +12,9 @@ $qoutation = $db->query("SELECT qoutation.*, customer.name as customer_name, cus
 $products = $db->query("SELECT *, SUM(total) as grand_total FROM product_qoutation WHERE qoutation_id = :id", [
     'id' => $_GET['id']
 ])->get();
+$grand_total = $db->query("SELECT SUM(total) as grand_total FROM product_qoutation WHERE qoutation_id = :id", [
+    'id' => $_GET['id']
+])->find()['grand_total'];
 // dd("approved-qoutation");
 // dd("create Qoutation");
 // $managers = $db->query("SELECT id, name FROM user WHERE role_id = :role_id", [
@@ -23,4 +26,5 @@ view("qoutation/approvedQoutation.view.php", [
     'heading' => "Qoutation Information",
     'qoutation' => $qoutation,
     'products' => $products,
+    'grand_total' => $grand_total,
 ]);
