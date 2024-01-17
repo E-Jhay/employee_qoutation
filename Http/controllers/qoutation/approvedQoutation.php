@@ -9,7 +9,7 @@ $qoutation = $db->query("SELECT qoutation.*, customer.name as customer_name, cus
     'id' => $_GET['id']
 ])->find();
 
-$products = $db->query("SELECT * as grand_total FROM product_qoutation WHERE qoutation_id = :id", [
+$products = $db->query("SELECT * FROM product_qoutation WHERE qoutation_id = :id", [
     'id' => $_GET['id']
 ])->get();
 $grand_total = $db->query("SELECT SUM(total) as grand_total FROM product_qoutation WHERE qoutation_id = :id", [
