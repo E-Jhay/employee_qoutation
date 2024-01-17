@@ -58,3 +58,18 @@ function old($key, $default = '')
 {
     return Session::get('old')[$key] ?? $default;
 }
+
+
+// Function to read HTML content from a file and replace placeholders with data
+function getHtmlContent($filePath, $data)
+{
+    $htmlContent = file_get_contents($filePath);
+
+    // Replace placeholders with data
+    foreach ($data as $key => $value) {
+        $placeholder = '{{' . strtoupper($key) . '}}';
+        $htmlContent = str_replace($placeholder, $value, $htmlContent);
+    }
+
+    return $htmlContent;
+}

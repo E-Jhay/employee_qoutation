@@ -1,6 +1,7 @@
 <?php
 
 use Core\App;
+use Core\Mailer;
 use Core\QoutationStatus;
 use Core\Role;
 use Http\Forms\QoutationCreateForm;
@@ -49,7 +50,7 @@ try {
         'contact_person' => $_POST['contact_person'],
         'position' => $_POST['position'],
     ]);
-    $lastInsertId = $db->connection()->lastInsertId();
+    $customerInsertedId = $db->connection()->lastInsertId();
 
     if($_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
         $team_id = $db->query("SELECT id FROM team WHERE manager_id = :id", [
@@ -62,7 +63,7 @@ try {
     $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms, :status, :team_id, :needed_at)", [
         'control_no' => rand(1, 1000),
         'created_by' => $_SESSION['user']['id'],
-        'customer_id' => $lastInsertId,
+        'customer_id' => $customerInsertedId,
         'territory' => $_POST['territory'],
         'tel_no' => $_POST['tel_no'],
         'validity' => $_POST['validity'],
@@ -72,13 +73,13 @@ try {
         'team_id' => $team_id,
         'needed_at' => $_POST['needed_at'],
     ]);
-    $lastInsertId = $db->connection()->lastInsertId();
+    $qoutationInsertId = $db->connection()->lastInsertId();
     
     $products = json_decode($_POST['products'], true);
 
     foreach($products as $product) {
         $db->query("INSERT INTO product_qoutation (qoutation_id, unit, code, description, quantity, stock, comparative_price, catalog_price, proposed_price, approved_price, total, deal_equivalent) VALUES(:qoutation_id, :unit, :code, :description, :quantity, :stock, :comparative_price, :catalog_price, :proposed_price, :approved_price, :total, :deal_equivalent)", [
-            'qoutation_id' => $lastInsertId,
+            'qoutation_id' => $qoutationInsertId,
             'unit' => $product['product_unit'],
             'code' => $product['product_code'],
             'description' => $product['product_description'],
@@ -92,8 +93,22 @@ try {
             'deal_equivalent' => $product['deal_equivalent'],
         ]);
     }
+    
+    $config = require base_path("config.php");
+    $mailer = new Mailer($config['mail']);
+    $to = ['bumacodejhay@gmail.com'];
+
+    // Read HTML content from a file and replace placeholders with data
+    $htmlContent = getHtmlContent('../views/mail/storeQoutation.html', [
+        'created_by' => $_SESSION['user']['name'],
+        'id' => $qoutationInsertId
+    ]);
+    // $mail->Body = $htmlContent;
+
+    $mailer->sendMail($to, 'PMC Qoutation', $htmlContent);
 
     $db->commit();
+
     $response = array('success' => true, 'message' => 'Qoutation added');
     echo json_encode($response);
 } catch(Exception $e) {

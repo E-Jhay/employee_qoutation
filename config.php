@@ -8,11 +8,11 @@ return [
         'charset' => 'utf8mb4',
     ],
     'mail' => [
-        'host' => "sandbox.smtp.mailtrap.io",
-        'username' => "7f295ca4668438",
-        'password' => "a18e868de21767",
-        'port' => 2525,
-        'from' => 'bumacodejhay@gmail.com',
-        'fromName' => 'E-Jhay Bumacod',
+        'host' => "smtp.pmc.ph",
+        'username' => "no-reply@pmc.ph",
+        'password' => "Unimex123!",
+        'port' => 587,
+        'from' => 'no-reply@pmc.ph',
+        'fromName' => 'PMC',
     ]
 ];
