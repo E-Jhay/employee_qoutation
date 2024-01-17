@@ -24,7 +24,7 @@ $heading = "Dashboard";
 
 $currentUserTeamId = $db->query("SELECT id FROM team WHERE manager_id = :manager_id", [
     'manager_id' => $_SESSION['user']['id']
-])->find()['id'];
+])->find()['id'] ?? '';
 
 $salesThisMonth = $db->query("SELECT SUM(approved_price) as total FROM product_qoutation LEFT JOIN qoutation ON 
 product_qoutation.qoutation_id = qoutation.id WHERE qoutation.team_id = :team_id AND qoutation.status = :status AND
