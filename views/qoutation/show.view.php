@@ -187,9 +187,9 @@ use Core\Role;
                   </div> -->
 
                   <?php if($qoutation['status'] == QoutationStatus::PENDING && $_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
-                  <div class="flex justify-end gap-2 mt-4">
-                     <button type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
-                     <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
+                  <div class="actionBtnDiv flex justify-end gap-2 mt-4">
+                     <button type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="actionBtn bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
+                     <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="actionBtn bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
                      <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                   </div>
                   <?php endif; ?>
@@ -288,7 +288,7 @@ use Core\Role;
                               </div>
                            </div>
                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                              <button onclick="updateQoutation(<?= $_GET['id'] ?>)" type="button" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"><span class="modalText"></span></button>
+                              <button id="actionBtn" onclick="updateQoutation(<?= $_GET['id'] ?>)" type="button" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"><span class="modalText"></span></button>
                               <button type="button" onclick="toggleModal('qoutationModal')" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                            </div>
                      </div>
@@ -310,6 +310,14 @@ use Core\Role;
       const errorMessage = document.querySelector('.errorMessage')
       const mode = document.querySelector('.modalText').innerHTML
       const formData = new FormData()
+      const actionBtn = document.getElementById('actionBtn')
+      
+      actionBtn.innerText = 'Loading...'
+      actionBtn.className = 'actionBtn bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50'
+      // actionButtons.forEach(button => {
+      //    button.className = 'actionBtn w-32 bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50'
+      // })
+
       formData.append("id", id)
       formData.append("mode", mode)
       try {
@@ -322,6 +330,7 @@ use Core\Role;
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
             toggleModal('qoutationModal')
+            document.querySelector('.actionBtnDiv').classList.add('hidden')
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
