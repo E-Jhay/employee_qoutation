@@ -184,7 +184,7 @@
                   
                         <div class="mt-4 md:col-span-6 text-left">
                            <div class="inline-flex items-end">
-                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">Submit</button>
+                              <button id="submitButton" type="submit" class="w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white">Submit</button>
                            </div>
                         </div>
 
@@ -524,8 +524,13 @@
    })
 
    async function sendData(formData) {
+      const submitButton = document.getElementById('submitButton')
       try {
          hideMessage()
+         submitButton.className = '';
+         submitButton.className = 'w-32 bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50';
+         submitButton.disabled = true;
+         submitButton.innerText = "Loading...";
          const response = await fetch("/qoutation", {
             method: "POST",
             body: formData,
@@ -536,11 +541,19 @@
             successMessage.innerText = data.message
             document.getElementById('main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
             successPanel.focus()
+            submitButton.className = '';
+            submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
+            submitButton.disabled = false;
+            submitButton.innerText = "Submit";
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
             document.getElementById('main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
             errorPanel.focus()
+            submitButton.className = '';
+            submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
+            submitButton.disabled = false;
+            submitButton.innerText = "Submit";
          }
          resetQoutationForm()
          productLists = []
