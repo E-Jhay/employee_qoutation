@@ -30,7 +30,7 @@ if($_SESSION['user']['role_id'] == Role::SALES) {
 } elseif($_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
     $currentUserTeamId = $db->query("SELECT id FROM team WHERE manager_id = :manager_id", [
         'manager_id' => $_SESSION['user']['id']
-    ])->find()['id'];
+    ])->find()['id'] ?? '';
     // dd($currentUserTeamId);
 
     $allQoutations = $db->query("SELECT qoutation.*, customer.name as customer_name, user.name as created_by_name, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id WHERE qoutation.team_id = :team_id ORDER BY id desc", [
