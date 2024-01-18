@@ -59,5 +59,6 @@ $router->post('/qoutation/change-status', 'qoutation/changeStatus.php')->only('a
 
 
 $router->get('/approved-qoutation', 'qoutation/approvedQoutation.php');
+$router->post('/generate-pdf', 'qoutation/generatePdf.php');
 
 // dd($router->routes);

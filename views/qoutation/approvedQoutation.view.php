@@ -285,6 +285,14 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
    </div>
 </div>
 
+
+<div class="flex justify-end gap-2 mt-4">
+   <button type="button" onclick="generatePdf('print')" title="Print" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Print</button>
+   <button type="button" onclick="generatePdf('download')" title="Download" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Download</button>
+   <!-- <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button> -->
+   <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+</div>
+
 </div>
 </div>
 
@@ -292,6 +300,70 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
    // const updateQoutation = (id) => {
    //    console.log(id)
    // }
+
+   async function generatePdf(action) {
+      window.print();
+      // const successPanel = document.querySelector('.success-panel')
+      // const errorPanel = document.querySelector('.error-panel')
+      // const successMessage = document.querySelector('.successMessage')
+      // const errorMessage = document.querySelector('.errorMessage')
+      // const mode = document.querySelector('.modalText').innerHTML
+      const htmlContent = document.getElementById('invoice').innerHTML
+      // const formData = new FormData()
+      // formData.append("action", action)
+      // formData.append("file", "approvedQoutation.php")
+      // try {
+      //    const response = await fetch("/qoutation/generate-pdf", {
+      //       method: "POST",
+      //       body: formData
+      //    });
+      //    const data = await response.json()
+      //    if (data.success) {
+      //       successPanel.classList.remove('hidden')
+      //       successMessage.innerText = data.message
+      //       toggleModal('qoutationModal')
+      //    } else {
+      //       errorPanel.classList.remove('hidden')
+      //       errorMessage.innerText = data.message
+      //       toggleModal('qoutationModal')
+      //    }
+      //    // console.log(data.success);
+      // } catch (e) {
+      //    console.error(e);
+      // }
+      console.log(action)
+
+      try {
+         // Fetch the PDF content from the server
+         const response = await fetch('/generate-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'htmlContent=' + encodeURIComponent(htmlContent),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = blobUrl;
+        document.body.appendChild(iframe);
+
+        iframe.contentWindow.print();
+
+        // Cleanup
+        document.body.removeChild(iframe);
+        window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+   }
 
    async function updateQoutation(id) {
       const successPanel = document.querySelector('.success-panel')
