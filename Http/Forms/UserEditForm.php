@@ -35,13 +35,13 @@ class UserEditForm {
             $this->errors['role_id'] = "Please provide a valid role.";
         }
 
-        if(! Validator::passwordConfirmed($attributes['password'], $attributes['re-type-password'])) {
-            $this->errors['password'] = "Password doesn't match.";
-        }
+        // if(! Validator::passwordConfirmed($attributes['password'], $attributes['re-type-password'])) {
+        //     $this->errors['password'] = "Password doesn't match.";
+        // }
 
-        if(! Validator::password($attributes['password'])) {
-            $this->errors['password'] = "Password Must Contain At Least 8 Characters.";
-        }
+        // if(! Validator::password($attributes['password'])) {
+        //     $this->errors['password'] = "Password Must Contain At Least 8 Characters.";
+        // }
 
     }
 
