@@ -27,7 +27,7 @@ if(! empty($form->errors())) {
 
 $user = $db->query("UPDATE user SET name = :name, email = :email, address = :address, phone = :phone, role_id = :role_id, updated_at = :updated_at WHERE id = :id", [
     'id' => $_POST['id'],
-    'name' => $_POST['full_name'],
+    'name' => $_POST['name'],
     'email' => $_POST['email'],
     'address' => $_POST['address'],
     'phone' => $_POST['phone'],
@@ -37,7 +37,7 @@ $user = $db->query("UPDATE user SET name = :name, email = :email, address = :add
 ]);
 
 if($user) {
-    Session::flash('success', "User '{$_POST["full_name"]}' Updated.");
+    Session::flash('success', "User '{$_POST["name"]}' Updated.");
 }
 
 redirect('/users');
