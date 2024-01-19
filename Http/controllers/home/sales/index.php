@@ -9,7 +9,7 @@ $db = App::resolve(Database::class);
 
 authorize($_SESSION['user']['role_id'] === Role::SALES);
 
-$heading = "Dashboard";
+$heading = "Sales Dashboard";
 
 $currentUserId = $_SESSION['user']['id'];
 

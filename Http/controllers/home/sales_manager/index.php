@@ -9,7 +9,7 @@ $db = App::resolve(Database::class);
 
 authorize($_SESSION['user']['role_id'] === Role::SALES_MANAGER);
 
-$heading = "Dashboard";
+$heading = "Sales Manager Dashboard";
 
 // -- Total for This Month
 ;
