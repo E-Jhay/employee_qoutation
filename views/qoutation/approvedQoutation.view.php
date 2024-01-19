@@ -5,8 +5,8 @@ use Core\QoutationStatus;
 use Core\Role;
 
 require base_path('views/partials/head.php') ?>
-<div class="flex overflow-hidden bg-white pt-16">
-<div class="w-full sm:w-3/4 mx-auto p-6 bg-white" id="invoice">
+<div class="flex overflow-hidden bg-white pt-4">
+<div class="w-full sm:w-3/5 mx-auto p-6 bg-white" id="invoice">
 
 
 <!-- Client info -->
@@ -67,7 +67,7 @@ require base_path('views/partials/head.php') ?>
 <div class="grid grid-cols-2 items-center mb-8">
    <div>
       <!--  Company logo  -->
-      <img src="https://pmc.ph/app/static/image/logo.png" alt="company-logo" height="150" width="250">
+      <img src="../images/logo.png" alt="company-logo" height="150" width="250">
    </div>
 </div>
 
@@ -287,76 +287,106 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
 
 </div>
 </div>
-
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 <script>
    // const updateQoutation = (id) => {
    //    console.log(id)
    // }
 
    async function generatePdf(action) {
-      document.getElementById('actionButtons').classList.add('hidden')
-      window.print();
-      document.getElementById('actionButtons').classList.remove('hidden')
-      // const successPanel = document.querySelector('.success-panel')
-      // const errorPanel = document.querySelector('.error-panel')
-      // const successMessage = document.querySelector('.successMessage')
-      // const errorMessage = document.querySelector('.errorMessage')
-      // const mode = document.querySelector('.modalText').innerHTML
-   //    const htmlContent = document.getElementById('invoice').innerHTML
-   //    // const formData = new FormData()
-   //    // formData.append("action", action)
-   //    // formData.append("file", "approvedQoutation.php")
-   //    // try {
-   //    //    const response = await fetch("/qoutation/generate-pdf", {
-   //    //       method: "POST",
-   //    //       body: formData
-   //    //    });
-   //    //    const data = await response.json()
-   //    //    if (data.success) {
-   //    //       successPanel.classList.remove('hidden')
-   //    //       successMessage.innerText = data.message
-   //    //       toggleModal('qoutationModal')
-   //    //    } else {
-   //    //       errorPanel.classList.remove('hidden')
-   //    //       errorMessage.innerText = data.message
-   //    //       toggleModal('qoutationModal')
-   //    //    }
-   //    //    // console.log(data.success);
-   //    // } catch (e) {
-   //    //    console.error(e);
-   //    // }
-   //    console.log(action)
 
-   //    try {
-   //       // Fetch the PDF content from the server
-   //       const response = await fetch('/generate-pdf', {
-   //          method: 'POST',
-   //          headers: {
-   //              'Content-Type': 'application/x-www-form-urlencoded',
-   //          },
-   //          body: 'htmlContent=' + encodeURIComponent(htmlContent),
-   //      });
+      document.getElementById('actionButtons').style.display = 'none'
+      document.getElementById('invoice').className = 'w-full mx-auto p-6 bg-white'
+      if(action === 'print') {
+         window.print();
+      } else {
 
-   //      if (!response.ok) {
-   //          throw new Error(`HTTP error! Status: ${response.status}`);
-   //      }
+         // Get the element to hide in the PDF
+         const elementToHideInPDF = document.getElementById('actionButtons');
 
-   //      const blob = await response.blob();
-   //      const blobUrl = window.URL.createObjectURL(blob);
+         // Clone the body content
+         const clonedBody = document.body.cloneNode(true);
 
-   //      const iframe = document.createElement('iframe');
-   //      iframe.style.display = 'none';
-   //      iframe.src = blobUrl;
-   //      document.body.appendChild(iframe);
+         // Apply a style to hide the element in the cloned body
+         const elementToHideInPDFClone = clonedBody.querySelector('#actionButtons');
+         elementToHideInPDFClone.style.display = 'none';
+         
+         clonedBody.querySelector('#invoice').className = 'w-full mx-auto p-6 bg-white'
 
-   //      iframe.contentWindow.print();
+         // Create a configuration object for html2pdf
+   //  const options = {
+   //      filename: 'downloaded_document.pdf',
+   //      image: { type: 'jpeg', quality: 0.98 },
+   //      html2canvas: { scale: 2 },
+   //      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+   //  };
 
-   //      // Cleanup
-   //      document.body.removeChild(iframe);
-   //      window.URL.revokeObjectURL(blobUrl);
-   //  } catch (error) {
-   //      console.error('Error:', error);
-   //  }
+    // All images are loaded, proceed to generate the PDF
+   const options = {
+      filename: 'pmc-qoutation.pdf',
+      margin: 8,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+   };
+
+   // Convert the entire body to a PDF with custom options
+   // html2pdf(document.body, options);
+
+    // Convert the cloned body to a PDF with custom options
+    html2pdf(clonedBody, options);
+         
+      // // Clone the body content
+      // const clonedBody = document.body.cloneNode(true);
+      // // Apply a style to hide the element in the cloned body
+      // clonedBody.document.getElementById('actionButtons').style.display = 'none'
+      //    // // Convert the entire body to a PDF
+      //    // const images = document.querySelectorAll('img');
+      //    // const promises = [];
+
+      //    // images.forEach(img => {
+      //    //    const promise = new Promise((resolve, reject) => {
+      //    //          if (img.complete) {
+      //    //             resolve();
+      //    //          } else {
+      //    //             img.onload = resolve;
+      //    //             img.onerror = reject;
+      //    //          }
+      //    //    });
+
+      //    //    promises.push(promise);
+      //    // });
+      //    // Promise.all(promises)
+      //    //    .then(() => {
+      //    //          // All images are loaded, proceed to generate the PDF
+      //    //          const options = {
+      //    //             filename: 'pmc-qoutation.pdf',
+      //    //             margin: 2,
+      //    //             image: { type: 'jpeg', quality: 0.98 },
+      //    //             html2canvas: { scale: 2 },
+      //    //             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      //    //          };
+
+      //    //          // Convert the entire body to a PDF with custom options
+      //    //          html2pdf(document.body, options);
+      //    // })
+      //    // .catch(error => console.error('Error loading images:', error));
+         
+      //             // All images are loaded, proceed to generate the PDF
+      //             const options = {
+      //                filename: 'pmc-qoutation.pdf',
+      //                margin: 2,
+      //                image: { type: 'jpeg', quality: 0.98 },
+      //                html2canvas: { scale: 2 },
+      //                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      //             };
+
+      //             // Convert the entire body to a PDF with custom options
+      //             html2pdf(clonedBody, options);
+      }
+      document.getElementById('actionButtons').style.display = ''
+      document.getElementById('invoice').className = 'w-full sm:w-2/3 mx-auto p-6 bg-white'
+      
    }
 
    async function updateQoutation(id) {
