@@ -17,6 +17,7 @@ $router->delete('/session', 'session/destroy.php')->only('auth');
 
 $router->get('/dashboard', 'home/sales_manager/index.php')->only('auth');
 $router->get('/', 'home/sales/index.php')->only('auth');
+$router->get('/admin', 'home/admin/index.php')->only('auth');
 
 // User route
 $router->get('/users', 'user/index.php')->only('auth');
