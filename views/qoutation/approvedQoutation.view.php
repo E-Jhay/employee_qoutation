@@ -6,7 +6,7 @@ use Core\Role;
 
 require base_path('views/partials/head.php') ?>
 <div class="flex overflow-hidden bg-white pt-16">
-<div class="w-full sm:w-3/4 mx-auto p-6 bg-white my-6" id="invoice">
+<div class="w-full sm:w-3/4 mx-auto p-6 bg-white" id="invoice">
 
 
 <!-- Client info -->
@@ -147,31 +147,23 @@ require base_path('views/partials/head.php') ?>
 <div class="-mx-4 flow-root sm:mx-0  overflow-x-auto">
    <table class="min-w-full">
       <colgroup>
-         <col class="w-full sm:w-1/5">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
-         <col class="sm:w-1/12">
+         <col class="w-full sm:w-1/2">
+         <col class="sm:w-1/4">
+         <col class="sm:w-1/4">
+         <col class="sm:w-1/4">
       </colgroup>
       <thead class="border-b border-gray-300 text-gray-900">
          <tr>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Unit</th>
+            <!-- <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Unit</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Stock available</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Comparative price</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Catalog price</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Proposed price</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Proposed price</th> -->
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Approved price</th>
             <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Total</th>
-            <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th>
+            <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
          </tr>
       </thead>
       <tbody>
@@ -189,14 +181,14 @@ require base_path('views/partials/head.php') ?>
                   <div class="mt-1 truncate text-gray-500"><?= $product['code'] ?></div>
                </td>
                <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['quantity'] ?></td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['unit'] ?></td>
+               <!-- <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['unit'] ?></td>
                <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['stock'] ?></td>
                <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['comparative_price'] ?></td>
                <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['catalog_price'] ?></td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['proposed_price'] ?></td>
+               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['proposed_price'] ?></td> -->
                <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['approved_price'] ?></td>
                <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['total'] ?></td>
-               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td>
+               <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
             </tr>
          <?php endforeach; ?>
       </tbody>
@@ -217,7 +209,7 @@ require base_path('views/partials/head.php') ?>
             <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
             </tr> -->
             <tr>
-            <th scope="row" colspan="8" class="hidden pl-4 sm:pr-11 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell">Total</th>
+            <th scope="row" colspan="3" class="hidden pl-4 sm:pr-11 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell">Total</th>
             <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
             <td class="pl-3 pr-4 pt-4 text-center text-sm font-semibold text-gray-900 sm:pr-0"><?= $grand_total ?></td>
             </tr>
@@ -286,7 +278,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
 </div>
 
 
-<div class="flex justify-end gap-2 mt-4">
+<div id="actionButtons" class="flex justify-end gap-2 mt-4">
    <button type="button" onclick="generatePdf('print')" title="Print" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Print</button>
    <button type="button" onclick="generatePdf('download')" title="Download" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Download</button>
    <!-- <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button> -->
@@ -302,67 +294,69 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
    // }
 
    async function generatePdf(action) {
+      document.getElementById('actionButtons').classList.add('hidden')
       window.print();
+      document.getElementById('actionButtons').classList.remove('hidden')
       // const successPanel = document.querySelector('.success-panel')
       // const errorPanel = document.querySelector('.error-panel')
       // const successMessage = document.querySelector('.successMessage')
       // const errorMessage = document.querySelector('.errorMessage')
       // const mode = document.querySelector('.modalText').innerHTML
-      const htmlContent = document.getElementById('invoice').innerHTML
-      // const formData = new FormData()
-      // formData.append("action", action)
-      // formData.append("file", "approvedQoutation.php")
-      // try {
-      //    const response = await fetch("/qoutation/generate-pdf", {
-      //       method: "POST",
-      //       body: formData
-      //    });
-      //    const data = await response.json()
-      //    if (data.success) {
-      //       successPanel.classList.remove('hidden')
-      //       successMessage.innerText = data.message
-      //       toggleModal('qoutationModal')
-      //    } else {
-      //       errorPanel.classList.remove('hidden')
-      //       errorMessage.innerText = data.message
-      //       toggleModal('qoutationModal')
-      //    }
-      //    // console.log(data.success);
-      // } catch (e) {
-      //    console.error(e);
-      // }
-      console.log(action)
+   //    const htmlContent = document.getElementById('invoice').innerHTML
+   //    // const formData = new FormData()
+   //    // formData.append("action", action)
+   //    // formData.append("file", "approvedQoutation.php")
+   //    // try {
+   //    //    const response = await fetch("/qoutation/generate-pdf", {
+   //    //       method: "POST",
+   //    //       body: formData
+   //    //    });
+   //    //    const data = await response.json()
+   //    //    if (data.success) {
+   //    //       successPanel.classList.remove('hidden')
+   //    //       successMessage.innerText = data.message
+   //    //       toggleModal('qoutationModal')
+   //    //    } else {
+   //    //       errorPanel.classList.remove('hidden')
+   //    //       errorMessage.innerText = data.message
+   //    //       toggleModal('qoutationModal')
+   //    //    }
+   //    //    // console.log(data.success);
+   //    // } catch (e) {
+   //    //    console.error(e);
+   //    // }
+   //    console.log(action)
 
-      try {
-         // Fetch the PDF content from the server
-         const response = await fetch('/generate-pdf', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'htmlContent=' + encodeURIComponent(htmlContent),
-        });
+   //    try {
+   //       // Fetch the PDF content from the server
+   //       const response = await fetch('/generate-pdf', {
+   //          method: 'POST',
+   //          headers: {
+   //              'Content-Type': 'application/x-www-form-urlencoded',
+   //          },
+   //          body: 'htmlContent=' + encodeURIComponent(htmlContent),
+   //      });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+   //      if (!response.ok) {
+   //          throw new Error(`HTTP error! Status: ${response.status}`);
+   //      }
 
-        const blob = await response.blob();
-        const blobUrl = window.URL.createObjectURL(blob);
+   //      const blob = await response.blob();
+   //      const blobUrl = window.URL.createObjectURL(blob);
 
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = blobUrl;
-        document.body.appendChild(iframe);
+   //      const iframe = document.createElement('iframe');
+   //      iframe.style.display = 'none';
+   //      iframe.src = blobUrl;
+   //      document.body.appendChild(iframe);
 
-        iframe.contentWindow.print();
+   //      iframe.contentWindow.print();
 
-        // Cleanup
-        document.body.removeChild(iframe);
-        window.URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-        console.error('Error:', error);
-    }
+   //      // Cleanup
+   //      document.body.removeChild(iframe);
+   //      window.URL.revokeObjectURL(blobUrl);
+   //  } catch (error) {
+   //      console.error('Error:', error);
+   //  }
    }
 
    async function updateQoutation(id) {
