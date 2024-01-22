@@ -257,15 +257,15 @@
                                     <?php endif; ?>
                                  </div>
                                  
-                                 <div class="col-span-3 md:col-span-2">
+                                 <!-- <div class="col-span-3 md:col-span-2">
                                     <label for="stock">Stock available</label>
                                     <input type="text" name="stock" id="stock" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['stock']) ? 'border-red-500' : '' ?>" value="<?= old('stock') ?>" required/>
                                     <?php if(isset($errors['stock'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['stock'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="comparative_price">Comparative price</label>
                                     <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>" required/>
                                     <?php if(isset($errors['comparative_price'])): ?>
@@ -273,7 +273,7 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="catalog_price">Catalog price</label>
                                     <input type="text" name="catalog_price" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
                                     <?php if(isset($errors['catalog_price'])): ?>
@@ -283,35 +283,42 @@
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="proposed_price">Proposed price / deal</label>
-                                    <input type="text" name="proposed_price" id="proposed_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price') ?>" required/>
+                                    <input type="number" step="0.01" name="proposed_price" id="proposed_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price') ?>" required/>
                                     <?php if(isset($errors['proposed_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price'] ?></span>
                                     <?php endif; ?>
                                  </div>
-                                 
                                  <div class="col-span-3 md:col-span-3">
+                                    <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
+                                    <input type="number" max="1" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
+                                    <?php if(isset($errors['proposed_price_discount'])): ?>
+                                       <span class="text-red-500 text-xs"><?= $errors['proposed_price_discount'] ?></span>
+                                    <?php endif; ?>
+                                 </div>
+                                 
+                                 <!-- <div class="col-span-3 md:col-span-3">
                                     <label for="approved_price">Approved price</label>
                                     <input type="text" name="approved_price" id="approved_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['approved_price']) ? 'border-red-500' : '' ?>" value="<?= old('approved_price') ?>" required/>
                                     <?php if(isset($errors['approved_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['approved_price'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="product_total">Total</label>
-                                    <input type="text" name="product_total" id="product_total" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_total']) ? 'border-red-500' : '' ?>" value="<?= old('product_total') ?>" required/>
+                                    <input type="text" name="product_total" id="product_total" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_total']) ? 'border-red-500' : '' ?>" value="<?= old('product_total') ?>" disabled/>
                                     <?php if(isset($errors['product_total'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_total'] ?></span>
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-3">
+                                 <!-- <div class="col-span-3 md:col-span-3">
                                     <label for="deal_equivalent">Deal Equivalent</label>
                                     <input type="text" name="deal_equivalent" id="deal_equivalent" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['deal_equivalent']) ? 'border-red-500' : '' ?>" value="<?= old('deal_equivalent') ?>" required/>
                                     <?php if(isset($errors['deal_equivalent'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['deal_equivalent'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
                               </div>
                            </div>
@@ -333,6 +340,19 @@
 <script>
    document.addEventListener("DOMContentLoaded", () => {
       refreshTableRow()
+      document.getElementById('proposed_price').addEventListener('input', (e) => {
+         const catalog_price = document.getElementById('catalog_price').value
+         document.getElementById('proposed_price_discount').value =  (catalog_price - e.target.value) / catalog_price * 100
+         const product_qty = document.getElementById('product_qty').value
+         document.getElementById('product_total').value =  e.target.value * product_qty
+      })
+      document.getElementById('proposed_price_discount').addEventListener('input', (e) => {
+         const catalog_price = document.getElementById('catalog_price').value
+         const proposed_price = catalog_price - (catalog_price * e.target.value / 100)
+         document.getElementById('proposed_price').value = proposed_price
+         const product_qty = document.getElementById('product_qty').value
+         document.getElementById('product_total').value =  proposed_price * product_qty
+      })
    });
    const toggleProductModal = () => {
       const modal = document.getElementById('productModal')
