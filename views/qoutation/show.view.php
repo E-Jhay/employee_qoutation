@@ -113,7 +113,7 @@ use Core\Role;
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
-                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Total</th>
+                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
                               <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
                            </tr>
                         </thead>
