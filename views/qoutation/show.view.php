@@ -135,11 +135,11 @@ use Core\Role;
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['code'] ?></td> -->
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['stock'] ?></td> -->
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['comparative_price'] ?></td> -->
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] / 100 * $product['proposed_price_discount'] ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price'] ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'] / 100 * $product['proposed_price_discount'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['proposed_price'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
-                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['total'] ?></td>
+                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
                                  <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
                               </tr>
                            <?php endforeach; ?>
@@ -163,7 +163,7 @@ use Core\Role;
                            <tr>
                            <th scope="row" colspan="6" class="pl-4 pr-6 sm:pr-16 pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
                            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
-                           <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= $grand_total ?></td>
+                           <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
                            </tr>
                         </tfoot>
                      </table>
