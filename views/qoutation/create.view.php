@@ -341,19 +341,55 @@
    document.addEventListener("DOMContentLoaded", () => {
       refreshTableRow()
       document.getElementById('proposed_price').addEventListener('input', (e) => {
-         const catalog_price = document.getElementById('catalog_price').value
-         document.getElementById('proposed_price_discount').value =  (catalog_price - e.target.value) / catalog_price * 100
-         const product_qty = document.getElementById('product_qty').value
-         document.getElementById('product_total').value =  e.target.value * product_qty
+         computeProposedPriceDiscount()
+         computeTotal()
       })
       document.getElementById('proposed_price_discount').addEventListener('input', (e) => {
-         const catalog_price = document.getElementById('catalog_price').value
-         const proposed_price = catalog_price - (catalog_price * e.target.value / 100)
-         document.getElementById('proposed_price').value = proposed_price
-         const product_qty = document.getElementById('product_qty').value
-         document.getElementById('product_total').value =  proposed_price * product_qty
+         computeProposedPrice()
+         computeTotal()
+      })
+
+      document.getElementById('product_qty').addEventListener('input', (e) => {
+         // computeProposedPrice(e)
+         computeTotal()
+      })
+
+      document.getElementById('catalog_price').addEventListener('change', (e) => {
+         if(document.getElementById('proposed_price').value !== '') {
+            computeProposedPriceDiscount()
+         } else {
+            computeProposedPrice()
+         }
+         // // computeProposedPrice(e)
+         computeTotal()
       })
    });
+
+   const computeProposedPriceDiscount = () => {
+      const catalog_price = document.getElementById('catalog_price').value
+      // console.log(catalog_price)
+      if(catalog_price){
+         const proposed_price_discount = (catalog_price - document.getElementById('proposed_price').value) / catalog_price * 100
+         document.getElementById('proposed_price_discount').value = proposed_price_discount
+      }
+   }
+
+   const computeProposedPrice = () => {
+      const catalog_price = document.getElementById('catalog_price').value
+      // console.log(catalog_price)
+      if(catalog_price){
+         const proposed_price = catalog_price - (catalog_price * document.getElementById('proposed_price_discount').value / 100)
+         document.getElementById('proposed_price').value = proposed_price
+      }
+      // console.log(document.getElementById('proposed_price_discount').value)
+   }
+
+   const computeTotal = () => {
+      const product_qty = document.getElementById('product_qty').value
+      const proposed_price = document.getElementById('proposed_price').value
+      document.getElementById('product_total').value =  proposed_price * product_qty
+   }
+
    const toggleProductModal = () => {
       const modal = document.getElementById('productModal')
       modal.classList.toggle('hidden')
