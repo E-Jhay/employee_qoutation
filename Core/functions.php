@@ -73,3 +73,23 @@ function getHtmlContent($filePath, $data)
 
     return $htmlContent;
 }
+
+// Function to generate the next control number
+function generateControlNumber($controlNumber, $counterLength = 4) {
+
+    // Extract the numeric part after the hyphen
+    $numericPartWithZeros = explode('-', $controlNumber)[1];
+
+    // Extract the prefix part
+    $prefix = explode('-', $controlNumber)[0];
+
+    // Remove leading zeros
+    $numericPartWithoutZeros = ltrim($numericPartWithZeros, '0') + 1;
+    // Format the counter with leading zeros
+    $formattedCounter = str_pad($numericPartWithoutZeros, $counterLength, '0', STR_PAD_LEFT);
+
+    // Combine prefix and formatted counter
+    $controlNumber = $prefix . '-' . $formattedCounter;
+
+    return $controlNumber;
+}

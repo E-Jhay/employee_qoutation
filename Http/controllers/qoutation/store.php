@@ -60,8 +60,10 @@ try {
         $team_id = $_SESSION['user']['team_id'];
     }
 
+    $latestControlNo = $db->query("SELECT control_no FROM `qoutation` WHERE control_no LIKE '%PMC%' ORDER BY id DESC LIMIT 1")->find()['control_no'];
+
     $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms, :status, :team_id, :needed_at)", [
-        'control_no' => rand(1, 1000),
+        'control_no' => generateControlNumber($latestControlNo),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $customerInsertedId,
         'territory' => $_POST['territory'],
