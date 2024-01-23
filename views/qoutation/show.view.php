@@ -112,8 +112,10 @@ use Core\Role;
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
+                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Recommended price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
+                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900"></th>
                               <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
                            </tr>
                         </thead>
@@ -138,8 +140,12 @@ use Core\Role;
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'] / 100 * $product['proposed_price_discount'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['proposed_price'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['approved_price'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
+                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500">
+                                    <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
+                                 </td>
                                  <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
                               </tr>
                            <?php endforeach; ?>
@@ -161,7 +167,7 @@ use Core\Role;
                            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
                            </tr> -->
                            <tr>
-                           <th scope="row" colspan="6" class="pl-4 pr-6 sm:pr-16 pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
+                           <th scope="row" colspan="7" class="pl-4 pr-6 sm:pr-10 pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
                            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
                            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
                            </tr>
@@ -217,7 +223,7 @@ use Core\Role;
                   </div>
                   <?php if($qoutation['status'] == QoutationStatus::PENDING && $_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
                   <div class="actionBtnDiv flex justify-end gap-2 mt-4">
-                     <button type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="actionBtn bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
+                     <button id="approveButton" type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="actionBtn bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
                      <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="actionBtn bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
                      <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                   </div>
@@ -283,6 +289,71 @@ use Core\Role;
                   </div>
                </div>
          </div>
+
+         <div id="approvedPricesModal" class="relative z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+               <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+               <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                  <div class="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+                     <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8">
+                     <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <form id="ApprovedPricesForm">
+                           <div class="lg:col-span-2">
+                              <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
+                                 Change Price
+                              </h3>
+                              <div class="grid gap-4 gap-y-2 text-sm grid-cols-6 md:grid-cols-6">
+                                 <div class="col-span-6 md:col-span-6">
+                                    <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
+                                       From
+                                    </h3>
+                                 </div>
+                                 <div class="col-span-3 md:col-span-2">
+                                    <label for="proposed_price">Proposed price / deal</label>
+                                    <input type="number" id="proposed_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
+                                    <input type="hidden" name="id" id="id" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+                                 </div>
+                                 <div class="col-span-3 md:col-span-2">
+                                    <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
+                                    <input type="number" id="proposed_price_discount" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
+                                 </div>
+
+                                 <div class="col-span-3 md:col-span-2">
+                                    <label for="proposed_price_total">Total</label>
+                                    <input type="number" id="proposed_price_total" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
+                                 </div>
+
+                                 <div class="col-span-6 md:col-span-6">
+                                    <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mt-4">
+                                       To
+                                    </h3>
+                                 </div>
+
+                                 <div class="col-span-3 md:col-span-2">
+                                    <label for="approved_price">Proposed price / deal</label>
+                                    <input type="number" name="approved_price" id="approved_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+                                 </div>
+                                 <div class="col-span-3 md:col-span-2">
+                                    <label for="approved_price_discount">Proposed price / deal (Discount in %)</label>
+                                    <input type="number" id="approved_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+                                 </div>
+                                 <div class="col-span-3 md:col-span-2">
+                                    <label for="approved_price_total">Total</label>
+                                    <input type="number" id="approved_price_total" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+                                 </div>
+
+                              </div>
+                           </div>
+                     <div class="bg-gray-50 py-3 sm:flex sm:flex-row-reverse">
+                        <button id="productFormBtn" type="submit" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto">Submit</button>
+                        <button onclick="closeModal()" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+                     </div>
+                        </form>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
 <!-- Footer -->
 <?php require base_path('views/partials/footer.php') ?>
 
@@ -290,6 +361,55 @@ use Core\Role;
    // const updateQoutation = (id) => {
    //    console.log(id)
    // }
+   let approvedPrices = []
+
+   const toggleApprovedPricesModal = (id, proposed_price, proposed_price_discount, total) => {
+      document.getElementById('id').value = id
+      document.getElementById('proposed_price').value = proposed_price
+      document.getElementById('proposed_price_discount').value = proposed_price_discount
+      document.getElementById('proposed_price_total').value = total
+      const modal = document.getElementById('approvedPricesModal')
+      modal.classList.remove('hidden')
+   }
+
+   const closeModal = () => {
+      resetForm()
+      const modal = document.getElementById('approvedPricesModal')
+      modal.classList.add('hidden')
+   }
+
+   const approvedPricesForm = document.getElementById('ApprovedPricesForm')
+
+   const resetForm = () => {
+      document.getElementById('id').value = ''
+      approvedPricesForm.reset();
+   }
+
+
+   approvedPricesForm.addEventListener('submit', (e) => {
+      
+      e.preventDefault()
+      const formData = new FormData(approvedPricesForm);
+      // Display the key/value pairs
+      // for (const pair of formData.entries()) {
+      // console.log(pair[0], pair[1]);
+      // }
+      const price = Object.fromEntries(formData);
+      // console.log(prices)
+
+      // Find the index of the object with id: 2
+      let indexToUpdate = approvedPrices.findIndex(item => item.id === price.id);
+
+      // Use spread operator for updating or inserting the object
+      approvedPrices = indexToUpdate !== -1
+         ? approvedPrices.map(item => (item.id === price.id ? { ...item, ...price } : item))
+         : [...approvedPrices, price];
+      // approvedPrices.push(price)
+      console.log(approvedPrices)
+      closeModal()
+      document.getElementById('approveButton').classList.add('hidden')
+   })
+
 
    async function updateQoutation(id) {
       const successPanel = document.querySelector('.success-panel')
@@ -308,6 +428,9 @@ use Core\Role;
 
       formData.append("id", id)
       formData.append("mode", mode)
+      if(mode === 'Disapprove') {
+         formData.append("approvedPrices", JSON.stringify(approvedPrices))
+      }
       try {
          const response = await fetch("/qoutation/change-status", {
             method: "POST",

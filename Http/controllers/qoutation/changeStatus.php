@@ -12,11 +12,20 @@ authorize($_SESSION['user']['role_id'] === Role::SALES_MANAGER);
 
 $id = $_POST['id'];
 $mode = $_POST['mode'];
+$approvedPrices = json_decode($_POST['approvedPrices'], true);
 $status = QoutationStatus::PENDING;
 
 try {
     $mode == 'Approve' ? $status = QoutationStatus::APPROVED : ($mode == 'Disapprove' ? $status = QoutationStatus::DISAPPROVED : $status = QoutationStatus::PENDING);
 
+    if($mode == 'Disapprove') {
+        foreach($approvedPrices as $prices) {
+            $db->query("UPDATE product_qoutation SET approved_price = :approved_price WHERE id = :id", [
+                'id' => $prices['id'],
+                'approved_price' => $prices['approved_price'],
+            ]);
+        }
+    }
     $db->query("UPDATE qoutation SET status = :status WHERE id = :id", [
         'status' => $status,
         'id' => $id,
