@@ -146,12 +146,12 @@
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Product Description
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Stock available
-                                                      </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      </th> -->
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Comparative price
-                                                      </th>
+                                                      </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Catalog price
                                                       </th>
@@ -159,14 +159,17 @@
                                                          Proposed price/deal
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Approved price
+                                                         Proposed price/deal (Discount in %)
                                                       </th>
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                         Approved price
+                                                      </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Total
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Deal equivalent
-                                                      </th>
+                                                      </th> -->
                                                       <th scope="col" class="p-4">
                                                          <span class="sr-only">Edit</span>
                                                       </th>
@@ -290,7 +293,7 @@
                                  </div>
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
-                                    <input type="number" max="1" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
+                                    <input type="number" min="20" max="99" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
                                     <?php if(isset($errors['proposed_price_discount'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price_discount'] ?></span>
                                     <?php endif; ?>
@@ -306,7 +309,7 @@
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="product_total">Total</label>
-                                    <input type="text" name="product_total" id="product_total" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_total']) ? 'border-red-500' : '' ?>" value="<?= old('product_total') ?>" disabled/>
+                                    <input type="text" name="product_total" id="product_total" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_total']) ? 'border-red-500' : '' ?>" value="<?= old('product_total') ?>"/>
                                     <?php if(isset($errors['product_total'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_total'] ?></span>
                                     <?php endif; ?>
@@ -478,13 +481,14 @@
          'product_code',
          // 'product_name',
          'product_description',
-         'stock',
+         // 'stock',
          'comparative_price',
          'catalog_price',
          'proposed_price',
-         'approved_price',
+         'proposed_price_discount',
+         // 'approved_price',
          'product_total',
-         'deal_equivalent',
+         // 'deal_equivalent',
          'action',
       ]
 
@@ -536,13 +540,14 @@
          'product_code',
          // 'product_name',
          'product_description',
-         'stock',
+         // 'stock',
          'comparative_price',
          'catalog_price',
          'proposed_price',
-         'approved_price',
+         'proposed_price_discount',
+         // 'approved_price',
          'product_total',
-         'deal_equivalent',
+         // 'deal_equivalent',
          'id'
       ]
 

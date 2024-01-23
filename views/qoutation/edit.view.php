@@ -109,9 +109,9 @@ use Core\QoutationStatus;
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Product Description
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Stock available
-                                                      </th>
+                                                      </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Comparative price
                                                       </th>
@@ -122,14 +122,17 @@ use Core\QoutationStatus;
                                                          Proposed price/deal
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Approved price
+                                                         Proposed price/ (Discount in %)
                                                       </th>
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                         Approved price
+                                                      </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Total
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Deal equivalent
-                                                      </th>
+                                                      </th> -->
                                                       <th scope="col" class="p-4">
                                                          <span class="sr-only">Edit</span>
                                                       </th>
@@ -220,15 +223,15 @@ use Core\QoutationStatus;
                                     <?php endif; ?>
                                  </div>
                                  
-                                 <div class="col-span-3 md:col-span-2">
+                                 <!-- <div class="col-span-3 md:col-span-2">
                                     <label for="stock">Stock available</label>
                                     <input type="text" name="stock" id="stock" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['stock']) ? 'border-red-500' : '' ?>" value="<?= old('stock') ?>" required/>
                                     <?php if(isset($errors['stock'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['stock'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="comparative_price">Comparative price</label>
                                     <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>" required/>
                                     <?php if(isset($errors['comparative_price'])): ?>
@@ -236,7 +239,7 @@ use Core\QoutationStatus;
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="catalog_price">Catalog price</label>
                                     <input type="text" name="catalog_price" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
                                     <?php if(isset($errors['catalog_price'])): ?>
@@ -251,14 +254,22 @@ use Core\QoutationStatus;
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price'] ?></span>
                                     <?php endif; ?>
                                  </div>
-                                 
+
                                  <div class="col-span-3 md:col-span-3">
+                                    <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
+                                    <input type="text" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
+                                    <?php if(isset($errors['proposed_price_discount'])): ?>
+                                       <span class="text-red-500 text-xs"><?= $errors['proposed_price_discount'] ?></span>
+                                    <?php endif; ?>
+                                 </div>
+                                 
+                                 <!-- <div class="col-span-3 md:col-span-3">
                                     <label for="approved_price">Approved price</label>
                                     <input type="text" name="approved_price" id="approved_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['approved_price']) ? 'border-red-500' : '' ?>" value="<?= old('approved_price') ?>" required/>
                                     <?php if(isset($errors['approved_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['approved_price'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="product_total">Total</label>
@@ -268,13 +279,13 @@ use Core\QoutationStatus;
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-3">
+                                 <!-- <div class="col-span-3 md:col-span-3">
                                     <label for="deal_equivalent">Deal Equivalent</label>
                                     <input type="text" name="deal_equivalent" id="deal_equivalent" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['deal_equivalent']) ? 'border-red-500' : '' ?>" value="<?= old('deal_equivalent') ?>" required/>
                                     <?php if(isset($errors['deal_equivalent'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['deal_equivalent'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
                               </div>
                            </div>
@@ -296,7 +307,56 @@ use Core\QoutationStatus;
 <script>
    document.addEventListener("DOMContentLoaded", () => {
       refreshTableRow()
+      document.getElementById('proposed_price').addEventListener('input', (e) => {
+         computeProposedPriceDiscount()
+         computeTotal()
+      })
+      document.getElementById('proposed_price_discount').addEventListener('input', (e) => {
+         computeProposedPrice()
+         computeTotal()
+      })
+
+      document.getElementById('product_qty').addEventListener('input', (e) => {
+         // computeProposedPrice(e)
+         computeTotal()
+      })
+
+      document.getElementById('catalog_price').addEventListener('change', (e) => {
+         if(document.getElementById('proposed_price').value !== '') {
+            computeProposedPriceDiscount()
+         } else {
+            computeProposedPrice()
+         }
+         // // computeProposedPrice(e)
+         computeTotal()
+      })
    });
+
+   const computeProposedPriceDiscount = () => {
+      const catalog_price = document.getElementById('catalog_price').value
+      // console.log(catalog_price)
+      if(catalog_price){
+         const proposed_price_discount = (catalog_price - document.getElementById('proposed_price').value) / catalog_price * 100
+         document.getElementById('proposed_price_discount').value = proposed_price_discount
+      }
+   }
+
+   const computeProposedPrice = () => {
+      const catalog_price = document.getElementById('catalog_price').value
+      // console.log(catalog_price)
+      if(catalog_price){
+         const proposed_price = catalog_price - (catalog_price * document.getElementById('proposed_price_discount').value / 100)
+         document.getElementById('proposed_price').value = proposed_price
+      }
+      // console.log(document.getElementById('proposed_price_discount').value)
+   }
+
+   const computeTotal = () => {
+      const product_qty = document.getElementById('product_qty').value
+      const proposed_price = document.getElementById('proposed_price').value
+      document.getElementById('product_total').value =  proposed_price * product_qty
+   }
+
    const toggleProductModal = () => {
       const modal = document.getElementById('productModal')
       modal.classList.toggle('hidden')
@@ -381,13 +441,14 @@ use Core\QoutationStatus;
          'product_code',
          // 'product_name',
          'product_description',
-         'stock',
+         // 'stock',
          'comparative_price',
          'catalog_price',
          'proposed_price',
-         'approved_price',
+         'proposed_price_discount',
+         // 'approved_price',
          'product_total',
-         'deal_equivalent',
+         // 'deal_equivalent',
          'action',
       ]
 
@@ -439,13 +500,14 @@ use Core\QoutationStatus;
          'product_code',
          // 'product_name',
          'product_description',
-         'stock',
+         // 'stock',
          'comparative_price',
          'catalog_price',
          'proposed_price',
-         'approved_price',
+         'proposed_price_discount',
+         // 'approved_price',
          'product_total',
-         'deal_equivalent',
+         // 'deal_equivalent',
          'id'
       ]
 

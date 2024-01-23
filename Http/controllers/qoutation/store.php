@@ -78,19 +78,20 @@ try {
     $products = json_decode($_POST['products'], true);
 
     foreach($products as $product) {
-        $db->query("INSERT INTO product_qoutation (qoutation_id, unit, code, description, quantity, stock, comparative_price, catalog_price, proposed_price, approved_price, total, deal_equivalent) VALUES(:qoutation_id, :unit, :code, :description, :quantity, :stock, :comparative_price, :catalog_price, :proposed_price, :approved_price, :total, :deal_equivalent)", [
+        $db->query("INSERT INTO product_qoutation (qoutation_id, unit, code, description, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:qoutation_id, :unit, :code, :description, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
             'qoutation_id' => $qoutationInsertId,
             'unit' => $product['product_unit'],
             'code' => $product['product_code'],
             'description' => $product['product_description'],
             'quantity' => $product['product_qty'],
-            'stock' => $product['stock'],
+            // 'stock' => $product['stock'],
             'comparative_price' => $product['comparative_price'],
             'catalog_price' => $product['catalog_price'],
             'proposed_price' => $product['proposed_price'],
-            'approved_price' => $product['approved_price'],
+            'proposed_price_discount' => $product['proposed_price_discount'],
+            // 'approved_price' => $product['approved_price'],
             'total' => $product['product_total'],
-            'deal_equivalent' => $product['deal_equivalent'],
+            // 'deal_equivalent' => $product['deal_equivalent'],
         ]);
     }
     

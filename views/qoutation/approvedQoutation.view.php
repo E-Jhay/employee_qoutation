@@ -71,7 +71,7 @@ require base_path('views/partials/head.php') ?>
    </div>
 </div>
 
-<div class="flex justify-between gap-4 mt-2">
+<div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
    <div class="">
       <p class="font-bold text-gray-800">
          Bill to :
@@ -104,7 +104,7 @@ require base_path('views/partials/head.php') ?>
    </div>
 </div>
 
-<div class="flex justify-between gap-4 mt-2">
+<div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
    <div class="">
       <p class="font-bold text-gray-800">
          <?= $qoutation['customer_contact_person'] ?>
@@ -146,23 +146,19 @@ require base_path('views/partials/head.php') ?>
 <!-- Invoice Items -->
 <div class="-mx-4 flow-root sm:mx-0  overflow-x-auto">
    <table class="min-w-full">
-      <colgroup>
-         <col class="w-full sm:w-1/2">
-         <col class="sm:w-1/4">
-         <col class="sm:w-1/4">
-         <col class="sm:w-1/4">
-      </colgroup>
       <thead class="border-b border-gray-300 text-gray-900">
          <tr>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
-            <!-- <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Unit</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Stock available</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Comparative price</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Catalog price</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Proposed price</th> -->
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Approved price</th>
-            <th scope="col" class="hidden px-3 py-3.5 text-center text-sm font-semibold text-gray-900 sm:table-cell">Total</th>
+            <th scope="col" class="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Quantity</th>
+            <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Unit</th>
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Stock available</th>
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Comparative price</th>
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th> -->
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Price</th>
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Price after discount</th>
+            <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Total</th>
             <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
          </tr>
       </thead>
@@ -180,14 +176,16 @@ require base_path('views/partials/head.php') ?>
                   <div class="font-medium text-gray-900"><?= $product['description'] ?></div>
                   <div class="mt-1 truncate text-gray-500"><?= $product['code'] ?></div>
                </td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['quantity'] ?></td>
-               <!-- <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['unit'] ?></td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['stock'] ?></td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['comparative_price'] ?></td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['catalog_price'] ?></td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['proposed_price'] ?></td> -->
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['approved_price'] ?></td>
-               <td class="hidden px-3 py-5 text-center text-sm text-gray-500 sm:table-cell"><?= $product['total'] ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
+               <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['unit'] ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['stock'] ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['comparative_price'] ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price'] ?></td> -->
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price'] ?></td>
+               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['total'] ?></td>
                <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
             </tr>
          <?php endforeach; ?>
@@ -209,9 +207,9 @@ require base_path('views/partials/head.php') ?>
             <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
             </tr> -->
             <tr>
-            <th scope="row" colspan="3" class="hidden pl-4 sm:pr-11 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell">Total</th>
-            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
-            <td class="pl-3 pr-4 pt-4 text-center text-sm font-semibold text-gray-900 sm:pr-0"><?= $grand_total ?></td>
+            <th scope="row" colspan="5" class="pl-4 pr-6 sm:pr-16 pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
+            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
+            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= $grand_total ?></td>
             </tr>
          </tfoot>
    </table>
