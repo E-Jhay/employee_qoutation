@@ -75,9 +75,11 @@ use Core\QoutationStatus;
                               Products
                            </h3>
                         </div>
+                        <?php if($qoutation['status'] !== QoutationStatus::DISAPPROVED): ?>
                         <div class="md:col-span-6 my-2">
                            <button onclick="toggleProductModal()" type="button" title="Add product" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Add Product</button>
                         </div>
+                        <?php endif ?>
 
                         <div class="md:col-span-6">
                            <div class="mx-auto">
@@ -124,6 +126,11 @@ use Core\QoutationStatus;
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Proposed price/ (Discount in %)
                                                       </th>
+                                                      <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED): ?>
+                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                         Recommended price
+                                                      </th>
+                                                      <?php endif; ?>
                                                       <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Approved price
                                                       </th> -->
@@ -435,22 +442,44 @@ use Core\QoutationStatus;
 
    const addRow = (product) => {
 
-      let cells = [
-         'product_qty',
-         'product_unit',
-         'product_code',
-         // 'product_name',
-         'product_description',
-         // 'stock',
-         'comparative_price',
-         'catalog_price',
-         'proposed_price',
-         'proposed_price_discount',
-         // 'approved_price',
-         'product_total',
-         // 'deal_equivalent',
-         'action',
-      ]
+      let cells = []
+      if(<?= $qoutation['status'] === QoutationStatus::DISAPPROVED ? 1 : 0 ?>) {
+         cells = [
+            'product_qty',
+            'product_unit',
+            'product_code',
+            // 'product_name',
+            'product_description',
+            // 'stock',
+            'comparative_price',
+            'catalog_price',
+            'proposed_price',
+            'proposed_price_discount',
+            'approved_price',
+            // 'approved_price',
+            'product_total',
+            // 'deal_equivalent',
+            'action',
+         ]
+      } else {
+         cells = [
+            'product_qty',
+            'product_unit',
+            'product_code',
+            // 'product_name',
+            'product_description',
+            // 'stock',
+            'comparative_price',
+            'catalog_price',
+            'proposed_price',
+            'proposed_price_discount',
+            // 'approved_price',
+            // 'approved_price',
+            'product_total',
+            // 'deal_equivalent',
+            'action',
+         ]
+      }
 
       // Get the table body element in which you want to add row
       let table = document.getElementById("productTableBody");
@@ -462,7 +491,12 @@ use Core\QoutationStatus;
       cells.forEach(cell => {
          let c = document.createElement("td")
          if(cell !== 'action') {
-            c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'text-gray-900', 'whitespace-nowrap', 'dark:text-white')
+            c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'whitespace-nowrap', 'dark:text-white')
+            if(cell === 'approved_price'){
+               c.classList.add('text-green-500')
+            } else if(cell === 'proposed_price' && <?= $qoutation['status'] === QoutationStatus::DISAPPROVED ? 1 : 0 ?>) {
+               c.classList.add('text-red-500')
+            }
             c.innerText = product[cell]
          }
          else {

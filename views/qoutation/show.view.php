@@ -112,10 +112,14 @@ use Core\Role;
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
+                              <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED && $_SESSION['user']['role_id'] === Role::SALES): ?>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Recommended price</th>
+                              <?php endif; ?>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
+                              <?php if($qoutation['status'] === QoutationStatus::PENDING && $_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900"></th>
+                              <?php endif; ?>
                               <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
                            </tr>
                         </thead>
@@ -139,13 +143,17 @@ use Core\Role;
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['comparative_price'] ?></td> -->
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'] / 100 * $product['proposed_price_discount'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['proposed_price'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['approved_price'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500"><?= number_format($product['proposed_price'], 2) ?></td>
+                                 <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED && $_SESSION['user']['role_id'] === Role::SALES): ?>
+                                 <td class="px-3 py-5 text-center text-sm text-green-500"><?= number_format($product['approved_price'], 2) ?></td>
+                                 <?php endif; ?>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
+                                 <?php if($qoutation['status'] === QoutationStatus::PENDING && $_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500">
-                                    <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
+                                    <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>, <?= $product['catalog_price'] ?>, <?= $product['quantity'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
                                  </td>
+                                 <?php endif; ?>
                                  <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
                               </tr>
                            <?php endforeach; ?>
@@ -167,7 +175,7 @@ use Core\Role;
                            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
                            </tr> -->
                            <tr>
-                           <th scope="row" colspan="7" class="pl-4 pr-6 sm:pr-10 pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
+                           <th scope="row" colspan="<?=$qoutation['status'] === QoutationStatus::DISAPPROVED && $_SESSION['user']['role_id'] === Role::SALES ? '7' : '6' ?>" class="pl-4 pr-6 sm:pr-<?=$qoutation['status'] === QoutationStatus::PENDING && $_SESSION['user']['role_id'] === Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
                            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
                            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
                            </tr>
@@ -312,6 +320,8 @@ use Core\Role;
                                     <label for="proposed_price">Proposed price / deal</label>
                                     <input type="number" id="proposed_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
                                     <input type="hidden" name="id" id="id" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+                                    <input type="hidden" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+                                    <input type="hidden" id="quantity" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                  </div>
                                  <div class="col-span-3 md:col-span-2">
                                     <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
@@ -363,8 +373,10 @@ use Core\Role;
    // }
    let approvedPrices = []
 
-   const toggleApprovedPricesModal = (id, proposed_price, proposed_price_discount, total) => {
+   const toggleApprovedPricesModal = (id, proposed_price, proposed_price_discount, total, catalog_price, quantity) => {
       document.getElementById('id').value = id
+      document.getElementById('catalog_price').value = catalog_price
+      document.getElementById('quantity').value = quantity
       document.getElementById('proposed_price').value = proposed_price
       document.getElementById('proposed_price_discount').value = proposed_price_discount
       document.getElementById('proposed_price_total').value = total
@@ -384,6 +396,15 @@ use Core\Role;
       document.getElementById('id').value = ''
       approvedPricesForm.reset();
    }
+
+   document.getElementById('approved_price').addEventListener('input', (e) => {
+      computeProposedPriceDiscount()
+      computeTotal()
+   })
+   document.getElementById('approved_price_discount').addEventListener('input', (e) => {
+      computeProposedPrice()
+      computeTotal()
+   })
 
 
    approvedPricesForm.addEventListener('submit', (e) => {
@@ -409,6 +430,31 @@ use Core\Role;
       closeModal()
       document.getElementById('approveButton').classList.add('hidden')
    })
+
+   const computeProposedPriceDiscount = () => {
+      const catalog_price = document.getElementById('catalog_price').value
+      // console.log(catalog_price)
+      if(catalog_price){
+         const approved_price_discount = (catalog_price - document.getElementById('approved_price').value) / catalog_price * 100
+         document.getElementById('approved_price_discount').value = approved_price_discount
+      }
+   }
+
+   const computeProposedPrice = () => {
+      const catalog_price = document.getElementById('catalog_price').value
+      // console.log(catalog_price)
+      if(catalog_price){
+         const approved_price = catalog_price - (catalog_price * document.getElementById('approved_price_discount').value / 100)
+         document.getElementById('approved_price').value = approved_price
+      }
+      // console.log(document.getElementById('proposed_price_discount').value)
+   }
+
+   const computeTotal = () => {
+      const product_qty = document.getElementById('quantity').value
+      const approved_price = document.getElementById('approved_price').value
+      document.getElementById('approved_price_total').value =  approved_price * product_qty
+   }
 
 
    async function updateQoutation(id) {
