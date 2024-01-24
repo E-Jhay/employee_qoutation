@@ -316,19 +316,19 @@ use Core\Role;
                                        From
                                     </h3>
                                  </div>
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-6 md:col-span-2">
                                     <label for="proposed_price">Proposed price / deal</label>
                                     <input type="number" id="proposed_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
                                     <input type="hidden" name="id" id="id" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                     <input type="hidden" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                     <input type="hidden" id="quantity" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                  </div>
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-6 md:col-span-2">
                                     <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
                                     <input type="number" id="proposed_price_discount" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-6 md:col-span-2">
                                     <label for="proposed_price_total">Total</label>
                                     <input type="number" id="proposed_price_total" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
                                  </div>
@@ -339,15 +339,15 @@ use Core\Role;
                                     </h3>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-6 md:col-span-2">
                                     <label for="approved_price">Proposed price / deal</label>
-                                    <input type="number" name="approved_price" id="approved_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+                                    <input type="number" step="0.01" name="approved_price" id="approved_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                  </div>
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-6 md:col-span-2">
                                     <label for="approved_price_discount">Proposed price / deal (Discount in %)</label>
-                                    <input type="number" id="approved_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+                                    <input type="number" step="0.01" id="approved_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                  </div>
-                                 <div class="col-span-3 md:col-span-2">
+                                 <div class="col-span-6 md:col-span-2">
                                     <label for="approved_price_total">Total</label>
                                     <input type="number" id="approved_price_total" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                  </div>
