@@ -23,7 +23,7 @@ use Core\Role;
                <div class="grid grid-cols-2 items-center mb-8">
                   <div>
                      <!--  Company logo  -->
-                     <img src="https://pmc.ph/app/static/image/logo.png" alt="company-logo" height="150" width="250">
+                     <img src="../images/logo.png" alt="company-logo" height="150" width="250">
                   </div>
                </div>
 

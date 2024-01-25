@@ -12,7 +12,7 @@
                 </svg>
             </button>
             <a href="#" class="text-xl font-bold flex items-center lg:ml-2.5">
-            <img src="https://pmc.ph/app/static/image/logo.png" alt="company-logo" class="h-8">
+            <img src="../images/logo.png" alt="company-logo" class="h-8">
             <!-- <span class="self-center whitespace-nowrap">PMC</span> -->
             </a>
         </div>
