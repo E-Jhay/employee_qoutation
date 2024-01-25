@@ -47,6 +47,7 @@ $router->get('/team/edit', 'team/edit.php')->only('auth');
 $router->put('/team/update', 'team/update.php')->only('auth');
 
 // Qoutation route
+$router->get('/get-qoutations', 'qoutation/pending.php')->only('auth');
 $router->get('/qoutations', 'qoutation/index.php')->only('auth');
 $router->get('/qoutation/show', 'qoutation/show.php')->only('auth');
 $router->delete('/qoutation/delete', 'qoutation/destroy.php')->only('auth');
