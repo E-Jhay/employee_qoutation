@@ -13,6 +13,6 @@ return [
         'password' => "Unimex123!",
         'port' => 587,
         'from' => 'no-reply@pmc.ph',
-        'fromName' => 'PMC',
+        'fromName' => 'Progressive Medical Corporation',
     ]
 ];
