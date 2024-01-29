@@ -36,9 +36,9 @@ try {
     $config = require base_path("config.php");
     $mailer = new Mailer($config['mail']);
     if($status == QoutationStatus::DISAPPROVED) {
-        $to = ['bumacodejhay@gmail.com'];
+        // $to = ['bumacodejhay@gmail.com'];
 
-        // $to = (array)$db->query("SELECT user.email as created_by_email FROM qoutation LEFT JOIN user ON qoutation.created_by = user.id WHERE qoutation.id = :id", ['id' => $id])->find()['created_by_email'];
+        $to = (array)$db->query("SELECT user.email as created_by_email FROM qoutation LEFT JOIN user ON qoutation.created_by = user.id WHERE qoutation.id = :id", ['id' => $id])->find()['created_by_email'];
 
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/disapprovedQoutation.html', [
@@ -49,11 +49,11 @@ try {
 
         $mailer->sendMail($to, 'PMC Qoutation', $htmlContent);
     } elseif($status == QoutationStatus::APPROVED) {
-        $to = ['bumacodejhay@gmail.com'];
+        // $to = ['bumacodejhay@gmail.com'];
 
-        // $to = (array)$db->query("SELECT customer.email as customer_email FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id WHERE qoutation.id = :id", ['id' => $id])->find()['customer_email'];
+        $to = (array)$db->query("SELECT customer.email as customer_email FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id WHERE qoutation.id = :id", ['id' => $id])->find()['customer_email'];
         
-        // $cc = (array)$db->query("SELECT user.email as created_by_email FROM qoutation LEFT JOIN user ON qoutation.created_by = user.id WHERE qoutation.id = :id", ['id' => $id])->find()['created_by_email'];
+        $cc = (array)$db->query("SELECT user.email as created_by_email FROM qoutation LEFT JOIN user ON qoutation.created_by = user.id WHERE qoutation.id = :id", ['id' => $id])->find()['created_by_email'];
 
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/approvedQoutation.html', [

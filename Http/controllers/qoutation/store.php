@@ -99,7 +99,10 @@ try {
     
     $config = require base_path("config.php");
     $mailer = new Mailer($config['mail']);
-    $to = ['bumacodejhay@gmail.com'];
+    $manager_email = (array)$db->query("SELECT email FROM team LEFT JOIN user ON team.manager_id = user.id WHERE team.id = :team_id", [
+        'team_id' => $_SESSION['user']['team_id'],
+    ])->find()['email'];
+    $to = $manager_email;
 
     // Read HTML content from a file and replace placeholders with data
     $htmlContent = getHtmlContent('../views/mail/storeQoutation.html', [
