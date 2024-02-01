@@ -5,14 +5,26 @@ use Core\Role;
 use Core\Session;
 
 $db = App::resolve('Core\Database');
+// Retrieve data from the request payload
+$data = json_decode(file_get_contents("php://input"), true);
 
-$qoutationCreatedBy = $db->query("SELECT created_by FROM qoutation WHERE id = :id", [
-    'id' => $_POST['id']
-])->find()['created_by'];
-// dd($qoutationCreatedBy);
-authorize($_SESSION['user']['role_id'] === Role::SALES && $_SESSION['user']['id'] === $qoutationCreatedBy);
+// Access the data
+$id = $data['id'];
 
-$db->query("DELETE FROM qoutation WHERE id = :id", ['id' => $_POST['id']]);
+try {
 
-Session::flash('success', "Qoutation Deleted.");
-redirect('/qoutations');
+    $qoutationCreatedBy = $db->query("SELECT created_by FROM qoutation WHERE id = :id", [
+        'id' => $id
+    ])->find()['created_by'];
+    // dd($qoutationCreatedBy);
+    authorize($_SESSION['user']['role_id'] === Role::SALES && $_SESSION['user']['id'] === $qoutationCreatedBy);
+    
+    $db->query("DELETE FROM qoutation WHERE id = :id", ['id' => $id]);
+    echo json_encode(['success' => true, 'message' => 'Qoutation Deleted.']);
+} catch (\Exception $e) {
+    //throw $th;
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+}
+
+// Session::flash('success', "Qoutation Deleted.");
+// redirect('/qoutations');

@@ -38,7 +38,17 @@ use Core\Role;
                      <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="all" type="button" onclick="filterBystatus(this, 'all')">All</button></li>
                   </ul>
 
-                  <div id="pending" class="shadow overflow-hidden border-b sm:rounded-lg py-8">
+                  <div id="pending" class="shadow overflow-hidden border-b sm:rounded-lg mt-4 py-2">
+                  <div class="px-4 mb-2 d-flex">
+                     <select name="itemsPerPage" id="itemsPerPage" autocomplete="itemsPerpage" class="h-10 border rounded px-2 w-18 bg-transparent border-gray-300">
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                     </select>
+
+                     <input type="text" name="searchTerm" id="searchTerm" class="h-10 border rounded px-2 bg-transparent border-gray-300" placeholder="Search..." />
+                  </div>
                      <div class="flex flex-col">
                         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -91,6 +101,19 @@ use Core\Role;
    })
    let sortOrders = {}; // Object to track sorting order for each column
 
+   const getActiveStatus = () => {
+      const status = document.querySelector('#tabs li.active button').id
+      return status
+   }
+   const getItemsPerPage = () => {
+      const itemsPerPage = document.getElementById('itemsPerPage').value
+      return itemsPerPage
+   }
+   const getSearchTerm = () => {
+      const searchTerm = document.getElementById('searchTerm').value
+      return searchTerm
+   }
+
    const filterBystatus = (button, status) => {
       let tabsContainer = document.querySelector("#tabs");
       
@@ -101,14 +124,19 @@ use Core\Role;
       })
       button.parentElement.classList.add("active", "border-blue-400", "border-b-2", "-mb-px", "opacity-100");
 
-      getData(status)
+      getData(status, getItemsPerPage(), getSearchTerm())
    }
 
-   async function getData(status) {
-      // console.log(status)
+   document.getElementById('itemsPerPage').addEventListener('change', (e) => {
+      getData(getActiveStatus(), e.target.value, getSearchTerm())
+   })
+   document.getElementById('searchTerm').addEventListener('input', (e) => {
+      getData(getActiveStatus(), getItemsPerPage(), e.target.value)
+   })
+
+   async function getData(status, itemsPerPage = 10, searchTerm = '') {
       try {
-         
-         const response = await fetch(`/get-qoutations?status=${status}&itemsPerPage=10&searchTerm=&page=`);
+         const response = await fetch(`/get-qoutations?status=${status}&itemsPerPage=${itemsPerPage}&searchTerm=${searchTerm}&page=`);
          const data = await response.json()
          loadTable(data.qoutations)
       } catch (e) {
@@ -176,7 +204,7 @@ use Core\Role;
                         body: JSON.stringify({id : qoutation['id']})
                      });
                      const data = await response.json()
-                     const status = document.querySelector('#tabs li.active button').id
+                     // const status = document.querySelector('#tabs li.active button').id
                      if (data.success) {
                         successPanel.classList.remove('hidden')
                         successMessage.innerText = data.message
@@ -184,7 +212,7 @@ use Core\Role;
                         errorPanel.classList.remove('hidden')
                         errorMessage.innerText = data.message
                      }
-                     getData(status)
+                     getData(getActiveStatus(), getItemsPerPage(), getSearchTerm())
                   } catch (e) {
                      console.error(e);
                   }

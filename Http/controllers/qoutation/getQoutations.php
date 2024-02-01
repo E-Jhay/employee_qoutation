@@ -13,6 +13,7 @@ $status = $_GET['status'] ?? QoutationStatus::PENDING;
 $searchTerm = $_GET['searchTerm'] ?? '';
 // Get the current page number from the query parameters
 $currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$currentUserId = $_SESSION['user']['id'];
 
 // Function to perform pagination for a given query
 function paginateQuery($db, $query, $currentPage, $itemsPerPage, $bindings = []) {
@@ -36,7 +37,7 @@ function paginateQuery($db, $query, $currentPage, $itemsPerPage, $bindings = [])
     // // Add bindings for LIMIT and OFFSET
     // $bindings['limit'] = $itemsPerPage;
     // $bindings['offset'] = $startIndex;
-
+    
     // Execute the modified query
     $results =  $db->query($query, $bindings)->get();
     // Return both the paginated results and total pages
@@ -44,12 +45,15 @@ function paginateQuery($db, $query, $currentPage, $itemsPerPage, $bindings = [])
 }
 if($status !== 'all'){
     if($_SESSION['user']['role_id'] == Role::SALES) {
-        $currentUserId = $_SESSION['user']['id'];
         $qoutationsData = paginateQuery($db,
-            "SELECT qoutation.*, customer.name as customer_name, user.name as created_by_name, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id WHERE status = :status AND created_by = :created_by_id ORDER BY id desc",
+        "SELECT qoutation.*, customer.name as customer_name, user.name as created_by_name, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id WHERE status = :status AND created_by = :created_by_id
+        AND
+        (qoutation.control_no LIKE CONCAT('%', :searchTerm, '%')
+        OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
             $currentPage,
             $itemsPerPage,
             [
+                'searchTerm' => $searchTerm,
                 'status' => $status,
                 'created_by_id' => $currentUserId
             ]
@@ -62,10 +66,14 @@ if($status !== 'all'){
         ])->find()['id'] ?? '';
 
         $qoutationsData = paginateQuery($db,
-            "SELECT qoutation.*, customer.name as customer_name, user.name as created_by_name, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id WHERE status = :status AND qoutation.team_id = :team_id ORDER BY id desc",
+            "SELECT qoutation.*, customer.name as customer_name, user.name as created_by_name, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id WHERE status = :status AND qoutation.team_id = :team_id
+            AND
+            (qoutation.control_no LIKE CONCAT('%', :searchTerm, '%')
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
             $currentPage,
             $itemsPerPage,
             [
+                'searchTerm' => $searchTerm,
                 'status' => $status,
                 'team_id' => $currentUserTeamId
             ]
@@ -75,10 +83,14 @@ if($status !== 'all'){
     } else {
 
         $qoutationsData = paginateQuery($db,
-            "SELECT qoutation.*, customer.name as customer_name, user.name as created_by_name, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id WHERE status = :status ORDER BY id desc",
+            "SELECT qoutation.*, customer.name as customer_name, user.name as created_by_name, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id WHERE status = :status
+            AND
+            (qoutation.control_no LIKE CONCAT('%', :searchTerm, '%')
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
             $currentPage,
             $itemsPerPage,
             [
+                'searchTerm' => $searchTerm,
                 'status' => $status,
             ]
         );
@@ -89,12 +101,15 @@ if($status !== 'all'){
     $qoutationsData = paginateQuery($db,
         "SELECT qoutation.*, customer.name as customer_name, user.name as created_by_name, qoutation_status.name as status_name FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN qoutation_status ON qoutation.status = qoutation_status.id
         WHERE 
-        qoutation.control_no LIKE CONCAT('%', :searchTerm, '%')
-        OR customer.name LIKE CONCAT('%', :searchTerm, '%') ORDER BY id desc",
+        created_by = :created_by_id
+        AND
+        (qoutation.control_no LIKE CONCAT('%', :searchTerm, '%')
+        OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
         $currentPage,
         $itemsPerPage,
         [
-            'searchTerm' => $searchTerm
+            'searchTerm' => $searchTerm,
+            'created_by_id' => $currentUserId
         ]
     );
     $qoutations = $qoutationsData['results'];
