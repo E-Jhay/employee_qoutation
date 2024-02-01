@@ -13,13 +13,13 @@ $heading = "Sales Dashboard";
 
 $currentUserId = $_SESSION['user']['id'];
 
-$salesThisMonth = $db->query("SELECT SUM(product_qoutation.approved_price) as total FROM qoutation LEFT JOIN product_qoutation ON qoutation.id = product_qoutation.qoutation_id WHERE created_by = :created_by AND status = :status AND MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE())", [
+$salesThisMonth = $db->query("SELECT SUM(product_qoutation.total) as total FROM qoutation LEFT JOIN product_qoutation ON qoutation.id = product_qoutation.qoutation_id WHERE created_by = :created_by AND status = :status AND MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE())", [
     'created_by' => $currentUserId,
     'status' => QoutationStatus::APPROVED,
 ])->find()['total'];
 // dd($salesThisMonth);
 
-$salesLastMonth = $db->query("SELECT SUM(product_qoutation.approved_price) as total FROM qoutation LEFT JOIN product_qoutation ON qoutation.id = product_qoutation.qoutation_id WHERE created_by = :created_by AND status = :status AND
+$salesLastMonth = $db->query("SELECT SUM(product_qoutation.total) as total FROM qoutation LEFT JOIN product_qoutation ON qoutation.id = product_qoutation.qoutation_id WHERE created_by = :created_by AND status = :status AND
 (YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE()) - 1)
 OR
 (YEAR(created_at) = YEAR(CURDATE()) - 1 AND MONTH(created_at) = 12 AND MONTH(CURDATE()) = 1)", [
@@ -55,7 +55,7 @@ $disapprovedQoutations = $db->query("SELECT COUNT(*) as count FROM qoutation WHE
     'status' => QoutationStatus::DISAPPROVED,
 ])->find()['count'];
 
-$salesThisYear = $db->query("SELECT SUM(approved_price) as total, MONTHNAME(qoutation.created_at) as month_name FROM product_qoutation LEFT JOIN qoutation ON 
+$salesThisYear = $db->query("SELECT SUM(total) as total, MONTHNAME(qoutation.created_at) as month_name FROM product_qoutation LEFT JOIN qoutation ON 
 product_qoutation.qoutation_id = qoutation.id WHERE created_by = :created_by AND qoutation.status = :status AND YEAR(qoutation.created_at) = YEAR(CURDATE()) GROUP BY MONTH(created_at)", [
     'created_by' => $currentUserId,
     'status' => QoutationStatus::APPROVED,
