@@ -194,7 +194,7 @@ use Core\QoutationStatus;
                                  Product Details
                               </h3>
                               <div class="grid gap-4 gap-y-2 text-sm grid-cols-6 md:grid-cols-6">
-                                 <div class="col-span-2 md:col-span-2">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="product_qty">Quantity</label>
                                     <input type="hidden" name="id" id="id" value="" />
                                     <input type="text" name="product_qty" id="product_qty" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_qty']) ? 'border-red-500' : '' ?>" value="<?= old('product_qty') ?>" required/>
@@ -203,15 +203,15 @@ use Core\QoutationStatus;
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-2 md:col-span-2">
+                                 <!-- <div class="col-span-2 md:col-span-2">
                                     <label for="product_unit">Unit</label>
                                     <input type="text" name="product_unit" id="product_unit" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_unit']) ? 'border-red-500' : '' ?>" value="<?= old('product_unit') ?>" required/>
                                     <?php if(isset($errors['product_unit'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_unit'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
-                                 <div class="col-span-2 md:col-span-2">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="product_code">Code</label>
                                     <input type="text" name="product_code" id="product_code" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_code']) ? 'border-red-500' : '' ?>" value="<?= old('product_code') ?>" required/>
                                     <?php if(isset($errors['product_code'])): ?>
@@ -243,6 +243,10 @@ use Core\QoutationStatus;
                                     <?php if(isset($errors['product_description'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_description'] ?></span>
                                     <?php endif; ?>
+
+                                    <ul id="dropdownOptions" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
+                                          <!-- Options will be dynamically added here -->
+                                    </ul>
                                  </div>
                                  
                                  <!-- <div class="col-span-3 md:col-span-2">
@@ -461,7 +465,7 @@ use Core\QoutationStatus;
       if(<?= $qoutation['status'] === QoutationStatus::DISAPPROVED ? 1 : 0 ?>) {
          cells = [
             'product_qty',
-            'product_unit',
+            // 'product_unit',
             'product_code',
             // 'product_name',
             'product_description',
@@ -479,7 +483,7 @@ use Core\QoutationStatus;
       } else {
          cells = [
             'product_qty',
-            'product_unit',
+            // 'product_unit',
             'product_code',
             // 'product_name',
             'product_description',
@@ -545,7 +549,7 @@ use Core\QoutationStatus;
    const editProduct = (product) => {
       let cells = [
          'product_qty',
-         'product_unit',
+         // 'product_unit',
          'product_code',
          // 'product_name',
          'product_description',
@@ -607,10 +611,12 @@ use Core\QoutationStatus;
          if (data.success) {
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
             console.log(data.message)
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
          }
          // resetQoutationForm()
          // productLists = []
@@ -621,4 +627,69 @@ use Core\QoutationStatus;
       }
    }
 
+</script>
+
+<script src="../js/products.js"></script>
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("product_description");
+    const dropdownOptions = document.getElementById("dropdownOptions");
+
+   // allOptions = [...new Set(allOptions)]
+   // console.log(allOptions)
+   // Create a Set with unique names
+   const uniqueNamesSet = new Set(allOptions.map((option) => option.name));
+   
+   // Create a new array with unique items
+   const uniqueOptions = [...uniqueNamesSet].map((uniqueName) => {
+      return allOptions.find((option) => option.name === uniqueName);
+   });
+   // console.log(allOptions.length)
+   // console.log(uniqueOptions.length)
+
+    // Event listener for input changes
+    searchInput.addEventListener("input", function () {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredOptions = uniqueOptions.filter(option =>
+            option.name.toLowerCase().includes(searchTerm)
+        );
+
+        // Update the dropdown with filtered options
+        renderOptions(filteredOptions);
+    });
+
+    function renderOptions(options) {
+        // Clear existing options
+        dropdownOptions.innerHTML = "";
+
+        // Render filtered options
+        options.forEach(option => {
+            const li = document.createElement("li");
+            li.textContent = option.name;
+            li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500'
+
+            // Event listener for option click
+            li.addEventListener("click", function () {
+                searchInput.value = option.name;
+                document.getElementById('product_code').value  = option.code;
+                // Additional action when an option is selected
+
+                // Close the dropdown
+                dropdownOptions.style.display = "none";
+            });
+
+            dropdownOptions.appendChild(li);
+        });
+
+        // Show or hide the dropdown based on the number of filtered options
+        dropdownOptions.style.display = options.length > 0 ? "block" : "none";
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".searchable-dropdown")) {
+            dropdownOptions.style.display = "none";
+        }
+    });
+});
 </script>
