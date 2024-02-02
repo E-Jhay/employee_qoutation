@@ -13,19 +13,8 @@
                   <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                      <div class="flex items-center">
                         <div class="flex-shrink-0">
-                           <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"><?= $salesThisMonth ?></span>
-                           <h3 class="text-base font-normal text-gray-500">Sales this month</h3>
-                        </div>
-                        <div class="ml-5 w-0 flex items-center justify-end flex-1 text-<?= $isPositive ? 'green' : 'red' ?>-500 text-base font-bold">
-                           <?= $percentageIncrease ?>
-                           <!-- <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                           </svg> -->
-                           <?php if($isPositive) : ?>
-                           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="16" width="12" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
-                           <?php else: ?>
-                           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="16" width="12" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
-                           <?php endif; ?>
+                           <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"><?= $averageApprovalTime ?></span>
+                           <h3 class="text-base font-normal text-gray-500">Average Approval Time</h3>
                         </div>
                      </div>
                   </div>
@@ -67,7 +56,7 @@
                   <div class="flex items-center justify-between mb-4">
                      <div class="flex-shrink-0">
                         <!-- <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$45,385</span> -->
-                        <h3 class="text-xl font-bold leading-none text-gray-900">Sales this <?= date('Y') ?></h3>
+                        <h3 class="text-xl font-bold leading-none text-gray-900">Qouted this <?= date('Y') ?></h3>
                      </div>
                      <!-- <div class="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
                         12.5%
@@ -99,9 +88,9 @@
       "November" : 0,
       "December" : 0
    }
-   let salesThisYear = <?= $salesThisYear ?>
+   let qoutedThisYear = <?= $qoutedThisYear ?>
    
-   salesThisYear.forEach(sale => {
+   qoutedThisYear.forEach(sale => {
       sales[sale.month_name] = sale.total
    });
 
@@ -110,7 +99,7 @@
    data: {
       labels: Object.keys(sales),
       datasets: [{
-         label: 'Monthly Sales',
+         label: 'Monthly approved qoutation',
          backgroundColor: 'rgba(75, 192, 192, 0.2)',
          borderColor: 'rgba(75, 192, 192, 1)',
          borderWidth: 2,
