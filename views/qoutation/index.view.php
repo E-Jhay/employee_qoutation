@@ -110,6 +110,7 @@ use Core\Role;
 
    const getActiveStatus = () => {
       const status = document.querySelector('#tabs li.active button').id
+      // console.log(status)
       return status
    }
    const getItemsPerPage = () => {
@@ -145,6 +146,7 @@ use Core\Role;
       try {
          const response = await fetch(`/get-qoutations?status=${status}&itemsPerPage=${itemsPerPage}&searchTerm=${searchTerm}&page=${page}`);
          const data = await response.json()
+         // console.log(data)
          loadTable(data.qoutations)
          if(data.totalPages > 1) {
             displayPagination(data.totalPages, data.currentPage)
@@ -163,7 +165,7 @@ use Core\Role;
       pagination.innerHTML = '';
 
       if (currentPage > 1) {
-         pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData(${getActiveStatus()}, ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage - 1})">Previous</button>`;
+         pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage - 1})">Previous</button>`;
       }
 
       let startPage = Math.max(1, currentPage - 1);
@@ -177,15 +179,15 @@ use Core\Role;
 
       for (let i = startPage; i <= endPage; i++) {
          if (i === currentPage) {
-            pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 border border-gray200 bg-blue-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData(${getActiveStatus()}, ${getItemsPerPage()}, '${getSearchTerm()}', ${i})">${i}</button>`
+            pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 border border-gray200 bg-blue-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${i})">${i}</button>`
          } else {
-            pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData(${getActiveStatus()}, ${getItemsPerPage()}, '${getSearchTerm()}', ${i})">${i}</button>`
+            pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${i})">${i}</button>`
          }
          
       }
 
       if (currentPage < totalPages) {
-         pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData(${getActiveStatus()}, ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage + 1})">Next</button>`;
+         pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage + 1})">Next</button>`;
       }
    }
 
