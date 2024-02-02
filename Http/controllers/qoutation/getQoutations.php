@@ -126,6 +126,6 @@ if($status !== 'all'){
 echo json_encode([
         // 'heading' => "Pending Qoutations",
         'qoutations' => $qoutations,
-        'totalPagesQoutations' => $totalPagesqoutations,
+        'totalPages' => $totalPagesqoutations,
         'currentPage' => $currentPage
     ]);

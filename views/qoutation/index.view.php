@@ -39,16 +39,16 @@ use Core\Role;
                   </ul>
 
                   <div id="pending" class="shadow overflow-hidden border-b sm:rounded-lg mt-4 py-2">
-                  <div class="px-4 mb-2 d-flex">
-                     <select name="itemsPerPage" id="itemsPerPage" autocomplete="itemsPerpage" class="h-10 border rounded px-2 w-18 bg-transparent border-gray-300">
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                     </select>
+                     <div class="px-4 mb-2 d-flex">
+                        <select name="itemsPerPage" id="itemsPerPage" autocomplete="itemsPerpage" class="h-10 border rounded px-2 w-18 bg-transparent border-gray-300">
+                           <option value="10" selected>10</option>
+                           <option value="20">20</option>
+                           <option value="25">25</option>
+                           <option value="50">50</option>
+                        </select>
 
-                     <input type="text" name="searchTerm" id="searchTerm" class="h-10 border rounded px-2 bg-transparent border-gray-300" placeholder="Search..." />
-                  </div>
+                        <input type="text" name="searchTerm" id="searchTerm" class="h-10 border rounded px-2 bg-transparent border-gray-300" placeholder="Search..." />
+                     </div>
                      <div class="flex flex-col">
                         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -89,6 +89,13 @@ use Core\Role;
                            </div>
                         </div>
                      </div>
+                     <div class="my-4 flex justify-center sm:justify-end sm:pr-2">
+                        <nav id="pagination" class="flex space-x-2" aria-label="Pagination">
+                        </nav>
+                     </div>
+
+                     
+                     
                   </div>
                </div>
 
@@ -134,13 +141,51 @@ use Core\Role;
       getData(getActiveStatus(), getItemsPerPage(), e.target.value)
    })
 
-   async function getData(status, itemsPerPage = 10, searchTerm = '') {
+   async function getData(status, itemsPerPage = 10, searchTerm = '', page = 1) {
       try {
-         const response = await fetch(`/get-qoutations?status=${status}&itemsPerPage=${itemsPerPage}&searchTerm=${searchTerm}&page=`);
+         const response = await fetch(`/get-qoutations?status=${status}&itemsPerPage=${itemsPerPage}&searchTerm=${searchTerm}&page=${page}`);
          const data = await response.json()
          loadTable(data.qoutations)
+         if(data.totalPages > 1) {
+            displayPagination(data.totalPages, data.currentPage)
+         } else {    
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+         }
       } catch (e) {
          console.error(e);
+      }
+   }
+
+   // Function to display pagination controls
+   function displayPagination(totalPages, currentPage) {
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      if (currentPage > 1) {
+         pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData(${getActiveStatus()}, ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage - 1})">Previous</button>`;
+      }
+
+      let startPage = Math.max(1, currentPage - 1);
+      let endPage = Math.min(totalPages, currentPage + 1);
+
+      if (currentPage === 1) {
+         endPage = Math.min(totalPages, currentPage + 2);
+      } else if (currentPage === totalPages) {
+         startPage = Math.max(1, currentPage - 2);
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+         if (i === currentPage) {
+            pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 border border-gray200 bg-blue-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData(${getActiveStatus()}, ${getItemsPerPage()}, '${getSearchTerm()}', ${i})">${i}</button>`
+         } else {
+            pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData(${getActiveStatus()}, ${getItemsPerPage()}, '${getSearchTerm()}', ${i})">${i}</button>`
+         }
+         
+      }
+
+      if (currentPage < totalPages) {
+         pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData(${getActiveStatus()}, ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage + 1})">Next</button>`;
       }
    }
 
