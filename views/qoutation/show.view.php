@@ -486,11 +486,13 @@ use Core\Role;
          if (data.success) {
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
             toggleModal('qoutationModal')
             document.querySelector('.actionBtnDiv').classList.add('hidden')
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
             toggleModal('qoutationModal')
          }
          // console.log(data.success);

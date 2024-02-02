@@ -12,13 +12,13 @@ authorize($_SESSION['user']['role_id'] === Role::SALES_MANAGER);
 
 $id = $_POST['id'];
 $mode = $_POST['mode'];
-$approvedPrices = json_decode($_POST['approvedPrices'], true);
 $status = QoutationStatus::PENDING;
 
 try {
     $mode == 'Approve' ? $status = QoutationStatus::APPROVED : ($mode == 'Disapprove' ? $status = QoutationStatus::DISAPPROVED : $status = QoutationStatus::PENDING);
-
+    
     if($mode == 'Disapprove') {
+        $approvedPrices = json_decode($_POST['approvedPrices'], true);
         foreach($approvedPrices as $prices) {
             $db->query("UPDATE product_qoutation SET approved_price = :approved_price WHERE id = :id", [
                 'id' => $prices['id'],
@@ -31,7 +31,15 @@ try {
         'id' => $id,
     ]);
 
-    
+    if($mode == 'Approve') {
+        $db->query("UPDATE qoutation SET updated_at = :updated_at, expired_at = :expired_at, validity = :validity WHERE id = :id", [
+            'validity' => 30,
+            'updated_at' => date('Y-m-d'),
+            'expired_at' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 30 days')),
+            'id' => $id,
+        ]);
+    }
+
 
     $config = require base_path("config.php");
     $mailer = new Mailer($config['mail']);

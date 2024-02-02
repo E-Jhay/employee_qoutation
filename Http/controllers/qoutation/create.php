@@ -2,7 +2,6 @@
 
 use Core\App;
 use Core\Session;
-
 $db = App::resolve('Core\Database');
 // dd("create Qoutation");
 // $managers = $db->query("SELECT id, name FROM user WHERE role_id = :role_id", [

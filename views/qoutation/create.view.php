@@ -5,7 +5,7 @@
    <div class="flex overflow-hidden bg-white pt-16">
       <!-- Sidebar -->
       <?php require base_path('views/partials/sidebar.php') ?>
-      <div id="main-content" class="h-full w-full bg-gray-50 relative lg:ml-64">
+      <div class="h-full w-full bg-gray-50 relative lg:ml-64">
          <main class="pt-6 px-2 lg:px-8">
             <div class="flex justify-start gap-2">
                <a href="/qoutations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
@@ -606,7 +606,7 @@
          if (data.success) {
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
-            document.getElementById('main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
             successPanel.focus()
             submitButton.className = '';
             submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
@@ -615,7 +615,7 @@
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
-            document.getElementById('main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
             errorPanel.focus()
             submitButton.className = '';
             submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
