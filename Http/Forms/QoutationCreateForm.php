@@ -28,18 +28,18 @@ class QoutationCreateForm {
         if(! Validator::string($attributes['position'])) {
             $this->errors['position'] = "Position is required.";
         }
-        if(! Validator::string($attributes['territory'])) {
-            $this->errors['territory'] = "Territory is required.";
-        }
-        if(! Validator::string($attributes['tel_no'])) {
-            $this->errors['tel_no'] = "Tel / Fax no is required.";
-        }
-        if(! Validator::string($attributes['validity'])) {
-            $this->errors['validity'] = "Validity is required.";
-        }
-        if(! Validator::string($attributes['delivery'])) {
-            $this->errors['delivery'] = "Delivery is required.";
-        }
+        // if(! Validator::string($attributes['territory'])) {
+        //     $this->errors['territory'] = "Territory is required.";
+        // }
+        // if(! Validator::string($attributes['tel_no'])) {
+        //     $this->errors['tel_no'] = "Tel / Fax no is required.";
+        // }
+        // if(! Validator::string($attributes['validity'])) {
+        //     $this->errors['validity'] = "Validity is required.";
+        // }
+        // if(! Validator::string($attributes['delivery'])) {
+        //     $this->errors['delivery'] = "Delivery is required.";
+        // }
         if(! Validator::string($attributes['terms'])) {
             $this->errors['terms'] = "Terms is required.";
         }

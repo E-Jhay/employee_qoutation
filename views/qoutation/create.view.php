@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="md:col-span-6">
-                           <label for="address">Address / Street</label>
+                           <label for="address">Address</label>
                            <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
                            <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= old('address') ?>" placeholder="" />
                            <?php if(isset($errors['address'])): ?>
@@ -61,7 +61,7 @@
                               <span class="text-red-500 text-xs"><?= $errors['position'] ?></span>
                            <?php endif; ?>
                         </div>
-                        <div class="md:col-span-3">
+                        <!-- <div class="md:col-span-3">
                            <label for="territory">Territory</label>
                            <input type="text" name="territory" id="territory" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['territory']) ? 'border-red-500' : '' ?>" value="<?= old('territory') ?>" />
                            <?php if(isset($errors['territory'])): ?>
@@ -88,10 +88,10 @@
                            <?php if(isset($errors['delivery'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['delivery'] ?></span>
                            <?php endif; ?>
-                        </div>
+                        </div> -->
                         <div class="md:col-span-6">
                            <label for="terms">Terms</label>
-                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
+                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" cols="30" rows="10"></textarea>
                            <?php if(isset($errors['terms'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['terms'] ?></span>
                            <?php endif; ?>
@@ -209,7 +209,7 @@
                                  Product Details
                               </h3>
                               <div class="grid gap-4 gap-y-2 text-sm grid-cols-6 md:grid-cols-6">
-                                 <div class="col-span-2 md:col-span-2">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="product_qty">Quantity</label>
                                     <input type="hidden" name="id" id="id" value="" />
                                     <input type="text" name="product_qty" id="product_qty" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_qty']) ? 'border-red-500' : '' ?>" value="<?= old('product_qty') ?>" required/>
@@ -218,15 +218,15 @@
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-2 md:col-span-2">
+                                 <!-- <div class="col-span-2 md:col-span-2">
                                     <label for="product_unit">Unit</label>
                                     <input type="text" name="product_unit" id="product_unit" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_unit']) ? 'border-red-500' : '' ?>" value="<?= old('product_unit') ?>" required/>
                                     <?php if(isset($errors['product_unit'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_unit'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
-                                 <div class="col-span-2 md:col-span-2">
+                                 <div class="col-span-3 md:col-span-3">
                                     <label for="product_code">Code</label>
                                     <input type="text" name="product_code" id="product_code" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_code']) ? 'border-red-500' : '' ?>" value="<?= old('product_code') ?>" required/>
                                     <?php if(isset($errors['product_code'])): ?>

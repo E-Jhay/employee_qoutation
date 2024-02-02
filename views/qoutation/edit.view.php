@@ -43,7 +43,7 @@ use Core\QoutationStatus;
                         </div>
 
                         <div class="md:col-span-6">
-                           <label for="address">Address / Street</label>
+                           <label for="address">Address</label>
                            <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
                            <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= $qoutation['customer_address']  ?>" placeholder="" />
                            <?php if(isset($errors['address'])): ?>
@@ -64,6 +64,21 @@ use Core\QoutationStatus;
                            <input type="text" name="position" id="position" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['position']) ? 'border-red-500' : '' ?>" value="<?= $qoutation['customer_position']  ?>" />
                            <?php if(isset($errors['position'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['position'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
+                        <div class="md:col-span-6">
+                           <label for="terms">Terms</label>
+                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" cols="30" rows="10"><?= $qoutation['terms']  ?></textarea>
+                           <?php if(isset($errors['terms'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['terms'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-3">
+                           <label for="needed_at">Date Needed</label>
+                           <input type="date" name="needed_at" id="needed_at" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['needed_at']) ? 'border-red-500' : '' ?>" value="<?php echo date('Y-m-d',strtotime($qoutation["needed_at"])) ?>" />
+                           <?php if(isset($errors['needed_at'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['needed_at'] ?></span>
                            <?php endif; ?>
                         </div>
                         <div class="md:col-span-6 my-4">

@@ -29,14 +29,15 @@ try {
     
     // $lastInsertId = $db->connection()->lastInsertId();
 
-    $db->query("UPDATE qoutation SET created_by = :created_by, territory = :territory, tel_no = :tel_no, validity = :validity, delivery = :delivery, terms = :terms WHERE id = :id", [
+    $db->query("UPDATE qoutation SET created_by = :created_by, terms = :terms, needed_at = :needed_at WHERE id = :id", [
         'id' => $_POST['qoutation_id'],
         'created_by' => $_SESSION['user']['id'],
-        'territory' => 'territory2',
-        'tel_no' => '091234567892',
-        'validity' => 'valid2',
-        'delivery' => 'delivery2',
-        'terms' => 'terms2'
+        // 'territory' => 'territory2',
+        // 'tel_no' => '091234567892',
+        // 'validity' => 'valid2',
+        // 'delivery' => 'delivery2',
+        'terms' => $_POST['terms'],
+        'needed_at' => $_POST['needed_at'],
     ]);
     // $lastInsertId = $db->connection()->lastInsertId();
     

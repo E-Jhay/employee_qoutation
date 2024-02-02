@@ -23,10 +23,10 @@ $attributes = [
     'address' => $_POST['address'],
     'contact_person' => $_POST['contact_person'],
     'position' => $_POST['position'],
-    'territory' => $_POST['territory'],
-    'tel_no' => $_POST['tel_no'],
-    'validity' => $_POST['validity'],
-    'delivery' => $_POST['delivery'],
+    // 'territory' => $_POST['territory'],
+    // 'tel_no' => $_POST['tel_no'],
+    // 'validity' => $_POST['validity'],
+    // 'delivery' => $_POST['delivery'],
     'terms' => $_POST['terms'],
     'needed_at' => $_POST['needed_at'],
 ];
@@ -62,14 +62,14 @@ try {
 
     $latestControlNo = $db->query("SELECT control_no FROM `qoutation` WHERE control_no LIKE '%PMC%' ORDER BY id DESC LIMIT 1")->find()['control_no'];
 
-    $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, territory, tel_no, validity, delivery, terms, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :territory, :tel_no, :validity, :delivery, :terms, :status, :team_id, :needed_at)", [
+    $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, terms, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :terms, :status, :team_id, :needed_at)", [
         'control_no' => generateControlNumber($latestControlNo),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $customerInsertedId,
-        'territory' => $_POST['territory'],
-        'tel_no' => $_POST['tel_no'],
-        'validity' => $_POST['validity'],
-        'delivery' => $_POST['delivery'],
+        // 'territory' => $_POST['territory'],
+        // 'tel_no' => $_POST['tel_no'],
+        // 'validity' => $_POST['validity'],
+        // 'delivery' => $_POST['delivery'],
         'terms' => $_POST['terms'],
         'status' => QoutationStatus::PENDING,
         'team_id' => $team_id,
@@ -80,9 +80,9 @@ try {
     $products = json_decode($_POST['products'], true);
 
     foreach($products as $product) {
-        $db->query("INSERT INTO product_qoutation (qoutation_id, unit, code, description, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:qoutation_id, :unit, :code, :description, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
+        $db->query("INSERT INTO product_qoutation (qoutation_id, code, description, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:qoutation_id, :code, :description, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
             'qoutation_id' => $qoutationInsertId,
-            'unit' => $product['product_unit'],
+            // 'unit' => $product['product_unit'],
             'code' => $product['product_code'],
             'description' => $product['product_description'],
             'quantity' => $product['product_qty'],
@@ -101,8 +101,9 @@ try {
     $mailer = new Mailer($config['mail']);
     $manager_email = (array)$db->query("SELECT email FROM team LEFT JOIN user ON team.manager_id = user.id WHERE team.id = :team_id", [
         'team_id' => $_SESSION['user']['team_id'],
-    ])->find()['email'];
-    $to = $manager_email;
+    ])->find()['email'] ?? '';
+    // $to = $manager_email;
+    $to = ['bumacodejhay@gmail.com'];
 
     // Read HTML content from a file and replace placeholders with data
     $htmlContent = getHtmlContent('../views/mail/storeQoutation.html', [
@@ -111,7 +112,7 @@ try {
     ]);
     // $mail->Body = $htmlContent;
 
-    $mailer->sendMail($to, 'PMC Qoutation', $htmlContent);
+    $mailer->sendMail($to, 'PMC Qoutation ' . generateControlNumber($latestControlNo), $htmlContent);
 
     $db->commit();
 
