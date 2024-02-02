@@ -224,46 +224,48 @@ use Core\Role;
             else {
                td.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'text-right', 'whitespace-nowrap')
                let editBtn = document.createElement("a")
-
+               
                editBtn.classList.add('text-blue-600', 'dark:text-blue-500', 'hover:underline', 'cursor-pointer', 'mb-2', 'mr-2')
                editBtn.innerText = `View`
                editBtn.href = `/qoutation/show?id=${qoutation['id']}`
-
-               let deleteBtn = document.createElement("a")
-
-               deleteBtn.classList.add('text-red-600', 'dark:text-red-500', 'hover:underline', 'cursor-pointer', 'mb-2', 'mr-2')
-               deleteBtn.innerText = `Delete`
-               deleteBtn.addEventListener('click', async (e) => {
-                  e.preventDefault()
-                  
-                  const successPanel = document.querySelector('.success-panel')
-                  const errorPanel = document.querySelector('.error-panel')
-                  const successMessage = document.querySelector('.successMessage')
-                  const errorMessage = document.querySelector('.errorMessage')
-                  try {
-                     const response = await fetch("/qoutation/delete", {
-                        method: "DELETE",
-                        headers: {
-                           'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({id : qoutation['id']})
-                     });
-                     const data = await response.json()
-                     // const status = document.querySelector('#tabs li.active button').id
-                     if (data.success) {
-                        successPanel.classList.remove('hidden')
-                        successMessage.innerText = data.message
-                     } else {
-                        errorPanel.classList.remove('hidden')
-                        errorMessage.innerText = data.message
-                     }
-                     getData(getActiveStatus(), getItemsPerPage(), getSearchTerm())
-                  } catch (e) {
-                     console.error(e);
-                  }
-               })
                td.appendChild(editBtn)
-               td.appendChild(deleteBtn)
+               
+               if (<?= (int)$_SESSION['user']['role_id'] === Role::SALES ? 1 : 0 ?> && qoutation['status'] === <?= QoutationStatus::PENDING ?>) {
+                  let deleteBtn = document.createElement("a")
+
+                  deleteBtn.classList.add('text-red-600', 'dark:text-red-500', 'hover:underline', 'cursor-pointer', 'mb-2', 'mr-2')
+                  deleteBtn.innerText = `Delete`
+                  deleteBtn.addEventListener('click', async (e) => {
+                     e.preventDefault()
+                     
+                     const successPanel = document.querySelector('.success-panel')
+                     const errorPanel = document.querySelector('.error-panel')
+                     const successMessage = document.querySelector('.successMessage')
+                     const errorMessage = document.querySelector('.errorMessage')
+                     try {
+                        const response = await fetch("/qoutation/delete", {
+                           method: "DELETE",
+                           headers: {
+                              'Content-Type': 'application/json'
+                           },
+                           body: JSON.stringify({id : qoutation['id']})
+                        });
+                        const data = await response.json()
+                        // const status = document.querySelector('#tabs li.active button').id
+                        if (data.success) {
+                           successPanel.classList.remove('hidden')
+                           successMessage.innerText = data.message
+                        } else {
+                           errorPanel.classList.remove('hidden')
+                           errorMessage.innerText = data.message
+                        }
+                        getData(getActiveStatus(), getItemsPerPage(), getSearchTerm())
+                     } catch (e) {
+                        console.error(e);
+                     }
+                  })
+                  td.appendChild(deleteBtn)
+               }
             }
             // Append cells to row
             tr.appendChild(td);
