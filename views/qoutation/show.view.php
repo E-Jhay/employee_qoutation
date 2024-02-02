@@ -25,6 +25,12 @@ use Core\Role;
                      <!--  Company logo  -->
                      <img src="../images/logo.png" alt="company-logo" height="150" width="250">
                   </div>
+                  <div class="text-right">
+                     <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Qoutation</h1>
+                     <h1 class="font-semibold text-gray-900 sm:text-xl text-xs">
+                        <?= $qoutation['control_no'] ?>
+                     </h1>
+                  </div>
                </div>
 
                <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
@@ -73,21 +79,20 @@ use Core\Role;
                      </p>
                   </div>
                   <div class="text-right">
-                     <p class="">
-                        Control number:
-                        <span class="text-gray-500">
-                           <?= $qoutation['control_no'] ?>
-                        </span>
-                     </p>
                      <p>
                         Qoute created: 
                         <span class="text-gray-500">
-                           <?= $qoutation['created_at'] ?>
+                           <?= date('m-d-Y',strtotime($qoutation['created_at'])) ?>
                         </span>
+                        <!-- <br />
+                        Qoute approved:
+                        <span class="text-gray-500">
+                           <?= date('m-d-Y',strtotime($qoutation['updated_at'])) ?? date('m-d-Y') ?>
+                        </span> -->
                         <br />
                         Qoute expires:
                         <span class="text-gray-500">
-                           <?= $qoutation['expired_at'] ?? date('Y-m-d') ?>
+                           <?= date('m-d-Y',strtotime($qoutation['expired_at'])) ?? date('m-d-Y') ?>
                         </span>
                      </p>
                   </div>
