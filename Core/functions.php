@@ -75,21 +75,40 @@ function getHtmlContent($filePath, $data)
 }
 
 // Function to generate the next control number
-function generateControlNumber($controlNumber, $counterLength = 4) {
+// function generateControlNumber($controlNumber, $counterLength = 4) {
+
+//     // Extract the numeric part after the hyphen
+//     $numericPartWithZeros = explode('-', $controlNumber)[1];
+
+//     // Extract the prefix part
+//     $prefix = explode('-', $controlNumber)[0];
+
+//     // Remove leading zeros
+//     $numericPartWithoutZeros = ltrim($numericPartWithZeros, '0') + 1;
+//     // Format the counter with leading zeros
+//     $formattedCounter = str_pad($numericPartWithoutZeros, $counterLength, '0', STR_PAD_LEFT);
+
+//     // Combine prefix and formatted counter
+//     $controlNumber = $prefix . '-' . $formattedCounter;
+
+//     return $controlNumber;
+// }
+// Function to generate the next control number
+function generateControlNumber($controlNumber = 'Q-0') {
 
     // Extract the numeric part after the hyphen
-    $numericPartWithZeros = explode('-', $controlNumber)[1];
+    $numericPartWithZeros = (int)explode('-', $controlNumber)[1] + 1;
 
     // Extract the prefix part
     $prefix = explode('-', $controlNumber)[0];
 
-    // Remove leading zeros
-    $numericPartWithoutZeros = ltrim($numericPartWithZeros, '0') + 1;
-    // Format the counter with leading zeros
-    $formattedCounter = str_pad($numericPartWithoutZeros, $counterLength, '0', STR_PAD_LEFT);
+    // // Remove leading zeros
+    // $numericPartWithoutZeros = ltrim($numericPartWithZeros, '0') + 1;
+    // // Format the counter with leading zeros
+    // $formattedCounter = str_pad($numericPartWithoutZeros, $counterLength, '0', STR_PAD_LEFT);
 
     // Combine prefix and formatted counter
-    $controlNumber = $prefix . '-' . $formattedCounter;
+    $controlNumber = $prefix . '-' . $numericPartWithZeros;
 
     return $controlNumber;
 }

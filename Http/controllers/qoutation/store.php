@@ -60,7 +60,7 @@ try {
         $team_id = $_SESSION['user']['team_id'];
     }
 
-    $latestControlNo = $db->query("SELECT control_no FROM `qoutation` WHERE control_no LIKE '%PMC%' ORDER BY id DESC LIMIT 1")->find()['control_no'];
+    $latestControlNo = $db->query("SELECT control_no FROM `qoutation` ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-0';
 
     $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, terms, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :terms, :status, :team_id, :needed_at)", [
         'control_no' => generateControlNumber($latestControlNo),
