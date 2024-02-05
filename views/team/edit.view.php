@@ -35,6 +35,20 @@
                            <?php endif; ?>
                         </div>
 
+                        <div class="md:col-span-3">
+                           <label for="manager">Manager</label>
+                           <!-- <input type="text" name="manager" id="manager" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="" placeholder="" /> -->
+                           <select id="manager_id" name="manager_id" autocomplete="manager_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['manager_id']) ? 'border-red-500' : '' ?>">
+                              <option value="" selected>-- Select manager --</option >
+                              <?php foreach($managers as $manager): ?>
+                                 <option <?= $team['manager_id'] === $manager['id'] ? 'selected' : '' ?> value="<?= $manager['id'] ?>"><?= ucwords($manager['name']) ?></option >
+                              <?php endforeach; ?>
+                           </select>
+                           <?php if(isset($errors['manager_id'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['manager_id'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
                         <!-- <div class="md:col-span-3">
                            <label for="region">Region</label>
                            <select id="region_id" name="region_id" autocomplete="region_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['region_id']) ? 'border-red-500' : '' ?>">
@@ -53,20 +67,6 @@
                            <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= $team['address'] ?>" placeholder="" />
                            <?php if(isset($errors['address'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['address'] ?></span>
-                           <?php endif; ?>
-                        </div>
-
-                        <div class="md:col-span-3">
-                           <label for="manager">Manager</label>
-                           <!-- <input type="text" name="manager" id="manager" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="" placeholder="" /> -->
-                           <select id="manager_id" name="manager_id" autocomplete="manager_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['manager_id']) ? 'border-red-500' : '' ?>">
-                              <option value="" selected>-- Select manager --</option >
-                              <?php foreach($managers as $manager): ?>
-                                 <option <?= $team['manager_id'] === $manager['id'] ? 'selected' : '' ?> value="<?= $manager['id'] ?>"><?= ucwords($manager['name']) ?></option >
-                              <?php endforeach; ?>
-                           </select>
-                           <?php if(isset($errors['manager_id'])): ?>
-                              <span class="text-red-500 text-xs"><?= $errors['manager_id'] ?></span>
                            <?php endif; ?>
                         </div>
                         <!-- <div class="md:col-span-3">

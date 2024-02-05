@@ -9,7 +9,7 @@ $db = App::resolve('Core\Database');
 $managers = $db->query("SELECT id, name FROM user WHERE role_id = :role_id", [
     'role_id' => 2
 ])->get();
-$regions = $db->query("SELECT id, name FROM region")->get();
+// $regions = $db->query("SELECT id, name FROM region")->get();
 
 $form = TeamCreateForm::validate($attributes = [
     'id' => $_POST['id'],
@@ -23,7 +23,7 @@ if(! empty($form->errors())) {
     return view("team/create.view.php", [
         'heading' => 'Create Team',
         'managers' => $managers,
-        'regions' => $regions
+        // 'regions' => $regions
     ]);
 }
 
