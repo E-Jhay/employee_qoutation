@@ -141,6 +141,7 @@ use Core\Role;
                                  <td class="py-5 pl-4 pr-3 text-sm sm:pl-0">
                                     <div class="font-medium truncate text-gray-900"><?= $product['description'] ?></div>
                                     <div class="mt-1 text-gray-500"><?= $product['code'] ?></div>
+                                    <div class="mt-1 text-gray-500">( <?= $product['comment'] ?> )</div>
                                  </td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['code'] ?></td> -->
@@ -234,12 +235,20 @@ use Core\Role;
                         </p>
                      </div>
                   </div>
+
                   <?php if($qoutation['status'] == QoutationStatus::PENDING && $_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
-                  <div class="actionBtnDiv flex justify-end gap-2 mt-4">
-                     <button id="approveButton" type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="actionBtn bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
-                     <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="actionBtn bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
-                     <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
-                  </div>
+                     <div id="remarksField" class="col-span-6 md:col-span-6">
+                        <label for="remarks">Comments</label>
+                        <textarea name="remarks" id="remarks" class="h-20 border mt-1 rounded p-2 w-full bg-transparent <?= isset($errors['remarks']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
+                        <?php if(isset($errors['remarks'])): ?>
+                           <span class="text-red-500 text-xs"><?= $errors['remarks'] ?></span>
+                        <?php endif; ?>
+                     </div>
+                     <div class="actionBtnDiv flex justify-end gap-2 mt-4">
+                        <button id="approveButton" type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="actionBtn bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
+                        <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="actionBtn bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
+                        <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+                     </div>
                   <?php endif; ?>
                   <?php if(($qoutation['status'] == QoutationStatus::PENDING || $qoutation['status'] == QoutationStatus::DISAPPROVED) && $_SESSION['user']['role_id'] == Role::SALES) : ?>
                   <div class="flex justify-end gap-2 mt-4">
@@ -468,6 +477,7 @@ use Core\Role;
       const successMessage = document.querySelector('.successMessage')
       const errorMessage = document.querySelector('.errorMessage')
       const mode = document.querySelector('.modalText').innerHTML
+      const remarks = document.getElementById('remarks').value
       const formData = new FormData()
       const actionBtn = document.getElementById('actionBtn')
       
@@ -479,6 +489,7 @@ use Core\Role;
 
       formData.append("id", id)
       formData.append("mode", mode)
+      formData.append("remarks", remarks)
       if(mode === 'Disapprove') {
          formData.append("approvedPrices", JSON.stringify(approvedPrices))
       }

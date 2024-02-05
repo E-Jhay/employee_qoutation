@@ -80,11 +80,12 @@ try {
     $products = json_decode($_POST['products'], true);
 
     foreach($products as $product) {
-        $db->query("INSERT INTO product_qoutation (qoutation_id, code, description, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:qoutation_id, :code, :description, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
+        $db->query("INSERT INTO product_qoutation (qoutation_id, code, description, comment, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:qoutation_id, :code, :description, :comment, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
             'qoutation_id' => $qoutationInsertId,
             // 'unit' => $product['product_unit'],
             'code' => $product['product_code'],
             'description' => $product['product_description'],
+            'comment' => $product['product_comment'],
             'quantity' => $product['product_qty'],
             // 'stock' => $product['stock'],
             'comparative_price' => $product['comparative_price'],

@@ -10,7 +10,7 @@ $qoutation = $db->query("SELECT qoutation.*, customer.name as customer_name, cus
 ])->find();
 
 
-$products = $db->query("SELECT *, quantity as product_qty, total as product_total, unit as product_unit, code as product_code, description as product_description FROM product_qoutation WHERE qoutation_id = :id", [
+$products = $db->query("SELECT *, quantity as product_qty, total as product_total, unit as product_unit, code as product_code, description as product_description, comment as product_comment FROM product_qoutation WHERE qoutation_id = :id", [
     'id' => $_GET['id']
 ])->get();
 // dd($products);

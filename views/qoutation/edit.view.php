@@ -114,9 +114,9 @@ use Core\QoutationStatus;
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Quantity
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Unit
-                                                      </th>
+                                                      </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Code
                                                       </th>
@@ -247,6 +247,14 @@ use Core\QoutationStatus;
                                     <ul id="dropdownOptions" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
                                           <!-- Options will be dynamically added here -->
                                     </ul>
+                                 </div>
+
+                                 <div class="col-span-6 md:col-span-6">
+                                    <label for="product_comment">Product comment</label>
+                                    <textarea name="product_comment" id="product_comment" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_comment']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
+                                    <?php if(isset($errors['product_comment'])): ?>
+                                       <span class="text-red-500 text-xs"><?= $errors['product_comment'] ?></span>
+                                    <?php endif; ?>
                                  </div>
                                  
                                  <!-- <div class="col-span-3 md:col-span-2">
@@ -553,6 +561,7 @@ use Core\QoutationStatus;
          'product_code',
          // 'product_name',
          'product_description',
+         'product_comment',
          // 'stock',
          'comparative_price',
          'catalog_price',
