@@ -1,14 +1,15 @@
 <?php
 
 use Core\App;
+use Core\Role;
 use Core\Session;
 
 $db = App::resolve('Core\Database');
 
 $managers = $db->query("SELECT id, name FROM user WHERE role_id = :role_id", [
-    'role_id' => 2
+    'role_id' => Role::SALES_MANAGER
 ])->get();
-$regions = $db->query("SELECT id, name FROM region")->get();
+// $regions = $db->query("SELECT id, name FROM region")->get();
 
 $team = $db->query("SELECT team.*, region.id as region_id, region.name as region, user.id as user_id, user.name as manager FROM team JOIN region on team.region_id = region.id LEFT JOIN user on team.manager_id = user.id WHERE team.id = :id", [
     'id' => $_GET['id']
@@ -20,7 +21,7 @@ $team = $db->query("SELECT team.*, region.id as region_id, region.name as region
 view("team/edit.view.php", [
     'heading' => "Edit User",
     'managers' => $managers,
-    'regions' => $regions,
+    // 'regions' => $regions,
     'team' => $team,
     'errors' => Session::get('errors')
 ]);

@@ -18,7 +18,7 @@ $regions = $db->query("SELECT id, name FROM region")->get();
 $form = TeamCreateForm::validate($attributes = [
     'name' => $_POST['name'],
     'address' => $_POST['address'],
-    'region_id' => $_POST['region_id'],
+    // 'region_id' => $_POST['region_id'],
     'manager_id' => $_POST['manager_id'],
 ]);
 
@@ -31,10 +31,10 @@ if(! empty($form->errors())) {
 }
 
 try {
-    $db->query("INSERT INTO team(name, address, region_id, manager_id) VALUES(:name, :address, :region_id, :manager_id)", [
+    $db->query("INSERT INTO team(name, address, manager_id) VALUES(:name, :address, :manager_id)", [
         'name' => $_POST['name'],
         'address' => $_POST['address'],
-        'region_id' => $_POST['region_id'],
+        // 'region_id' => $_POST['region_id'],
         'manager_id' => $_POST['manager_id'] !== '' ? $_POST['manager_id'] : NULL,
     ]);
 } catch(Exception $e) {

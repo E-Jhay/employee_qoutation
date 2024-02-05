@@ -34,9 +34,9 @@
                                           <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                              Team Name
                                           </th>
-                                          <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                          <!-- <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                              Region
-                                          </th>
+                                          </th> -->
                                           <th scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                              Address
                                           </th>
@@ -53,9 +53,9 @@
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 <?= $team['name'] ?>
                                              </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                             <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 <?= $team['region'] ?>
-                                             </td>
+                                             </td> -->
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 <?= htmlspecialchars($team['address']) ?>
                                              </td>

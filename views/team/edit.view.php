@@ -35,11 +35,9 @@
                            <?php endif; ?>
                         </div>
 
-                        <div class="md:col-span-3">
+                        <!-- <div class="md:col-span-3">
                            <label for="region">Region</label>
-                           <!-- <input type="text" name="region" id="region" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="" placeholder="" /> -->
                            <select id="region_id" name="region_id" autocomplete="region_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['region_id']) ? 'border-red-500' : '' ?>">
-                              <!-- <option value="" selected>-- Select region --</option > -->
                               <?php foreach($regions as $region): ?>
                                  <option <?= $team['region_id'] === $region['id'] ? 'selected' : '' ?> value="<?= $region['id'] ?>"><?= ucwords($region['name']) ?></option >
                               <?php endforeach; ?>
@@ -47,10 +45,10 @@
                            <?php if(isset($errors['region_id'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['region_id'] ?></span>
                            <?php endif; ?>
-                        </div>
+                        </div> -->
 
                         <div class="md:col-span-6">
-                           <label for="address">Address / Street</label>
+                           <label for="address">Address</label>
                            <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
                            <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= $team['address'] ?>" placeholder="" />
                            <?php if(isset($errors['address'])): ?>

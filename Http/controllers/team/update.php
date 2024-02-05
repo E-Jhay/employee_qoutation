@@ -15,7 +15,7 @@ $form = TeamCreateForm::validate($attributes = [
     'id' => $_POST['id'],
     'name' => $_POST['name'],
     'address' => $_POST['address'],
-    'region_id' => $_POST['region_id'],
+    // 'region_id' => $_POST['region_id'],
     'manager_id' => $_POST['manager_id'],
 ]);
 
@@ -28,11 +28,11 @@ if(! empty($form->errors())) {
 }
 
 try {
-    $db->query("UPDATE team SET name = :name, address = :address, region_id = :region_id, manager_id = :manager_id WHERE id = :id", [
+    $db->query("UPDATE team SET name = :name, address = :address, manager_id = :manager_id WHERE id = :id", [
         'id' => $_POST['id'],
         'name' => $_POST['name'],
         'address' => $_POST['address'],
-        'region_id' => $_POST['region_id'],
+        // 'region_id' => $_POST['region_id'],
         'manager_id' => $_POST['manager_id'] !== '' ? $_POST['manager_id'] : NULL,
     ]);
 } catch(Exception $e) {

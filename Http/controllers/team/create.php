@@ -20,6 +20,6 @@ $regions = $db->query("SELECT id, name FROM region")->get();
 view("team/create.view.php", [
     'heading' => 'Create Team',
     'managers' => $managers,
-    'regions' => $regions,
+    // 'regions' => $regions,
     'errors' => Session::get('errors')
 ]);
