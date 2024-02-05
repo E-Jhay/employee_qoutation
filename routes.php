@@ -37,6 +37,10 @@ $router->post('/role', 'role/store.php')->only('auth');
 $router->get('/role/edit', 'role/edit.php')->only('auth');
 $router->put('/role/update', 'role/update.php')->only('auth');
 
+// Validity route
+$router->get('/validity', 'validity/index.php')->only('auth');
+$router->post('/validity/update', 'validity/update.php')->only('auth');
+
 // Role route
 $router->get('/teams', 'team/index.php')->only('auth');
 $router->get('/team/show', 'team/show.php')->only('auth');

@@ -32,10 +32,11 @@ try {
     ]);
 
     if($mode == 'Approve') {
+        $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find()['validity'];
         $db->query("UPDATE qoutation SET updated_at = :updated_at, expired_at = :expired_at, validity = :validity WHERE id = :id", [
-            'validity' => 30,
-            'updated_at' => date('Y-m-d'),
-            'expired_at' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 30 days')),
+            'validity' => $validity,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'expired_at' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). ' + 30 days')),
             'id' => $id,
         ]);
     }
