@@ -130,7 +130,7 @@ use Core\QoutationStatus;
                                                          Stock available
                                                       </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Comparative price
+                                                         Previous price
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Catalog price
@@ -258,7 +258,7 @@ use Core\QoutationStatus;
                                  </div> -->
 
                                  <div class="col-span-3 md:col-span-3">
-                                    <label for="comparative_price">Comparative price</label>
+                                    <label for="comparative_price">Previous price</label>
                                     <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>" required/>
                                     <?php if(isset($errors['comparative_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['comparative_price'] ?></span>
