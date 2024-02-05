@@ -8,9 +8,11 @@ use Core\Validator;
 class UserEditForm {
 
     protected $errors = [];
+    protected $attributes = [];
 
-    public function __construct(public array $attributes)
+    public function __construct($attributes)
     {
+        $this->attributes = $attributes;
         if(! Validator::string($attributes['name'])) {
             $this->errors['name'] = "Name is required.";
         }

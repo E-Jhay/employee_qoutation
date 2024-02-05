@@ -23,9 +23,9 @@ if(!$signedIn) {
     )->throw();
 }
 
-if($_SESSION['user']['role_id'] === Role::SALES_MANAGER) {
+if((int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER) {
     return redirect('/dashboard');
-} elseif($_SESSION['user']['role_id'] === Role::SALES) {
+} elseif((int)$_SESSION['user']['role_id'] === Role::SALES) {
     return redirect('/');
 } else {
     return redirect('/admin');

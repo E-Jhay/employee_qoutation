@@ -11,6 +11,15 @@ function dd($value) {
     die();
 }
 
+if (!function_exists('array_key_last')) {
+    function array_key_last($array) {
+        if (!is_array($array) || empty($array)) {
+            return NULL;
+        }
+        return array_keys($array)[count($array) - 1];
+    }
+}
+
 function urlIs($value) {
     return in_array(parse_url($_SERVER['REQUEST_URI'])['path'], $value);
     // return $_SERVER['REQUEST_URI'] === $value;
