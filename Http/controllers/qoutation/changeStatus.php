@@ -8,7 +8,7 @@ use Core\Role;
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
 
-authorize($_SESSION['user']['role_id'] === Role::SALES_MANAGER);
+authorize((int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER);
 
 $id = $_POST['id'];
 $mode = $_POST['mode'];

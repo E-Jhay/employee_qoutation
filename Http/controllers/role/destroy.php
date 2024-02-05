@@ -1,9 +1,11 @@
 <?php
 
 use Core\App;
+use Core\Role;
+
 $db = App::resolve('Core\Database');
 
-authorize('admin' === 'admin');
+authorize((int)$_SESSION['user']['role_id'] === Role::ADMIN);
 
 $db->query("DELETE FROM role WHERE id = :id", ['id' => $_POST['id']]);
 

@@ -117,12 +117,12 @@ use Core\Role;
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
-                              <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED && $_SESSION['user']['role_id'] === Role::SALES): ?>
+                              <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES): ?>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Recommended price</th>
                               <?php endif; ?>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
-                              <?php if($qoutation['status'] === QoutationStatus::PENDING && $_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
+                              <?php if($qoutation['status'] === QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900"></th>
                               <?php endif; ?>
                               <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
@@ -150,12 +150,12 @@ use Core\Role;
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'] / 100 * $product['proposed_price_discount'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500"><?= number_format($product['proposed_price'], 2) ?></td>
-                                 <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED && $_SESSION['user']['role_id'] === Role::SALES): ?>
+                                 <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES): ?>
                                  <td class="px-3 py-5 text-center text-sm text-green-500"><?= number_format($product['approved_price'], 2) ?></td>
                                  <?php endif; ?>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
-                                 <?php if($qoutation['status'] === QoutationStatus::PENDING && $_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
+                                 <?php if($qoutation['status'] === QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500">
                                     <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>, <?= $product['catalog_price'] ?>, <?= $product['quantity'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
                                  </td>
@@ -181,7 +181,7 @@ use Core\Role;
                            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
                            </tr> -->
                            <tr>
-                           <th scope="row" colspan="<?=$qoutation['status'] === QoutationStatus::DISAPPROVED && $_SESSION['user']['role_id'] === Role::SALES ? '7' : '6' ?>" class="pl-4 pr-6 sm:pr-<?=$qoutation['status'] === QoutationStatus::PENDING && $_SESSION['user']['role_id'] === Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
+                           <th scope="row" colspan="<?=$qoutation['status'] === QoutationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES ? '7' : '6' ?>" class="pl-4 pr-6 sm:pr-<?=$qoutation['status'] === QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
                            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
                            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
                            </tr>
@@ -236,7 +236,7 @@ use Core\Role;
                      </div>
                   </div>
 
-                  <?php if($qoutation['status'] == QoutationStatus::PENDING && $_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
+                  <?php if($qoutation['status'] == QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
                      <div id="remarksField" class="col-span-6 md:col-span-6">
                         <label for="remarks">Comments</label>
                         <textarea name="remarks" id="remarks" class="h-20 border mt-1 rounded p-2 w-full bg-transparent <?= isset($errors['remarks']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
@@ -250,7 +250,7 @@ use Core\Role;
                         <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                      </div>
                   <?php endif; ?>
-                  <?php if(($qoutation['status'] == QoutationStatus::PENDING || $qoutation['status'] == QoutationStatus::DISAPPROVED) && $_SESSION['user']['role_id'] == Role::SALES) : ?>
+                  <?php if(($qoutation['status'] == QoutationStatus::PENDING || $qoutation['status'] == QoutationStatus::DISAPPROVED) && (int)$_SESSION['user']['role_id'] == Role::SALES) : ?>
                   <div class="flex justify-end gap-2 mt-4">
                      <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
                      <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->

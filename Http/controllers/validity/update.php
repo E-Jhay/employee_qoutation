@@ -1,7 +1,11 @@
 <?php
 
 use Core\App;
+use Core\Role;
+
 $db = App::resolve('Core\Database');
+
+authorize((int)$_SESSION['user']['role_id'] === Role::ADMIN);
 // dd("Update");
 
 // $role = $db->query("UPDATE role SET name = :name, updated_at = :updated_at WHERE id = :id", [

@@ -9,6 +9,8 @@ use Http\Forms\QoutationCreateForm;
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
 
+authorize((int)$_SESSION['user']['role_id'] === Role::SALES);
+
 // $form = QoutationCreateForm::validate($attributes = [
 //     'name' => $_POST['customer_name'],
 //     'email' => $_POST['email'],

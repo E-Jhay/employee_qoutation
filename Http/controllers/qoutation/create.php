@@ -1,6 +1,7 @@
 <?php
 
 use Core\App;
+use Core\Role;
 use Core\Session;
 $db = App::resolve('Core\Database');
 // dd("create Qoutation");
@@ -9,6 +10,7 @@ $db = App::resolve('Core\Database');
 // ])->get();
 // $regions = $db->query("SELECT id, name FROM region")->get();
 
+authorize((int)$_SESSION['user']['role_id'] === Role::SALES);
 view("qoutation/create.view.php", [
     'heading' => 'Create Qoutation',
     // 'managers' => $managers,

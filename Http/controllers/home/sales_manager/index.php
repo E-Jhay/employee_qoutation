@@ -7,7 +7,7 @@ use Core\Role;
 
 $db = App::resolve(Database::class);
 
-authorize($_SESSION['user']['role_id'] === Role::SALES_MANAGER);
+authorize((int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER);
 
 $heading = "Sales Manager Dashboard";
 

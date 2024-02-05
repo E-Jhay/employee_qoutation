@@ -2,6 +2,7 @@
 
 use Core\App;
 use Core\QoutationStatus;
+use Core\Role;
 use Core\Session;
 use Http\Forms\TeamCreateForm;
 
@@ -9,6 +10,12 @@ $db = App::resolve('Core\Database');
 
 // $response = array('success' => true, 'message' => $_POST['email']);
 // echo json_encode($response);
+
+$qoutationCreatedBy = $db->query("SELECT created_by FROM qoutation WHERE id = :id", [
+    'id' => $_POST['qoutation_id']
+])->find()['created_by'];
+// dd($qoutationCreatedBy);
+authorize((int)$_SESSION['user']['role_id'] === Role::SALES && $_SESSION['user']['id'] === $qoutationCreatedBy);
 
 
 try {

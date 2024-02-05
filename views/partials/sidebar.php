@@ -5,7 +5,7 @@
             <div class="flex-1 px-3 bg-white divide-y space-y-1">
                 <ul class="space-y-2 pb-2">
                 <li class="group <?= urlIs(['/', '/dashboard', '/admin']) ? 'active' : '' ?>">
-                    <a href="<?= $_SESSION['user']['role_id'] === \Core\Role::SALES ? '/' : ($_SESSION['user']['role_id'] === \Core\Role::SALES_MANAGER ? '/dashboard' : '/admin') ?>" class="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white">
+                    <a href="<?= (int)$_SESSION['user']['role_id'] === \Core\Role::SALES ? '/' : ((int)$_SESSION['user']['role_id'] === \Core\Role::SALES_MANAGER ? '/dashboard' : '/admin') ?>" class="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M13 21V11H21V21H13ZM3 13V3H11V13H3ZM9 11V5H5V11H9ZM3 21V15H11V21H3ZM5 19H9V17H5V19ZM15 19H19V13H15V19ZM13 3H21V9H13V3ZM15 5V7H19V5H15Z" fill="currentColor"></path></svg>
                         <span class="ml-3">Dashboard</span>
                     </a>
@@ -33,7 +33,7 @@
 
                     use Core\Role;
 
-                    if($_SESSION['user']['role_id'] === Role::ADMIN): ?>
+                    if((int)$_SESSION['user']['role_id'] === Role::ADMIN): ?>
                 <li class="group <?= urlIs(['/users', '/user/create', '/user/show', '/user/edit']) ? 'active' : '' ?>">
                     <a href="/users" class="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z" fill="currentColor"></path></svg>
@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <?php endif; ?>
-                <?php if($_SESSION['user']['role_id'] !== Role::ADMIN): ?>
+                <?php if((int)$_SESSION['user']['role_id'] !== Role::ADMIN): ?>
                 <li class="group <?= urlIs(['/qoutations', '/qoutation/create', '/qoutation/show', '/qoutation/edit']) ? 'active' : '' ?>">
                     <a href="/qoutations" class="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z" fill="currentColor"></path></svg>

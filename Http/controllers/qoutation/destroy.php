@@ -17,7 +17,7 @@ try {
         'id' => $id
     ])->find()['created_by'];
     // dd($qoutationCreatedBy);
-    authorize($_SESSION['user']['role_id'] === Role::SALES && $_SESSION['user']['id'] === $qoutationCreatedBy);
+    authorize((int)$_SESSION['user']['role_id'] === Role::SALES && $_SESSION['user']['id'] === $qoutationCreatedBy);
     
     $db->query("DELETE FROM qoutation WHERE id = :id", ['id' => $id]);
     echo json_encode(['success' => true, 'message' => 'Qoutation Deleted.']);

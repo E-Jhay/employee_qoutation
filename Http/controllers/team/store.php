@@ -10,6 +10,8 @@ use Http\Forms\UserCreateForm;
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
 
+authorize((int)$_SESSION['user']['role_id'] === Role::ADMIN);
+
 $managers = $db->query("SELECT id, name FROM user WHERE role_id = :role_id", [
     'role_id' => Role::SALES_MANAGER
 ])->get();
