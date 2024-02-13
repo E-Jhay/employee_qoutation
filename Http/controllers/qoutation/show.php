@@ -10,15 +10,21 @@ $qoutation = $db->query("SELECT qoutation.*, customer.name as customer_name, cus
 $products = $db->query("SELECT * FROM product_qoutation WHERE qoutation_id = :id", [
     'id' => $_GET['id']
 ])->get();
+
+$attachments = $db->query("SELECT * FROM file_qoutation WHERE qoutation_id = :id", [
+    'id' => $_GET['id']
+])->get();
+
 $grand_total = $db->query("SELECT SUM(total) as grand_total FROM product_qoutation WHERE qoutation_id = :id", [
     'id' => $_GET['id']
 ])->find()['grand_total'];
 
-// dd($products);
+// dd($attachments);
 
 view("qoutation/show.view.php", [
     'heading' => "Qoutation Information",
     'qoutation' => $qoutation,
     'products' => $products,
     'grand_total' => $grand_total,
+    'attachments' => $attachments,
 ]);
