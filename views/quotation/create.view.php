@@ -637,6 +637,9 @@
             submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
             submitButton.disabled = false;
             submitButton.innerText = "Submit";
+            resetQuotationForm()
+            productLists = []
+            refreshTableRow()
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
@@ -647,10 +650,6 @@
             submitButton.disabled = false;
             submitButton.innerText = "Submit";
          }
-         console.log(data)
-         resetQuotationForm()
-         productLists = []
-         refreshTableRow()
          // console.log(data.success);
       } catch (e) {
          console.error(e);
