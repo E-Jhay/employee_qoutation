@@ -13,6 +13,6 @@ $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find(
 // dd($validity['validity']);
 
 view("validity/index.view.php", [
-    'heading' => "Set Qoutation Validity",
+    'heading' => "Set Quotation Validity",
     'validity' => $validity
 ]);

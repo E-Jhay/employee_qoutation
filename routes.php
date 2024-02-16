@@ -50,21 +50,21 @@ $router->post('/team', 'team/store.php')->only('auth');
 $router->get('/team/edit', 'team/edit.php')->only('auth');
 $router->put('/team/update', 'team/update.php')->only('auth');
 
-// Qoutation route
-$router->get('/get-qoutations', 'qoutation/getQoutations.php')->only('auth');
-$router->get('/qoutations', 'qoutation/index.php')->only('auth');
-$router->get('/qoutation/show', 'qoutation/show.php')->only('auth');
-$router->delete('/qoutation/delete', 'qoutation/destroy.php')->only('auth');
-$router->get('/qoutation/create', 'qoutation/create.php')->only('auth');
-$router->post('/qoutation', 'qoutation/store.php')->only('auth');
-$router->get('/qoutation/edit', 'qoutation/edit.php')->only('auth');
-$router->post('/qoutation/update', 'qoutation/update.php')->only('auth'); 
-$router->post('/qoutation/change-status', 'qoutation/changeStatus.php')->only('auth'); 
+// Quotation route
+$router->get('/get-quotations', 'quotation/getQuotations.php')->only('auth');
+$router->get('/quotations', 'quotation/index.php')->only('auth');
+$router->get('/quotation/show', 'quotation/show.php')->only('auth');
+$router->delete('/quotation/delete', 'quotation/destroy.php')->only('auth');
+$router->get('/quotation/create', 'quotation/create.php')->only('auth');
+$router->post('/quotation', 'quotation/store.php')->only('auth');
+$router->get('/quotation/edit', 'quotation/edit.php')->only('auth');
+$router->post('/quotation/update', 'quotation/update.php')->only('auth'); 
+$router->post('/quotation/change-status', 'quotation/changeStatus.php')->only('auth'); 
 
 //     '/user/create' => 'user/create.php',
 
 
-$router->get('/approved-qoutation', 'qoutation/approvedQoutation.php');
-$router->post('/generate-pdf', 'qoutation/generatePdf.php');
+$router->get('/approved-quotation', 'quotation/approvedQuotation.php');
+$router->post('/generate-pdf', 'quotation/generatePdf.php');
 
 // dd($router->routes);

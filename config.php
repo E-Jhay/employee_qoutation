@@ -4,7 +4,7 @@ return [
     'database' => [
         'host' => "localhost",
         'port' => 3306,
-        'dbname' => "employee_qoutation",
+        'dbname' => "quotation",
         'charset' => 'utf8mb4',
     ],
     'mail' => [

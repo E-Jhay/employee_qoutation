@@ -1,7 +1,7 @@
 
 <?php
 
-use Core\QoutationStatus;
+use Core\QuotationStatus;
 
  require base_path('views/partials/head.php') ?>
       <!-- Navbar -->
@@ -12,23 +12,23 @@ use Core\QoutationStatus;
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
          <main class="pt-6 px-2 lg:px-8">
             <div class="flex justify-start gap-2">
-               <a href="/qoutations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
+               <a href="/quotations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
             </div>
 
             <?php require base_path('views/partials/banner.php') ?>
             <?php require base_path('views/partials/alerts.php') ?>
             <!-- component -->
-            <form id="qoutationForm">
+            <form id="quotationForm">
                <div class="bg-white rounded shadow-lg p-4 px-2 md:p-8 mb-6">
                   <div class="lg:col-span-2">
                      <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
-                        Qoutation Details
+                        Quotation Details
                      </h3>
                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
                         <div class="md:col-span-3">
                            <label for="customer_name">Customer</label>
-                           <input type="text" name="customer_name" id="customer_name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['customer_name']) ? 'border-red-500' : '' ?>" value="<?= $qoutation['customer_name'] ?>" />
-                           <input type="hidden" name="qoutation_id" id="qoutation_id" value="<?= $_GET['id'] ?>">
+                           <input type="text" name="customer_name" id="customer_name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['customer_name']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_name'] ?>" />
+                           <input type="hidden" name="quotation_id" id="quotation_id" value="<?= $_GET['id'] ?>">
                            <?php if(isset($errors['customer_name'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['customer_name'] ?></span>
                            <?php endif; ?>
@@ -36,7 +36,7 @@ use Core\QoutationStatus;
 
                         <div class="md:col-span-3">
                            <label for="email">Email</label>
-                           <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= $qoutation['customer_email'] ?>" />
+                           <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_email'] ?>" />
                            <?php if(isset($errors['email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
                            <?php endif; ?>
@@ -45,7 +45,7 @@ use Core\QoutationStatus;
                         <div class="md:col-span-6">
                            <label for="address">Address</label>
                            <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
-                           <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= $qoutation['customer_address']  ?>" placeholder="" />
+                           <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_address']  ?>" placeholder="" />
                            <?php if(isset($errors['address'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['address'] ?></span>
                            <?php endif; ?>
@@ -53,7 +53,7 @@ use Core\QoutationStatus;
 
                         <div class="md:col-span-3">
                            <label for="contact_person">Contact person</label>
-                           <input type="text" name="contact_person" id="contact_person" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['contact_person']) ? 'border-red-500' : '' ?>" value="<?= $qoutation['customer_contact_person']  ?>" />
+                           <input type="text" name="contact_person" id="contact_person" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['contact_person']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_contact_person']  ?>" />
                            <?php if(isset($errors['contact_person'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['contact_person'] ?></span>
                            <?php endif; ?>
@@ -61,7 +61,7 @@ use Core\QoutationStatus;
 
                         <div class="md:col-span-3">
                            <label for="position">Position</label>
-                           <input type="text" name="position" id="position" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['position']) ? 'border-red-500' : '' ?>" value="<?= $qoutation['customer_position']  ?>" />
+                           <input type="text" name="position" id="position" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['position']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_position']  ?>" />
                            <?php if(isset($errors['position'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['position'] ?></span>
                            <?php endif; ?>
@@ -69,14 +69,14 @@ use Core\QoutationStatus;
 
                         <div class="md:col-span-6">
                            <label for="terms">Terms</label>
-                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" cols="30" rows="10"><?= $qoutation['terms']  ?></textarea>
+                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" cols="30" rows="10"><?= $quotation['terms']  ?></textarea>
                            <?php if(isset($errors['terms'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['terms'] ?></span>
                            <?php endif; ?>
                         </div>
                         <div class="md:col-span-3">
                            <label for="needed_at">Date Needed</label>
-                           <input type="date" name="needed_at" id="needed_at" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['needed_at']) ? 'border-red-500' : '' ?>" value="<?php echo date('Y-m-d',strtotime($qoutation["needed_at"])) ?>" />
+                           <input type="date" name="needed_at" id="needed_at" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['needed_at']) ? 'border-red-500' : '' ?>" value="<?php echo date('Y-m-d',strtotime($quotation["needed_at"])) ?>" />
                            <?php if(isset($errors['needed_at'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['needed_at'] ?></span>
                            <?php endif; ?>
@@ -90,7 +90,7 @@ use Core\QoutationStatus;
                               Products
                            </h3>
                         </div>
-                        <?php if($qoutation['status'] !== QoutationStatus::DISAPPROVED): ?>
+                        <?php if($quotation['status'] !== QuotationStatus::DISAPPROVED): ?>
                         <div class="md:col-span-6 my-2">
                            <button onclick="toggleProductModal()" type="button" title="Add product" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Add Product</button>
                         </div>
@@ -141,7 +141,7 @@ use Core\QoutationStatus;
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Proposed price/ (Discount in %)
                                                       </th>
-                                                      <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED): ?>
+                                                      <?php if($quotation['status'] === QuotationStatus::DISAPPROVED): ?>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Recommended price
                                                       </th>
@@ -172,7 +172,7 @@ use Core\QoutationStatus;
                   
                         <div class="mt-4 md:col-span-6 text-left">
                            <div class="inline-flex items-end">
-                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $qoutation['status'] === QoutationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
+                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $quotation['status'] === QuotationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
                            </div>
                         </div>
 
@@ -437,9 +437,9 @@ use Core\QoutationStatus;
       document.getElementById('id').value = ''
       document.getElementById("productForm").reset();
    }
-   const resetQoutationForm = () => {
+   const resetQuotationForm = () => {
       // document.getElementById('id').value = ''
-      document.getElementById("qoutationForm").reset();
+      document.getElementById("quotationForm").reset();
    }
 
    const refreshTableRow = () => {
@@ -470,7 +470,7 @@ use Core\QoutationStatus;
    const addRow = (product) => {
 
       let cells = []
-      if(<?= $qoutation['status'] === QoutationStatus::DISAPPROVED ? 1 : 0 ?>) {
+      if(<?= $quotation['status'] === QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
          cells = [
             'product_qty',
             // 'product_unit',
@@ -521,7 +521,7 @@ use Core\QoutationStatus;
             c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'whitespace-nowrap', 'dark:text-white')
             if(cell === 'approved_price'){
                c.classList.add('text-green-500')
-            } else if(cell === 'proposed_price' && <?= $qoutation['status'] === QoutationStatus::DISAPPROVED ? 1 : 0 ?>) {
+            } else if(cell === 'proposed_price' && <?= $quotation['status'] === QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
                c.classList.add('text-red-500')
             }
             c.innerText = product[cell]
@@ -597,10 +597,10 @@ use Core\QoutationStatus;
    }
 
    
-   const qoutationForm = document.getElementById('qoutationForm')
-   qoutationForm.addEventListener('submit', (e) => {
+   const quotationForm = document.getElementById('quotationForm')
+   quotationForm.addEventListener('submit', (e) => {
       e.preventDefault()
-      const formData = new FormData(qoutationForm)
+      const formData = new FormData(quotationForm)
       formData.append("products", JSON.stringify(productLists))
 
       sendData(formData)
@@ -612,7 +612,7 @@ use Core\QoutationStatus;
       const successMessage = document.querySelector('.successMessage')
       const errorMessage = document.querySelector('.errorMessage')
       try {
-         const response = await fetch("/qoutation/update", {
+         const response = await fetch("/quotation/update", {
             method: "POST",
             body: formData,
          });
@@ -627,7 +627,7 @@ use Core\QoutationStatus;
             errorMessage.innerText = data.message
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
          }
-         // resetQoutationForm()
+         // resetQuotationForm()
          // productLists = []
          // refreshTableRow()
          // console.log(data.success);

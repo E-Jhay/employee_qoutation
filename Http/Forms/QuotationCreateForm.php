@@ -5,7 +5,7 @@ namespace Http\Forms;
 use Core\ValidationException;
 use Core\Validator;
 
-class QoutationCreateForm {
+class QuotationCreateForm {
 
     protected $errors = [];
     protected $attributes = [];

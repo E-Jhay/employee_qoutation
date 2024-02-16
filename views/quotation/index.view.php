@@ -1,7 +1,7 @@
 
 <?php
 
-use Core\QoutationStatus;
+use Core\QuotationStatus;
 use Core\Role;
 
  require base_path('views/partials/head.php') ?>
@@ -18,7 +18,7 @@ use Core\Role;
                <div class="flex justify-end gap-2 mb-4 -mt-12">
                   <a title="Export" href="" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-file-download-line"></i></a>
                   <a title="Import" href="" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-file-line"></i></a>
-                  <a title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></a>
+                  <a title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></a>
                </div>
                <?php if(Core\Session::get('success')): ?>
                   <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative message-alert" role="alert">
@@ -32,9 +32,9 @@ use Core\Role;
                <div class="rounded">
                   <!-- Tabs -->
                   <ul id="tabs" class="inline-flex w-full px-1 pt-2 ">
-                     <li class="active px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><button id="<?= QoutationStatus::PENDING ?>" type="button" onclick="filterBystatus(this, <?= QoutationStatus::PENDING ?>)">Pending</button></li>
-                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QoutationStatus::APPROVED ?>" type="button" onclick="filterBystatus(this, <?= QoutationStatus::APPROVED ?>)">Approved</button></li>
-                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QoutationStatus::DISAPPROVED ?>" type="button" onclick="filterBystatus(this, <?= QoutationStatus::DISAPPROVED ?>)">Disapproved</button></li>
+                     <li class="active px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><button id="<?= QuotationStatus::PENDING ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::PENDING ?>)">Pending</button></li>
+                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::APPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::APPROVED ?>)">Approved</button></li>
+                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::DISAPPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::DISAPPROVED ?>)">Disapproved</button></li>
                      <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="all" type="button" onclick="filterBystatus(this, 'all')">All</button></li>
                   </ul>
 
@@ -104,7 +104,7 @@ use Core\Role;
 
 <script>
    document.addEventListener("DOMContentLoaded", function () {
-      getData(<?= QoutationStatus::PENDING ?>)
+      getData(<?= QuotationStatus::PENDING ?>)
    })
    let sortOrders = {}; // Object to track sorting order for each column
 
@@ -144,10 +144,10 @@ use Core\Role;
 
    async function getData(status, itemsPerPage = 10, searchTerm = '', page = 1) {
       try {
-         const response = await fetch(`/get-qoutations?status=${status}&itemsPerPage=${itemsPerPage}&searchTerm=${searchTerm}&page=${page}`);
+         const response = await fetch(`/get-quotations?status=${status}&itemsPerPage=${itemsPerPage}&searchTerm=${searchTerm}&page=${page}`);
          const data = await response.json()
          // console.log(data)
-         loadTable(data.qoutations)
+         loadTable(data.quotations)
          if(data.totalPages > 1) {
             displayPagination(data.totalPages, data.currentPage)
          } else {    
@@ -191,7 +191,7 @@ use Core\Role;
       }
    }
 
-   const loadTable = (qoutations) => {
+   const loadTable = (quotations) => {
       document.getElementById('tbody').innerHTML = ""
       let cells = [
          'control_no',
@@ -206,7 +206,7 @@ use Core\Role;
          'action',
       ]
 
-      qoutations.forEach(qoutation => {
+      quotations.forEach(quotation => {
          const tr = document.createElement('tr')
          cells.forEach(cell => {
             const td = document.createElement('td')
@@ -215,12 +215,12 @@ use Core\Role;
                if(cell == 'status_name') {
                   const span = document.createElement('span')
                   let status_color = 'amber'
-                  qoutation['status'] == <?= QoutationStatus::APPROVED ?> ? status_color = 'green' : (qoutation['status'] == <?= QoutationStatus::DISAPPROVED ?> ? status_color = 'red' : status_color = 'amber');
+                  quotation['status'] == <?= QuotationStatus::APPROVED ?> ? status_color = 'green' : (quotation['status'] == <?= QuotationStatus::DISAPPROVED ?> ? status_color = 'red' : status_color = 'amber');
                   span.className = `px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${status_color}-200 text-${status_color}-800`
-                  span.innerText = qoutation[cell]
+                  span.innerText = quotation[cell]
                   td.appendChild(span)
                } else {
-                  td.innerText = qoutation[cell]
+                  td.innerText = quotation[cell]
                }
             }
             else {
@@ -229,10 +229,10 @@ use Core\Role;
                
                editBtn.classList.add('text-blue-600', 'dark:text-blue-500', 'hover:underline', 'cursor-pointer', 'mb-2', 'mr-2')
                editBtn.innerText = `View`
-               editBtn.href = `/qoutation/show?id=${qoutation['id']}`
+               editBtn.href = `/quotation/show?id=${quotation['id']}`
                td.appendChild(editBtn)
                
-               if (<?= (int)$_SESSION['user']['role_id'] === Role::SALES ? 1 : 0 ?> && qoutation['status'] === <?= QoutationStatus::PENDING ?>) {
+               if (<?= (int)$_SESSION['user']['role_id'] === Role::SALES ? 1 : 0 ?> && quotation['status'] === <?= QuotationStatus::PENDING ?>) {
                   let deleteBtn = document.createElement("a")
 
                   deleteBtn.classList.add('text-red-600', 'dark:text-red-500', 'hover:underline', 'cursor-pointer', 'mb-2', 'mr-2')
@@ -245,12 +245,12 @@ use Core\Role;
                      const successMessage = document.querySelector('.successMessage')
                      const errorMessage = document.querySelector('.errorMessage')
                      try {
-                        const response = await fetch("/qoutation/delete", {
+                        const response = await fetch("/quotation/delete", {
                            method: "DELETE",
                            headers: {
                               'Content-Type': 'application/json'
                            },
-                           body: JSON.stringify({id : qoutation['id']})
+                           body: JSON.stringify({id : quotation['id']})
                         });
                         const data = await response.json()
                         // const status = document.querySelector('#tabs li.active button').id

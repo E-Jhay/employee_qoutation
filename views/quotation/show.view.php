@@ -1,7 +1,7 @@
 
 <?php
 
-use Core\QoutationStatus;
+use Core\QuotationStatus;
 use Core\Role;
 
  require base_path('views/partials/head.php') ?>
@@ -13,7 +13,7 @@ use Core\Role;
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
          <main class="pt-6 px-4 lg:px-8">
             <div class="flex justify-start gap-2">
-               <a href="/qoutations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
+               <a href="/quotations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
             </div>
             <?php require base_path('views/partials/alerts.php') ?>
             <?php require base_path('views/partials/banner.php') ?>
@@ -26,9 +26,9 @@ use Core\Role;
                      <img src="../images/logo.png" alt="company-logo" height="150" width="250">
                   </div>
                   <div class="text-right">
-                     <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Qoutation</h1>
+                     <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Quotation</h1>
                      <h1 class="font-semibold text-gray-900 sm:text-xl text-xs">
-                        <?= $qoutation['control_no'] ?>
+                        <?= $quotation['control_no'] ?>
                      </h1>
                   </div>
                </div>
@@ -39,11 +39,11 @@ use Core\Role;
                         Bill to :
                      </p>
                      <p class="text-gray-500">
-                        <?= $qoutation['customer_name'] ?>
+                        <?= $quotation['customer_name'] ?>
                         <br />
-                        <?= $qoutation['customer_address'] ?>
-                        <br />
-                        <?= $qoutation['tel_no'] ?>
+                        <?= $quotation['customer_address'] ?>
+                        <!-- <br />
+                        <?= $quotation['tel_no'] ?> -->
                      </p>
                   </div>
 
@@ -51,17 +51,17 @@ use Core\Role;
                      <p class="">
                         Quote created by:
                         <span class="text-gray-500">
-                           <?= $qoutation['created_by'] ?>
+                           <?= $quotation['created_by'] ?>
                         </span>
                      </p>
                      <p>
-                        <?= $qoutation['created_by'] ?>
+                        <?= $quotation['created_by'] ?>
                      </p>
                      <p class="text-gray-500 text-sm">
-                        <?= $qoutation['sales_email'] ?>
+                        <?= $quotation['sales_email'] ?>
                      </p>
                      <p class="text-gray-500 text-sm mt-1">
-                        <?= $qoutation['sales_phone'] ?>
+                        <?= $quotation['sales_phone'] ?>
                      </p>
                   </div>
                </div>
@@ -69,30 +69,30 @@ use Core\Role;
                <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
                   <div class="">
                      <p class="font-bold text-gray-800">
-                        <?= $qoutation['customer_contact_person'] ?>
+                        <?= $quotation['customer_contact_person'] ?>
                      </p>
                      <p class="text-gray-500">
-                        <?= $qoutation['customer_position'] ?>
+                        <?= $quotation['customer_position'] ?>
                      </p>
                      <p class="text-gray-500">
-                        <?= $qoutation['customer_email'] ?>
+                        <?= $quotation['customer_email'] ?>
                      </p>
                   </div>
                   <div class="text-right">
                      <p>
                         Qoute created: 
                         <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($qoutation['created_at'])) ?>
+                           <?= date('m-d-Y',strtotime($quotation['created_at'])) ?>
                         </span>
                         <!-- <br />
                         Qoute approved:
                         <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($qoutation['updated_at'])) ?? date('m-d-Y') ?>
+                           <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
                         </span> -->
                         <br />
                         Qoute expires:
                         <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($qoutation['expired_at'])) ?? date('m-d-Y') ?>
+                           <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
                         </span>
                      </p>
                   </div>
@@ -117,12 +117,12 @@ use Core\Role;
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
-                              <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES): ?>
+                              <?php if($quotation['status'] === QuotationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES): ?>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Recommended price</th>
                               <?php endif; ?>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
-                              <?php if($qoutation['status'] === QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
+                              <?php if($quotation['status'] === QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900"></th>
                               <?php endif; ?>
                               <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
@@ -150,12 +150,12 @@ use Core\Role;
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'] / 100 * $product['proposed_price_discount'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500"><?= number_format($product['proposed_price'], 2) ?></td>
-                                 <?php if($qoutation['status'] === QoutationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES): ?>
+                                 <?php if($quotation['status'] === QuotationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES): ?>
                                  <td class="px-3 py-5 text-center text-sm text-green-500"><?= number_format($product['approved_price'], 2) ?></td>
                                  <?php endif; ?>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
-                                 <?php if($qoutation['status'] === QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
+                                 <?php if($quotation['status'] === QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER): ?>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500">
                                     <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>, <?= $product['catalog_price'] ?>, <?= $product['quantity'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
                                  </td>
@@ -181,7 +181,7 @@ use Core\Role;
                            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
                            </tr> -->
                            <tr>
-                           <th scope="row" colspan="<?=$qoutation['status'] === QoutationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES ? '7' : '6' ?>" class="pl-4 pr-6 sm:pr-<?=$qoutation['status'] === QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
+                           <th scope="row" colspan="<?=$quotation['status'] === QuotationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] === Role::SALES ? '7' : '6' ?>" class="pl-4 pr-6 sm:pr-<?=$quotation['status'] === QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
                            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
                            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
                            </tr>
@@ -201,7 +201,7 @@ use Core\Role;
                            Terms
                         </h2>
                         <p class="text-gray-500">
-                           <?= $qoutation['terms'] ?>
+                           <?= $quotation['terms'] ?>
                         </p>
                      </div>
                      <div class="my-4">
@@ -209,7 +209,7 @@ use Core\Role;
                            Validity
                         </h2>
                         <p class="text-gray-500">
-                           <?= $qoutation['validity'] ?>
+                           <?= $quotation['validity'] ?>
                         </p>
                      </div>
                      <div class="my-4">
@@ -217,7 +217,7 @@ use Core\Role;
                            Delivery
                         </h2>
                         <p class="text-gray-500">
-                           <?= $qoutation['delivery'] ?>
+                           <?= $quotation['delivery'] ?>
                         </p>
                      </div>
                      <div class="my-4">
@@ -225,13 +225,13 @@ use Core\Role;
                            Questions? Contact me
                         </h2>
                         <p class="">
-                           <?= $qoutation['created_by'] ?>
+                           <?= $quotation['created_by'] ?>
                         </p>
                         <p class="text-gray-500 text-sm">
-                           <?= $qoutation['sales_email'] ?>
+                           <?= $quotation['sales_email'] ?>
                         </p>
                         <p class="text-gray-500 text-sm mt-1">
-                           <?= $qoutation['sales_phone'] ?>
+                           <?= $quotation['sales_phone'] ?>
                         </p>
                      </div>
                      <div class="my-4">
@@ -240,13 +240,13 @@ use Core\Role;
                         </h2>
                         <div class="flex flex-col">
                            <?php foreach($attachments as $attachment) : ?>
-                              <a class="text-blue-500 hover:underline" href="../images/qoutation/<?= $attachment['name'] ?>" target="_blank"><?= $attachment['name'] ?></a>
+                              <a class="text-blue-500 hover:underline" href="../images/quotation/<?= $attachment['name'] ?>" target="_blank"><?= $attachment['name'] ?></a>
                            <?php endforeach; ?>
                         </div>
                      </div>
                   </div>
 
-                  <?php if($qoutation['status'] == QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
+                  <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
                      <div id="remarksField" class="col-span-6 md:col-span-6">
                         <label for="remarks">Comments</label>
                         <textarea name="remarks" id="remarks" class="h-20 border mt-1 rounded p-2 w-full bg-transparent <?= isset($errors['remarks']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
@@ -255,15 +255,15 @@ use Core\Role;
                         <?php endif; ?>
                      </div>
                      <div class="actionBtnDiv flex justify-end gap-2 mt-4">
-                        <button id="approveButton" type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="actionBtn bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
-                        <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="actionBtn bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
-                        <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+                        <button id="approveButton" type="button" title="Approve" onclick="toggleModal('quotationModal', 'Approve')" class="actionBtn bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
+                        <button type="button" title="Disapprove" onclick="toggleModal('quotationModal', 'Disapprove')" class="actionBtn bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
+                        <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                      </div>
                   <?php endif; ?>
-                  <?php if(($qoutation['status'] == QoutationStatus::PENDING || $qoutation['status'] == QoutationStatus::DISAPPROVED) && (int)$_SESSION['user']['role_id'] == Role::SALES) : ?>
+                  <?php if(($quotation['status'] == QuotationStatus::PENDING || $quotation['status'] == QuotationStatus::DISAPPROVED) && (int)$_SESSION['user']['role_id'] == Role::SALES) : ?>
                   <div class="flex justify-end gap-2 mt-4">
-                     <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
-                     <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+                     <a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
+                     <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                   </div>
                   <?php endif; ?>
 
@@ -272,7 +272,7 @@ use Core\Role;
          </main>
 
          
-         <div id="qoutationModal" class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+         <div id="quotationModal" class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                <!--
                   Background backdrop, show/hide based on modal state.
 
@@ -306,16 +306,16 @@ use Core\Role;
                                        </svg>
                                  </div>
                                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                       <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title"><span class="modalText"></span> Qoutation</h3>
+                                       <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title"><span class="modalText"></span> Quotation</h3>
                                        <div class="mt-2">
-                                          <p class="text-sm text-gray-500">Are you sure you want to <span class="modalText"></span> this qoutation? This action cannot be undone.</p>
+                                          <p class="text-sm text-gray-500">Are you sure you want to <span class="modalText"></span> this quotation? This action cannot be undone.</p>
                                        </div>
                                  </div>
                               </div>
                            </div>
                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                              <button id="actionBtn" onclick="updateQoutation(<?= $_GET['id'] ?>)" type="button" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"><span class="modalText"></span></button>
-                              <button type="button" onclick="toggleModal('qoutationModal')" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+                              <button id="actionBtn" onclick="updateQuotation(<?= $_GET['id'] ?>)" type="button" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"><span class="modalText"></span></button>
+                              <button type="button" onclick="toggleModal('quotationModal')" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                            </div>
                      </div>
                   </div>
@@ -392,7 +392,7 @@ use Core\Role;
 <?php require base_path('views/partials/footer.php') ?>
 
 <script>
-   // const updateQoutation = (id) => {
+   // const updateQuotation = (id) => {
    //    console.log(id)
    // }
    let approvedPrices = []
@@ -481,7 +481,7 @@ use Core\Role;
    }
 
 
-   async function updateQoutation(id) {
+   async function updateQuotation(id) {
       const successPanel = document.querySelector('.success-panel')
       const errorPanel = document.querySelector('.error-panel')
       const successMessage = document.querySelector('.successMessage')
@@ -504,7 +504,7 @@ use Core\Role;
          formData.append("approvedPrices", JSON.stringify(approvedPrices))
       }
       try {
-         const response = await fetch("/qoutation/change-status", {
+         const response = await fetch("/quotation/change-status", {
             method: "POST",
             body: formData
          });
@@ -513,13 +513,13 @@ use Core\Role;
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            toggleModal('qoutationModal')
+            toggleModal('quotationModal')
             document.querySelector('.actionBtnDiv').classList.add('hidden')
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            toggleModal('qoutationModal')
+            toggleModal('quotationModal')
          }
          // console.log(data.success);
       } catch (e) {

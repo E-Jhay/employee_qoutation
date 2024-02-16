@@ -2,7 +2,7 @@
 
 use Core\App;
 use Core\Database;
-use Core\QoutationStatus;
+use Core\QuotationStatus;
 use Core\Role;
 
 $db = App::resolve(Database::class);
@@ -36,20 +36,20 @@ $sales = $db->query("SELECT COUNT(id) as count FROM user WHERE role_id = :role_i
 //     'manager_id' => $_SESSION['user']['id']
 // ])->find()['id'] ?? '';
 
-// $salesThisMonth = $db->query("SELECT SUM(approved_price) as total FROM product_qoutation LEFT JOIN qoutation ON 
-// product_qoutation.qoutation_id = qoutation.id WHERE qoutation.team_id = :team_id AND qoutation.status = :status AND
-// MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE())", [
+// $salesThisMonth = $db->query("SELECT SUM(approved_price) as total FROM product_quotation LEFT JOIN quotation ON 
+// product_quotation.quotation_id = quotation.id WHERE quotation.team_id = :team_id AND quotation.status = :status AND
+// MONTH(quotation.created_at) = MONTH(CURDATE()) AND YEAR(quotation.created_at) = YEAR(CURDATE())", [
 //     'team_id' => $currentUserTeamId,
-//     'status' => QoutationStatus::APPROVED,
+//     'status' => QuotationStatus::APPROVED,
 // ])->find()['total'];
 
-// $salesLastMonth = $db->query("SELECT SUM(approved_price) as total FROM product_qoutation LEFT JOIN qoutation ON 
-// product_qoutation.qoutation_id = qoutation.id WHERE qoutation.team_id = :team_id AND qoutation.status = :status AND
+// $salesLastMonth = $db->query("SELECT SUM(approved_price) as total FROM product_quotation LEFT JOIN quotation ON 
+// product_quotation.quotation_id = quotation.id WHERE quotation.team_id = :team_id AND quotation.status = :status AND
 // (YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE()) - 1)
 // OR
 // (YEAR(created_at) = YEAR(CURDATE()) - 1 AND MONTH(created_at) = 12 AND MONTH(CURDATE()) = 1)", [
 //     'team_id' => $currentUserTeamId,
-//     'status' => QoutationStatus::APPROVED,
+//     'status' => QuotationStatus::APPROVED,
 // ])->find()['total'] ?? 0;
 
 
@@ -63,15 +63,15 @@ $sales = $db->query("SELECT COUNT(id) as count FROM user WHERE role_id = :role_i
 //     }
 // }
 
-// $pendingQoutations = $db->query("SELECT COUNT(*) as count FROM qoutation WHERE team_id = :team_id AND status = :status",[
+// $pendingQuotations = $db->query("SELECT COUNT(*) as count FROM quotation WHERE team_id = :team_id AND status = :status",[
 //     'team_id' => $currentUserTeamId,
-//     'status' => QoutationStatus::PENDING,
+//     'status' => QuotationStatus::PENDING,
 // ])->find()['count'];
 
-// $approvedQoutations = $db->query("SELECT COUNT(*) as count FROM qoutation WHERE team_id = :team_id AND status = :status AND
+// $approvedQuotations = $db->query("SELECT COUNT(*) as count FROM quotation WHERE team_id = :team_id AND status = :status AND
 // MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())",[
 //     'team_id' => $currentUserTeamId,
-//     'status' => QoutationStatus::APPROVED,
+//     'status' => QuotationStatus::APPROVED,
 // ])->find()['count'];
 
 // $agentsCount = $db->query("SELECT COUNT(*) as count FROM user WHERE team_id = :team_id AND role_id = :role_id",[
@@ -79,27 +79,27 @@ $sales = $db->query("SELECT COUNT(id) as count FROM user WHERE role_id = :role_i
 //     'role_id' => Role::SALES,
 // ])->find()['count'];
 
-// $latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address FROM qoutation LEFT JOIN customer ON qoutation.customer_id = customer.id WHERE team_id = :team_id AND status = :status ORDER BY customer.id DESC LIMIT 5",[
+// $latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE team_id = :team_id AND status = :status ORDER BY customer.id DESC LIMIT 5",[
 //     'team_id' => $currentUserTeamId,
-//     'status' => QoutationStatus::APPROVED,
+//     'status' => QuotationStatus::APPROVED,
 // ])->get();
 
-// // $totalAmount = $db->query("SELECT SUM(product_qoutation.approved_price) as total FROM qoutation LEFT JOIN product_qoutation ON qoutation.id = product_qoutation.qoutation_id
-// //                             WHERE qoutation.status = :status AND MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE())", [
-// //                                 'status' =>QoutationStatus::APPROVED
+// // $totalAmount = $db->query("SELECT SUM(product_quotation.approved_price) as total FROM quotation LEFT JOIN product_quotation ON quotation.id = product_quotation.quotation_id
+// //                             WHERE quotation.status = :status AND MONTH(quotation.created_at) = MONTH(CURDATE()) AND YEAR(quotation.created_at) = YEAR(CURDATE())", [
+// //                                 'status' =>QuotationStatus::APPROVED
 // //                             ])->find()['total'];
 
-// $topAgents = $db->query("SELECT user.name, SUM(product_qoutation.approved_price) as total, (SUM(product_qoutation.approved_price) / :total_amount) * 100 AS percentage FROM qoutation LEFT JOIN user ON qoutation.created_by = user.id LEFT JOIN product_qoutation ON qoutation.id = product_qoutation.qoutation_id WHERE qoutation.team_id = :team_id AND status = :status AND
-// MONTH(qoutation.created_at) = MONTH(CURDATE()) AND YEAR(qoutation.created_at) = YEAR(CURDATE()) GROUP BY qoutation.created_by ORDER BY total DESC LIMIT 5",[
+// $topAgents = $db->query("SELECT user.name, SUM(product_quotation.approved_price) as total, (SUM(product_quotation.approved_price) / :total_amount) * 100 AS percentage FROM quotation LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN product_quotation ON quotation.id = product_quotation.quotation_id WHERE quotation.team_id = :team_id AND status = :status AND
+// MONTH(quotation.created_at) = MONTH(CURDATE()) AND YEAR(quotation.created_at) = YEAR(CURDATE()) GROUP BY quotation.created_by ORDER BY total DESC LIMIT 5",[
 //     'team_id' => $currentUserTeamId,
-//     'status' => QoutationStatus::APPROVED,
+//     'status' => QuotationStatus::APPROVED,
 //     'total_amount' => $salesThisMonth,
 // ])->get();
 
-// $salesThisYear = $db->query("SELECT SUM(approved_price) as total, MONTHNAME(qoutation.created_at) as month_name FROM product_qoutation LEFT JOIN qoutation ON 
-// product_qoutation.qoutation_id = qoutation.id WHERE qoutation.team_id = :team_id AND qoutation.status = :status AND YEAR(qoutation.created_at) = YEAR(CURDATE()) GROUP BY MONTH(created_at)", [
+// $salesThisYear = $db->query("SELECT SUM(approved_price) as total, MONTHNAME(quotation.created_at) as month_name FROM product_quotation LEFT JOIN quotation ON 
+// product_quotation.quotation_id = quotation.id WHERE quotation.team_id = :team_id AND quotation.status = :status AND YEAR(quotation.created_at) = YEAR(CURDATE()) GROUP BY MONTH(created_at)", [
 //     'team_id' => $currentUserTeamId,
-//     'status' => QoutationStatus::APPROVED,
+//     'status' => QuotationStatus::APPROVED,
 // ])->get();
 
 

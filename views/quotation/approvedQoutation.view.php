@@ -1,7 +1,7 @@
 
 <?php
 
-use Core\QoutationStatus;
+use Core\QuotationStatus;
 use Core\Role;
 
 require base_path('views/partials/head.php') ?>
@@ -16,30 +16,30 @@ require base_path('views/partials/head.php') ?>
          Bill to :
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_name'] ?>
+         <?= $quotation['customer_name'] ?>
          <br />
-         <?= $qoutation['customer_address'] ?>
+         <?= $quotation['customer_address'] ?>
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_position'] ?>
+         <?= $quotation['customer_position'] ?>
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_email'] ?>
+         <?= $quotation['customer_email'] ?>
       </p>
 
       <p class="font-bold text-gray-800 mt-4">
          Bill to :
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_name'] ?>
+         <?= $quotation['customer_name'] ?>
          <br />
-         <?= $qoutation['customer_address'] ?>
+         <?= $quotation['customer_address'] ?>
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_position'] ?>
+         <?= $quotation['customer_position'] ?>
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_email'] ?>
+         <?= $quotation['customer_email'] ?>
       </p>
    </div>
 
@@ -47,18 +47,18 @@ require base_path('views/partials/head.php') ?>
       <p class="">
          Control number:
          <span class="text-gray-500">
-            <?= $qoutation['control_no'] ?>
+            <?= $quotation['control_no'] ?>
          </span>
       </p>
       <p>
          Qoute created: 
          <span class="text-gray-500">
-            <?= $qoutation['created_at'] ?>
+            <?= $quotation['created_at'] ?>
          </span>
          <br />
          Qoute expires:
          <span class="text-gray-500">
-            <?= $qoutation['expired_at'] ?? date('Y-m-d') ?>
+            <?= $quotation['expired_at'] ?? date('Y-m-d') ?>
          </span>
       </p>
    </div>
@@ -70,9 +70,9 @@ require base_path('views/partials/head.php') ?>
       <img src="../images/logo.png" alt="company-logo" height="150" width="250">
    </div>
    <div class="text-right">
-      <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Qoutation</h1>
+      <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Quotation</h1>
       <h1 class="font-semibold text-gray-900 sm:text-xl text-xs">
-         <?= $qoutation['control_no'] ?>
+         <?= $quotation['control_no'] ?>
       </h1>
    </div>
 </div>
@@ -80,14 +80,14 @@ require base_path('views/partials/head.php') ?>
 <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
    <div class="">
       <p class="font-bold text-gray-800">
-         Qoutation for :
+         Quotation for :
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_name'] ?>
+         <?= $quotation['customer_name'] ?>
          <br />
-         <?= $qoutation['customer_address'] ?>
+         <?= $quotation['customer_address'] ?>
          <br />
-         <?= $qoutation['tel_no'] ?>
+         <?= $quotation['tel_no'] ?>
       </p>
    </div>
 
@@ -95,17 +95,17 @@ require base_path('views/partials/head.php') ?>
       <p class="">
          Quote created by:
          <span class="text-gray-500">
-            <?= $qoutation['created_by'] ?>
+            <?= $quotation['created_by'] ?>
          </span>
       </p>
       <p>
-         <?= $qoutation['created_by'] ?>
+         <?= $quotation['created_by'] ?>
       </p>
       <p class="text-gray-500 text-sm">
-         <?= $qoutation['sales_email'] ?>
+         <?= $quotation['sales_email'] ?>
       </p>
       <p class="text-gray-500 text-sm mt-1">
-         <?= $qoutation['sales_phone'] ?>
+         <?= $quotation['sales_phone'] ?>
       </p>
    </div>
 </div>
@@ -113,30 +113,30 @@ require base_path('views/partials/head.php') ?>
 <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
    <div class="">
       <p class="font-bold text-gray-800">
-         <?= $qoutation['customer_contact_person'] ?>
+         <?= $quotation['customer_contact_person'] ?>
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_position'] ?>
+         <?= $quotation['customer_position'] ?>
       </p>
       <p class="text-gray-500">
-         <?= $qoutation['customer_email'] ?>
+         <?= $quotation['customer_email'] ?>
       </p>
    </div>
    <div class="text-right">
       <p>
          Qoute created: 
          <span class="text-gray-500">
-            <?= date('m-d-Y',strtotime($qoutation['created_at'])) ?>
+            <?= date('m-d-Y',strtotime($quotation['created_at'])) ?>
          </span>
          <!-- <br />
          Qoute approved:
          <span class="text-gray-500">
-            <?= date('m-d-Y',strtotime($qoutation['updated_at'])) ?? date('m-d-Y') ?>
+            <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
          </span> -->
          <br />
          Qoute expires:
          <span class="text-gray-500">
-            <?= date('m-d-Y',strtotime($qoutation['expired_at'])) ?? date('m-d-Y') ?>
+            <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
          </span>
       </p>
    </div>
@@ -225,17 +225,17 @@ require base_path('views/partials/head.php') ?>
 Please pay the invoice before the due date. You can pay the invoice by logging in to your account from our client portal.
 </div> -->
 
-<?php if($qoutation['status'] == QoutationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
+<?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
 <div class="flex justify-end gap-2 mt-4">
-   <button type="button" title="Approve" onclick="toggleModal('qoutationModal', 'Approve')" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
-   <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
-   <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+   <button type="button" title="Approve" onclick="toggleModal('quotationModal', 'Approve')" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Approve</button>
+   <button type="button" title="Disapprove" onclick="toggleModal('quotationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button>
+   <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
 </div>
 <?php endif; ?>
-<?php if(($qoutation['status'] == QoutationStatus::PENDING || $qoutation['status'] == QoutationStatus::DISAPPROVED) && (int)$_SESSION['user']['role_id'] == Role::SALES) : ?>
+<?php if(($quotation['status'] == QuotationStatus::PENDING || $quotation['status'] == QuotationStatus::DISAPPROVED) && (int)$_SESSION['user']['role_id'] == Role::SALES) : ?>
 <div class="flex justify-end gap-2 mt-4">
-   <a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
-   <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+   <a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
+   <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
 </div>
 <?php endif; ?>
 
@@ -245,7 +245,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          Terms
       </h2>
       <p class="text-gray-500">
-         <?= $qoutation['terms'] ?>
+         <?= $quotation['terms'] ?>
       </p>
    </div>
    <div class="my-4">
@@ -253,7 +253,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          Validity
       </h2>
       <p class="text-gray-500">
-         <?= $qoutation['validity'] ?> days
+         <?= $quotation['validity'] ?> days
       </p>
    </div>
    <div class="my-4">
@@ -261,7 +261,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          Delivery
       </h2>
       <p class="text-gray-500">
-         <?= $qoutation['delivery'] ?>
+         <?= $quotation['delivery'] ?>
       </p>
    </div>
    <div class="my-4">
@@ -269,13 +269,13 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          Questions? Contact me
       </h2>
       <p class="">
-         <?= $qoutation['created_by'] ?>
+         <?= $quotation['created_by'] ?>
       </p>
       <p class="text-gray-500 text-sm">
-         <?= $qoutation['sales_email'] ?>
+         <?= $quotation['sales_email'] ?>
       </p>
       <p class="text-gray-500 text-sm mt-1">
-         <?= $qoutation['sales_phone'] ?>
+         <?= $quotation['sales_phone'] ?>
       </p>
    </div>
 </div>
@@ -284,15 +284,15 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
 <div id="actionButtons" class="flex justify-end gap-2 mt-4">
    <button type="button" onclick="generatePdf('print')" title="Print" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Print</button>
    <!-- <button type="button" onclick="generatePdf('download')" title="Download" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Download</button> -->
-   <!-- <button type="button" title="Disapprove" onclick="toggleModal('qoutationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button> -->
-   <!-- <button title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
+   <!-- <button type="button" title="Disapprove" onclick="toggleModal('quotationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button> -->
+   <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
 </div>
 
 </div>
 </div>
 <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 <script>
-   // const updateQoutation = (id) => {
+   // const updateQuotation = (id) => {
    //    console.log(id)
    // }
 
@@ -326,7 +326,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
 
     // All images are loaded, proceed to generate the PDF
    const options = {
-      filename: 'pmc-qoutation.pdf',
+      filename: 'pmc-quotation.pdf',
       margin: 8,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
@@ -363,7 +363,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
       //    //    .then(() => {
       //    //          // All images are loaded, proceed to generate the PDF
       //    //          const options = {
-      //    //             filename: 'pmc-qoutation.pdf',
+      //    //             filename: 'pmc-quotation.pdf',
       //    //             margin: 2,
       //    //             image: { type: 'jpeg', quality: 0.98 },
       //    //             html2canvas: { scale: 2 },
@@ -377,7 +377,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          
       //             // All images are loaded, proceed to generate the PDF
       //             const options = {
-      //                filename: 'pmc-qoutation.pdf',
+      //                filename: 'pmc-quotation.pdf',
       //                margin: 2,
       //                image: { type: 'jpeg', quality: 0.98 },
       //                html2canvas: { scale: 2 },
@@ -392,7 +392,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
       
    }
 
-   async function updateQoutation(id) {
+   async function updateQuotation(id) {
       const successPanel = document.querySelector('.success-panel')
       const errorPanel = document.querySelector('.error-panel')
       const successMessage = document.querySelector('.successMessage')
@@ -402,7 +402,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
       formData.append("id", id)
       formData.append("mode", mode)
       try {
-         const response = await fetch("/qoutation/change-status", {
+         const response = await fetch("/quotation/change-status", {
             method: "POST",
             body: formData
          });
@@ -410,11 +410,11 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          if (data.success) {
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
-            toggleModal('qoutationModal')
+            toggleModal('quotationModal')
          } else {
             errorPanel.classList.remove('hidden')
             errorMessage.innerText = data.message
-            toggleModal('qoutationModal')
+            toggleModal('quotationModal')
          }
          // console.log(data.success);
       } catch (e) {

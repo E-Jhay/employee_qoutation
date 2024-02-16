@@ -2,16 +2,16 @@
 
 use Core\App;
 use Core\Mailer;
-use Core\QoutationStatus;
+use Core\QuotationStatus;
 use Core\Role;
-use Http\Forms\QoutationCreateForm;
+use Http\Forms\QuotationCreateForm;
 
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
 
 authorize((int)$_SESSION['user']['role_id'] === Role::SALES);
 
-// $form = QoutationCreateForm::validate($attributes = [
+// $form = QuotationCreateForm::validate($attributes = [
 //     'name' => $_POST['customer_name'],
 //     'email' => $_POST['email'],
 //     'address' => $_POST['address'],
@@ -33,7 +33,7 @@ $attributes = [
     'needed_at' => $_POST['needed_at'],
 ];
 
-$form = QoutationCreateForm::validate($attributes);
+$form = QuotationCreateForm::validate($attributes);
 
 if(count($form->errors()) > 0) {
     $response = array('success' => false, 'message' => 'Please fill out all required fields.');
@@ -62,9 +62,9 @@ try {
         $team_id = $_SESSION['user']['team_id'];
     }
 
-    $latestControlNo = $db->query("SELECT control_no FROM `qoutation` ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-0';
+    $latestControlNo = $db->query("SELECT control_no FROM `quotation` ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-0';
 
-    $db->query("INSERT INTO qoutation (control_no, created_by, customer_id, terms, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :terms, :status, :team_id, :needed_at)", [
+    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, terms, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :terms, :status, :team_id, :needed_at)", [
         'control_no' => generateControlNumber($latestControlNo),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $customerInsertedId,
@@ -73,17 +73,17 @@ try {
         // 'validity' => $_POST['validity'],
         // 'delivery' => $_POST['delivery'],
         'terms' => $_POST['terms'],
-        'status' => QoutationStatus::PENDING,
+        'status' => QuotationStatus::PENDING,
         'team_id' => $team_id,
         'needed_at' => $_POST['needed_at'],
     ]);
-    $qoutationInsertId = $db->connection()->lastInsertId();
+    $quotationInsertId = $db->connection()->lastInsertId();
     
     $products = json_decode($_POST['products'], true);
 
     foreach($products as $product) {
-        $db->query("INSERT INTO product_qoutation (qoutation_id, code, description, comment, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:qoutation_id, :code, :description, :comment, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
-            'qoutation_id' => $qoutationInsertId,
+        $db->query("INSERT INTO product_quotation (quotation_id, code, description, comment, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:quotation_id, :code, :description, :comment, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
+            'quotation_id' => $quotationInsertId,
             // 'unit' => $product['product_unit'],
             'code' => $product['product_code'],
             'description' => $product['product_description'],
@@ -112,7 +112,7 @@ try {
             // set the filename as the basename + extension
             $uploaded_file = pathinfo($filename, PATHINFO_FILENAME) . '-' . time() . '.' . pathinfo($filename, PATHINFO_EXTENSION);
             // new filepath
-            $filepath = './images/qoutation/' . $uploaded_file;
+            $filepath = './images/quotation/' . $uploaded_file;
     
             // move the file to the upload dir
             if (file_exists($filepath)) {
@@ -120,9 +120,9 @@ try {
                 exit;
             }else{
                 if(move_uploaded_file($tmp, $filepath)) {
-                    $db->query("INSERT INTO file_qoutation (name, qoutation_id) VALUES(:name, :qoutation_id)", [
+                    $db->query("INSERT INTO file_quotation (name, quotation_id) VALUES(:name, :quotation_id)", [
                         'name' => $uploaded_file,
-                        'qoutation_id' => $qoutationInsertId,
+                        'quotation_id' => $quotationInsertId,
                     ]);
                 }
             }
@@ -139,17 +139,17 @@ try {
     $to = ['bumacodejhay@gmail.com'];
 
     // Read HTML content from a file and replace placeholders with data
-    $htmlContent = getHtmlContent('../views/mail/storeQoutation.html', [
+    $htmlContent = getHtmlContent('../views/mail/storeQuotation.html', [
         'created_by' => $_SESSION['user']['name'],
-        'id' => $qoutationInsertId
+        'id' => $quotationInsertId
     ]);
     // $mail->Body = $htmlContent;
 
-    $mailer->sendMail($to, 'PMC Qoutation ' . generateControlNumber($latestControlNo), $htmlContent);
+    $mailer->sendMail($to, 'PMC Quotation ' . generateControlNumber($latestControlNo), $htmlContent);
 
     $db->commit();
 
-    $response = array('success' => true, 'message' => 'Qoutation added');
+    $response = array('success' => true, 'message' => 'Quotation added');
     echo json_encode($response);
 } catch(Exception $e) {
     // An error occurred, rollback the transaction

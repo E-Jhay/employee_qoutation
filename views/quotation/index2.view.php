@@ -1,7 +1,7 @@
 
 <?php
 
-use Core\QoutationStatus;
+use Core\QuotationStatus;
 use Core\Role;
 
  require base_path('views/partials/head.php') ?>
@@ -17,7 +17,7 @@ use Core\Role;
                <div class="flex justify-end gap-2 mb-4 -mt-12">
                   <a title="Export" href="" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-file-download-line"></i></a>
                   <a title="Import" href="" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-file-line"></i></a>
-                  <a title="Create" href="/qoutation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></a>
+                  <a title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></a>
                </div>
                <?php if(Core\Session::get('success')): ?>
                   <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative message-alert" role="alert">
@@ -31,10 +31,10 @@ use Core\Role;
                <div class="rounded">
                   <!-- Tabs -->
                   <ul id="tabs" class="inline-flex w-full px-1 pt-2 ">
-                     <li class="px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><a id="default-tab" href="#pending">Pending</a></li>
-                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><a href="#approved">Approved</a></li>
-                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><a href="#disapproved">Disapproved</a></li>
-                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><a href="#all">All</a></li>
+                     <li class="px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><button id="pending" type="button" onclick="filterBystatus(this, <?= QuotationStatus::PENDING ?>)">Pending</button></li>
+                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="approved" type="button" onclick="filterBystatus(this, <?= QuotationStatus::APPROVED ?>)">Approved</button></li>
+                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="disapproved" type="button" onclick="filterBystatus(this, <?= QuotationStatus::DISAPPROVED ?>)">Disapproved</button></li>
+                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="all" type="button" onclick="filterBystatus(this, 'all')">All</button></li>
                   </ul>
 
                   <!-- Tab Contents -->
@@ -73,50 +73,50 @@ use Core\Role;
                                              </tr>
                                           </thead>
                                           <tbody class="bg-white divide-y divide-gray-200">
-                                          <?php if(count($pendingQoutations) <= 0): ?>
+                                          <?php if(count($pendingQuotations) <= 0): ?>
                                              <tr>
                                                 <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
                                                    No items
                                                 </td>
                                              </tr>
                                           <?php endif; ?>
-                                          <?php foreach($pendingQoutations as $qoutation): ?>
+                                          <?php foreach($pendingQuotations as $quotation): ?>
                                              <tr>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['control_no'] ?>
+                                                   <?= $quotation['control_no'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['created_by_name'] ?>
+                                                   <?= $quotation['created_by_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['customer_name'] ?>
+                                                   <?= $quotation['customer_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?php
                                                       $status_color = 'amber';
-                                                      $qoutation['status'] == QoutationStatus::APPROVED ? $status_color = 'green' : ($qoutation['status'] == QoutationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
+                                                      $quotation['status'] == QuotationStatus::APPROVED ? $status_color = 'green' : ($quotation['status'] == QuotationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
                                                    ?>
                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
-                                                      <?= $qoutation['status_name'] ?>
+                                                      <?= $quotation['status_name'] ?>
                                                    </span>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= date('Y-m-d', strtotime($qoutation['created_at'])) ?>
+                                                   <?= date('Y-m-d', strtotime($quotation['created_at'])) ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['needed_at'] ?>
+                                                   <?= $quotation['needed_at'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['released_at'] ?>
+                                                   <?= $quotation['released_at'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                   <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
-                                                   <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
-                                                   <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ((int)$_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === QoutationStatus::PENDING): ?>
-                                                   <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                   <a href="/quotation/show?id=<?= $quotation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <!--<a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
+                                                   <!-- <a onclick="deletequotation(<?= $quotation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $quotation['status'] === QuotationStatus::PENDING): ?>
+                                                   <form class="inline-block" action="/quotation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
-                                                         <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
+                                                         <input type="hidden" name="id" value="<?= $quotation['id'] ?>">
                                                          <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                          <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
                                                    </form>
@@ -182,50 +182,50 @@ use Core\Role;
                                              </tr>
                                           </thead>
                                           <tbody class="bg-white divide-y divide-gray-200">
-                                          <?php if(count($approvedQoutations) <= 0): ?>
+                                          <?php if(count($approvedQuotations) <= 0): ?>
                                              <tr>
                                                 <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
                                                    No items
                                                 </td>
                                              </tr>
                                           <?php endif; ?>
-                                          <?php foreach($approvedQoutations as $qoutation): ?>
+                                          <?php foreach($approvedQuotations as $quotation): ?>
                                              <tr>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['control_no'] ?>
+                                                   <?= $quotation['control_no'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['created_by_name'] ?>
+                                                   <?= $quotation['created_by_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['customer_name'] ?>
+                                                   <?= $quotation['customer_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?php
                                                       $status_color = 'amber';
-                                                      $qoutation['status'] == QoutationStatus::APPROVED ? $status_color = 'green' : ($qoutation['status'] == QoutationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
+                                                      $quotation['status'] == QuotationStatus::APPROVED ? $status_color = 'green' : ($quotation['status'] == QuotationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
                                                    ?>
                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
-                                                      <?= $qoutation['status_name'] ?>
+                                                      <?= $quotation['status_name'] ?>
                                                    </span>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= date('Y-m-d', strtotime($qoutation['created_at'])) ?>
+                                                   <?= date('Y-m-d', strtotime($quotation['created_at'])) ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['needed_at'] ?>
+                                                   <?= $quotation['needed_at'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['released_at'] ?>
+                                                   <?= $quotation['released_at'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                   <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
-                                                   <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
-                                                   <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ((int)$_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === QoutationStatus::PENDING): ?>
-                                                   <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                   <a href="/quotation/show?id=<?= $quotation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <!--<a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
+                                                   <!-- <a onclick="deletequotation(<?= $quotation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $quotation['status'] === QuotationStatus::PENDING): ?>
+                                                   <form class="inline-block" action="/quotation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
-                                                         <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
+                                                         <input type="hidden" name="id" value="<?= $quotation['id'] ?>">
                                                          <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                          <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
                                                    </form>
@@ -291,50 +291,50 @@ use Core\Role;
                                              </tr>
                                           </thead>
                                           <tbody class="bg-white divide-y divide-gray-200">
-                                          <?php if(count($disapprovedQoutations) <= 0): ?>
+                                          <?php if(count($disapprovedQuotations) <= 0): ?>
                                              <tr>
                                                 <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
                                                    No items
                                                 </td>
                                              </tr>
                                           <?php endif; ?>
-                                          <?php foreach($disapprovedQoutations as $qoutation): ?>
+                                          <?php foreach($disapprovedQuotations as $quotation): ?>
                                              <tr>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['control_no'] ?>
+                                                   <?= $quotation['control_no'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['created_by_name'] ?>
+                                                   <?= $quotation['created_by_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['customer_name'] ?>
+                                                   <?= $quotation['customer_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?php
                                                       $status_color = 'amber';
-                                                      $qoutation['status'] == QoutationStatus::APPROVED ? $status_color = 'green' : ($qoutation['status'] == QoutationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
+                                                      $quotation['status'] == QuotationStatus::APPROVED ? $status_color = 'green' : ($quotation['status'] == QuotationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
                                                    ?>
                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
-                                                      <?= $qoutation['status_name'] ?>
+                                                      <?= $quotation['status_name'] ?>
                                                    </span>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= date('Y-m-d', strtotime($qoutation['created_at'])) ?>
+                                                   <?= date('Y-m-d', strtotime($quotation['created_at'])) ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['needed_at'] ?>
+                                                   <?= $quotation['needed_at'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['released_at'] ?>
+                                                   <?= $quotation['released_at'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                   <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
-                                                   <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
-                                                   <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ((int)$_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === QoutationStatus::PENDING): ?>
-                                                   <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                   <a href="/quotation/show?id=<?= $quotation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <!--<a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
+                                                   <!-- <a onclick="deletequotation(<?= $quotation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $quotation['status'] === QuotationStatus::PENDING): ?>
+                                                   <form class="inline-block" action="/quotation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
-                                                         <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
+                                                         <input type="hidden" name="id" value="<?= $quotation['id'] ?>">
                                                          <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                          <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
                                                    </form>
@@ -383,50 +383,50 @@ use Core\Role;
                                              </tr>
                                           </thead>
                                           <tbody class="bg-white divide-y divide-gray-200">
-                                          <?php if(count($allQoutations) <= 0): ?>
+                                          <?php if(count($allQuotations) <= 0): ?>
                                              <tr>
                                                 <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
                                                    No items
                                                 </td>
                                              </tr>
                                           <?php endif; ?>
-                                          <?php foreach($allQoutations as $qoutation): ?>
+                                          <?php foreach($allQuotations as $quotation): ?>
                                              <tr>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['control_no'] ?>
+                                                   <?= $quotation['control_no'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['created_by_name'] ?>
+                                                   <?= $quotation['created_by_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['customer_name'] ?>
+                                                   <?= $quotation['customer_name'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                    <?php
                                                       $status_color = 'amber';
-                                                      $qoutation['status'] == QoutationStatus::APPROVED ? $status_color = 'green' : ($qoutation['status'] == QoutationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
+                                                      $quotation['status'] == QuotationStatus::APPROVED ? $status_color = 'green' : ($quotation['status'] == QuotationStatus::DISAPPROVED ? $status_color = 'red' : $status_color = 'amber');
                                                    ?>
                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-<?= $status_color ?>-200 text-<?= $status_color ?>-800">
-                                                      <?= $qoutation['status_name'] ?>
+                                                      <?= $quotation['status_name'] ?>
                                                    </span>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= date('Y-m-d', strtotime($qoutation['created_at'])) ?>
+                                                   <?= date('Y-m-d', strtotime($quotation['created_at'])) ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['needed_at'] ?>
+                                                   <?= $quotation['needed_at'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                   <?= $qoutation['released_at'] ?>
+                                                   <?= $quotation['released_at'] ?>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                   <a href="/qoutation/show?id=<?= $qoutation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
-                                                   <!--<a href="/qoutation/edit?id=<?= $qoutation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
-                                                   <!-- <a onclick="deleteqoutation(<?= $qoutation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ((int)$_SESSION['user']['role_id'] === Role::SALES && $qoutation['status'] === QoutationStatus::PENDING): ?>
-                                                   <form class="inline-block" action="/qoutation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                                                   <a href="/quotation/show?id=<?= $quotation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
+                                                   <!--<a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
+                                                   <!-- <a onclick="deletequotation(<?= $quotation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
+                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $quotation['status'] === QuotationStatus::PENDING): ?>
+                                                   <form class="inline-block" action="/quotation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
-                                                         <input type="hidden" name="id" value="<?= $qoutation['id'] ?>">
+                                                         <input type="hidden" name="id" value="<?= $quotation['id'] ?>">
                                                          <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
                                                          <input type="submit" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2" value="Delete">
                                                    </form>
@@ -465,13 +465,13 @@ use Core\Role;
          </main>
 
 <!-- <script>
-   const deleteqoutation = (id) => {
+   const deletequotation = (id) => {
       if(confirm("Are you sure you want to delete this?")) {
-         window.location.href = '/qoutation/delete?id=' + id;
+         window.location.href = '/quotation/delete?id=' + id;
       }
    }
 </script> -->
-<script>
+<!-- <script>
    let tabsContainer = document.querySelector("#tabs");
 
    let tabTogglers = tabsContainer.querySelectorAll("a");
@@ -500,6 +500,46 @@ use Core\Role;
 
    document.getElementById("default-tab").click();
 
+</script> -->
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+      
+      // Get the current page and total pages from the URL
+      // let currentStatus = new URLSearchParams(window.location.search).get("status") || 'pending';
+      // document.getElementById(currentStatus).click();
+      getData(<?= QuotationStatus::PENDING ?>)
+   })
+
+   const filterBystatus = (button, status) => {
+      // console.log('first')
+      let tabsContainer = document.querySelector("#tabs");
+      
+      let tabTogglers = tabsContainer.querySelectorAll("button");
+      
+      tabTogglers.forEach(toggler => {
+         toggler.parentElement.classList.remove("border-blue-400", "border-b-2", "-mb-px", "opacity-100")
+      })
+      button.parentElement.classList.add("border-blue-400", "border-b-2", "-mb-px", "opacity-100");
+
+      getData(status)
+   }
+
+   async function getData(status) {
+      // console.log(status)
+      try {
+         
+         const response = await fetch(`/get-quotations?status=${status}`);
+         const data = await response.json()
+         console.log(data)
+         // if (data.success) {
+            
+         // } else {
+            
+         // }
+      } catch (e) {
+         console.error(e);
+      }
+   }
 </script>
 <!-- Footer -->
 <?php require base_path('views/partials/footer.php') ?>

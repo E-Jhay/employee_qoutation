@@ -8,17 +8,17 @@
       <div class="h-full w-full bg-gray-50 relative lg:ml-64">
          <main class="pt-6 px-2 lg:px-8">
             <div class="flex justify-start gap-2">
-               <a href="/qoutations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
+               <a href="/quotations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
             </div>
 
             <?php require base_path('views/partials/banner.php') ?>
             <?php require base_path('views/partials/alerts.php') ?>
             <!-- component -->
-            <form id="qoutationForm">
+            <form id="quotationForm">
                <div class="bg-white rounded shadow-lg p-4 px-2 md:p-8 mb-6">
                   <div class="lg:col-span-2">
                      <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
-                        Qoutation Details
+                        Quotation Details
                      </h3>
                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
                         <div class="md:col-span-3">
@@ -474,9 +474,9 @@
       document.getElementById('id').value = ''
       document.getElementById("productForm").reset();
    }
-   const resetQoutationForm = () => {
+   const resetQuotationForm = () => {
       // document.getElementById('id').value = ''
-      document.getElementById("qoutationForm").reset();
+      document.getElementById("quotationForm").reset();
    }
 
    const refreshTableRow = () => {
@@ -606,10 +606,10 @@
    }
 
    
-   const qoutationForm = document.getElementById('qoutationForm')
-   qoutationForm.addEventListener('submit', (e) => {
+   const quotationForm = document.getElementById('quotationForm')
+   quotationForm.addEventListener('submit', (e) => {
       e.preventDefault()
-      const formData = new FormData(qoutationForm)
+      const formData = new FormData(quotationForm)
       formData.append("products", JSON.stringify(productLists))
 
       sendData(formData)
@@ -623,7 +623,7 @@
          submitButton.className = 'w-32 bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50';
          submitButton.disabled = true;
          submitButton.innerText = "Loading...";
-         const response = await fetch("/qoutation", {
+         const response = await fetch("/quotation", {
             method: "POST",
             body: formData,
          });
@@ -648,7 +648,7 @@
             submitButton.innerText = "Submit";
          }
          console.log(data)
-         resetQoutationForm()
+         resetQuotationForm()
          productLists = []
          refreshTableRow()
          // console.log(data.success);
