@@ -44,36 +44,36 @@ try {
     }
 
 
-    // $config = require base_path("config.php");
-    // $mailer = new Mailer($config['mail']);
-    // if($status == QuotationStatus::DISAPPROVED) {
-    //     // $to = ['bumacodejhay@gmail.com'];
+    $config = require base_path("config.php");
+    $mailer = new Mailer($config['mail']);
+    if($status == QuotationStatus::DISAPPROVED) {
+        // $to = ['bumacodejhay@gmail.com'];
 
-    //     $to = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
+        $to = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
 
-    //     // // Read HTML content from a file and replace placeholders with data
-    //     $htmlContent = getHtmlContent('../views/mail/disapprovedQuotation.html', [
-    //         'manager' => $_SESSION['user']['name'],
-    //         'id' => $id
-    //     ]);
-    //     // $mail->Body = $htmlContent;
+        // // Read HTML content from a file and replace placeholders with data
+        $htmlContent = getHtmlContent('../views/mail/disapprovedQuotation.html', [
+            'manager' => $_SESSION['user']['name'],
+            'id' => $id
+        ]);
+        // $mail->Body = $htmlContent;
 
-    //     $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
-    // } elseif($status == QuotationStatus::APPROVED) {
-    //     // $to = ['bumacodejhay@gmail.com'];
+        $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
+    } elseif($status == QuotationStatus::APPROVED) {
+        // $to = ['bumacodejhay@gmail.com'];
 
-    //     $to = (array)$db->query("SELECT customer.email as customer_email FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE quotation.id = :id", ['id' => $id])->find()['customer_email'];
+        $to = (array)$db->query("SELECT customer.email as customer_email FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE quotation.id = :id", ['id' => $id])->find()['customer_email'];
         
-    //     $cc = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
+        $cc = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
 
-    //     // // Read HTML content from a file and replace placeholders with data
-    //     $htmlContent = getHtmlContent('../views/mail/approvedQuotation.html', [
-    //         'id' => $id
-    //     ]);
-    //     // // $mail->Body = $htmlContent;
+        // // Read HTML content from a file and replace placeholders with data
+        $htmlContent = getHtmlContent('../views/mail/approvedQuotation.html', [
+            'id' => $id
+        ]);
+        // // $mail->Body = $htmlContent;
 
-    //     $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
-    // }
+        $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
+    }
     $response = array('success' => true, 'message' => "Quotation {$_POST['mode']}d");
     echo json_encode($response);
 } catch(Exception $e) {
