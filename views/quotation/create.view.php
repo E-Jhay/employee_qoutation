@@ -117,7 +117,7 @@
                                     </label>
                                     <!-- <p class="pl-1">or drag and drop</p> -->
                                  </div>
-                                 <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                                 <p class="text-xs leading-5 text-gray-600">JPEG, IMG, PDF, EXCEL, PNG, JPG, GIF </p>
                               </div>
                            </div>
                         </div>
