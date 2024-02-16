@@ -54,9 +54,9 @@ use Core\Role;
                            <?= $quotation['created_by'] ?>
                         </span>
                      </p>
-                     <p>
+                     <!-- <p>
                         <?= $quotation['created_by'] ?>
-                     </p>
+                     </p> -->
                      <p class="text-gray-500 text-sm">
                         <?= $quotation['sales_email'] ?>
                      </p>
