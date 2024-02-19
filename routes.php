@@ -13,6 +13,10 @@
 $router->get('/login', 'session/create.php')->only('guest');
 $router->post('/session', 'session/store.php')->only('guest');
 $router->delete('/session', 'session/destroy.php')->only('auth');
+$router->get('/forgot-password', 'session/forgot_password.php')->only('guest');
+$router->post('/forgot-password', 'session/verify_email.php')->only('guest');
+$router->get('/reset-password', 'session/reset_password.php')->only('guest');
+$router->post('/reset-password', 'session/update_password.php')->only('guest');
 
 
 $router->get('/dashboard', 'home/sales_manager/index.php')->only('auth');
