@@ -10,7 +10,7 @@ $quotationCreatedBy = $db->query("SELECT created_by FROM quotation WHERE id = :i
     'id' => $_POST['id']
 ])->find()['created_by'];
 // dd($quotationCreatedBy);
-authorize((int)$_SESSION['user']['role_id'] === Role::SALES && $_SESSION['user']['id'] === $quotationCreatedBy);
+authorize((int)$_SESSION['user']['role_id'] == Role::SALES && $_SESSION['user']['id'] == $quotationCreatedBy);
 
 $db->query("DELETE FROM quotation WHERE id = :id", ['id' => $_POST['id']]);
 

@@ -21,7 +21,7 @@ class UpdatePassword {
         if(! Validator::password($attributes['password'])) {
             $this->errors['password'] = "Password Must Contain At Least 8 Characters.";
         }
-        if($attributes['email'] === '') {
+        if($attributes['email'] == '') {
             $this->errors['password'] = "Account not found, please click the link sent to your email.";
         }
     }

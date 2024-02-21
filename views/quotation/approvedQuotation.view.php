@@ -300,7 +300,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
 
       document.getElementById('actionButtons').style.display = 'none'
       document.getElementById('invoice').className = 'w-full mx-auto p-6 bg-white'
-      if(action === 'print') {
+      if(action == 'print') {
          window.print();
       } else {
 

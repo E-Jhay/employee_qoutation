@@ -171,14 +171,14 @@ use Core\Role;
       let startPage = Math.max(1, currentPage - 1);
       let endPage = Math.min(totalPages, currentPage + 1);
 
-      if (currentPage === 1) {
+      if (currentPage == 1) {
          endPage = Math.min(totalPages, currentPage + 2);
-      } else if (currentPage === totalPages) {
+      } else if (currentPage == totalPages) {
          startPage = Math.max(1, currentPage - 2);
       }
 
       for (let i = startPage; i <= endPage; i++) {
-         if (i === currentPage) {
+         if (i == currentPage) {
             pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 border border-gray200 bg-blue-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${i})">${i}</button>`
          } else {
             pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${i})">${i}</button>`
@@ -232,7 +232,7 @@ use Core\Role;
                editBtn.href = `/quotation/show?id=${quotation['id']}`
                td.appendChild(editBtn)
                
-               if (<?= (int)$_SESSION['user']['role_id'] === Role::SALES ? 1 : 0 ?> && quotation['status'] === <?= QuotationStatus::PENDING ?>) {
+               if (<?= (int)$_SESSION['user']['role_id'] == Role::SALES ? 1 : 0 ?> && quotation['status'] == <?= QuotationStatus::PENDING ?>) {
                   let deleteBtn = document.createElement("a")
 
                   deleteBtn.classList.add('text-red-600', 'dark:text-red-500', 'hover:underline', 'cursor-pointer', 'mb-2', 'mr-2')
@@ -285,13 +285,13 @@ use Core\Role;
 
       // Toggle sorting order for the clicked column
       const currentOrder = sortOrders[columnIndex] || 'asc';
-      const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+      const newOrder = currentOrder == 'asc' ? 'desc' : 'asc';
       sortOrders[columnIndex] = newOrder;
 
       rows.sort((a, b) => {
          const aValue = a.getElementsByTagName("td")[columnIndex].textContent;
          const bValue = b.getElementsByTagName("td")[columnIndex].textContent;
-         return newOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+         return newOrder == 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
       });
 
     // Clear the table body
@@ -313,7 +313,7 @@ use Core\Role;
     arrow.className = "sort-arrow";
     arrow.innerHTML = `
         <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
-            <path d="${newOrder === 'desc' ? 'M12 14L6 8H18L12 14Z' : 'M12 8L18 14H6L12 8Z'}"></path>
+            <path d="${newOrder == 'desc' ? 'M12 14L6 8H18L12 14Z' : 'M12 8L18 14H6L12 8Z'}"></path>
         </svg>
     `;
     clickedHeader.appendChild(arrow);

@@ -5,7 +5,7 @@ use Core\Role;
 
 $db = App::resolve('Core\Database');
 
-authorize((int)$_SESSION['user']['role_id'] === Role::ADMIN);
+authorize((int)$_SESSION['user']['role_id'] == Role::ADMIN);
 
 $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find();
 // dd($user);

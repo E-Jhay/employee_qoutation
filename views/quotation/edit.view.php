@@ -141,7 +141,7 @@ use Core\QuotationStatus;
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Proposed price/ (Discount in %)
                                                       </th>
-                                                      <?php if($quotation['status'] === QuotationStatus::DISAPPROVED): ?>
+                                                      <?php if($quotation['status'] == QuotationStatus::DISAPPROVED): ?>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Recommended price
                                                       </th>
@@ -172,7 +172,7 @@ use Core\QuotationStatus;
                   
                         <div class="mt-4 md:col-span-6 text-left">
                            <div class="inline-flex items-end">
-                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $quotation['status'] === QuotationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
+                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
                            </div>
                         </div>
 
@@ -470,7 +470,7 @@ use Core\QuotationStatus;
    const addRow = (product) => {
 
       let cells = []
-      if(<?= $quotation['status'] === QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
+      if(<?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
          cells = [
             'product_qty',
             // 'product_unit',
@@ -519,9 +519,9 @@ use Core\QuotationStatus;
          let c = document.createElement("td")
          if(cell !== 'action') {
             c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'whitespace-nowrap', 'dark:text-white')
-            if(cell === 'approved_price'){
+            if(cell == 'approved_price'){
                c.classList.add('text-green-500')
-            } else if(cell === 'proposed_price' && <?= $quotation['status'] === QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
+            } else if(cell == 'proposed_price' && <?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
                c.classList.add('text-red-500')
             }
             c.innerText = product[cell]
@@ -580,7 +580,7 @@ use Core\QuotationStatus;
    }
 
    const updateProduct = (id, product) => {
-      const index = productLists.findIndex(item => item.id === id)
+      const index = productLists.findIndex(item => item.id == id)
 
       // Check if the object with the given ID was found
       if (index !== -1) {
@@ -651,7 +651,7 @@ use Core\QuotationStatus;
    
    // Create a new array with unique items
    const uniqueOptions = [...uniqueNamesSet].map((uniqueName) => {
-      return allOptions.find((option) => option.name === uniqueName);
+      return allOptions.find((option) => option.name == uniqueName);
    });
    // console.log(allOptions.length)
    // console.log(uniqueOptions.length)

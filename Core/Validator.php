@@ -51,6 +51,6 @@ class Validator {
 
     public static function passwordConfirmed($password, $reTypePassword)
     {
-        return $password === $reTypePassword;
+        return $password == $reTypePassword;
     }
 }

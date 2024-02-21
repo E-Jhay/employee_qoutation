@@ -7,7 +7,7 @@ use Http\Forms\UserEditForm;
 
 $db = App::resolve('Core\Database');
 
-authorize((int)$_SESSION['user']['role_id'] === Role::ADMIN);
+authorize((int)$_SESSION['user']['role_id'] == Role::ADMIN);
 
 $roles = $db->query("SELECT id, name FROM role")->get();
 

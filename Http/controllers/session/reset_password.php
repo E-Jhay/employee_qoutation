@@ -6,7 +6,7 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
-// authorize((int)$_SESSION['user']['role_id'] === Role::ADMIN);
+// authorize((int)$_SESSION['user']['role_id'] == Role::ADMIN);
 
 view("session/reset_password.view.php", [
     'errors' => Session::get('errors'),

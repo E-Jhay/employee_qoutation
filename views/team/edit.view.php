@@ -41,7 +41,7 @@
                            <select id="manager_id" name="manager_id" autocomplete="manager_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['manager_id']) ? 'border-red-500' : '' ?>">
                               <option value="" selected>-- Select manager --</option >
                               <?php foreach($managers as $manager): ?>
-                                 <option <?= $team['manager_id'] === $manager['id'] ? 'selected' : '' ?> value="<?= $manager['id'] ?>"><?= ucwords($manager['name']) ?></option >
+                                 <option <?= $team['manager_id'] == $manager['id'] ? 'selected' : '' ?> value="<?= $manager['id'] ?>"><?= ucwords($manager['name']) ?></option >
                               <?php endforeach; ?>
                            </select>
                            <?php if(isset($errors['manager_id'])): ?>
@@ -53,7 +53,7 @@
                            <label for="region">Region</label>
                            <select id="region_id" name="region_id" autocomplete="region_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['region_id']) ? 'border-red-500' : '' ?>">
                               <?php foreach($regions as $region): ?>
-                                 <option <?= $team['region_id'] === $region['id'] ? 'selected' : '' ?> value="<?= $region['id'] ?>"><?= ucwords($region['name']) ?></option >
+                                 <option <?= $team['region_id'] == $region['id'] ? 'selected' : '' ?> value="<?= $region['id'] ?>"><?= ucwords($region['name']) ?></option >
                               <?php endforeach; ?>
                            </select>
                            <?php if(isset($errors['region_id'])): ?>

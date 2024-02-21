@@ -22,7 +22,7 @@ if (!function_exists('array_key_last')) {
 
 function urlIs($value) {
     return in_array(parse_url($_SERVER['REQUEST_URI'])['path'], $value);
-    // return $_SERVER['REQUEST_URI'] === $value;
+    // return $_SERVER['REQUEST_URI'] == $value;
 }
 
 function abort($code = 404)

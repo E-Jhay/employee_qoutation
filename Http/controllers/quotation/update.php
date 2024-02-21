@@ -15,7 +15,7 @@ $quotationCreatedBy = $db->query("SELECT created_by FROM quotation WHERE id = :i
     'id' => $_POST['quotation_id']
 ])->find()['created_by'];
 // dd($quotationCreatedBy);
-authorize((int)$_SESSION['user']['role_id'] === Role::SALES && $_SESSION['user']['id'] === $quotationCreatedBy);
+authorize((int)$_SESSION['user']['role_id'] == Role::SALES && $_SESSION['user']['id'] == $quotationCreatedBy);
 
 
 try {
@@ -73,7 +73,7 @@ try {
         ]);
     }
 
-    if($quotation['status'] === QuotationStatus::DISAPPROVED) {
+    if($quotation['status'] == QuotationStatus::DISAPPROVED) {
         $db->query("UPDATE quotation SET status = :status WHERE id = :id", [
             'id' => $quotation['id'],
             'status' => QuotationStatus::PENDING,

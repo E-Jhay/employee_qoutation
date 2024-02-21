@@ -113,7 +113,7 @@ use Core\Role;
                                                    <a href="/quotation/show?id=<?= $quotation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deletequotation(<?= $quotation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $quotation['status'] === QuotationStatus::PENDING): ?>
+                                                   <?php if ($_SESSION['user']['role_id'] == Role::SALES && $quotation['status'] == QuotationStatus::PENDING): ?>
                                                    <form class="inline-block" action="/quotation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $quotation['id'] ?>">
@@ -222,7 +222,7 @@ use Core\Role;
                                                    <a href="/quotation/show?id=<?= $quotation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deletequotation(<?= $quotation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $quotation['status'] === QuotationStatus::PENDING): ?>
+                                                   <?php if ($_SESSION['user']['role_id'] == Role::SALES && $quotation['status'] == QuotationStatus::PENDING): ?>
                                                    <form class="inline-block" action="/quotation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $quotation['id'] ?>">
@@ -331,7 +331,7 @@ use Core\Role;
                                                    <a href="/quotation/show?id=<?= $quotation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deletequotation(<?= $quotation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $quotation['status'] === QuotationStatus::PENDING): ?>
+                                                   <?php if ($_SESSION['user']['role_id'] == Role::SALES && $quotation['status'] == QuotationStatus::PENDING): ?>
                                                    <form class="inline-block" action="/quotation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $quotation['id'] ?>">
@@ -423,7 +423,7 @@ use Core\Role;
                                                    <a href="/quotation/show?id=<?= $quotation['id'] ?>" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>
                                                    <!--<a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
                                                    <!-- <a onclick="deletequotation(<?= $quotation['id'] ?>)" class="cursor-pointer text-red-600 hover:text-red-900 mb-2 mr-2">Delete</a> -->
-                                                   <?php if ($_SESSION['user']['role_id'] === Role::SALES && $quotation['status'] === QuotationStatus::PENDING): ?>
+                                                   <?php if ($_SESSION['user']['role_id'] == Role::SALES && $quotation['status'] == QuotationStatus::PENDING): ?>
                                                    <form class="inline-block" action="/quotation/delete" method="POST" onsubmit="return confirm('Are you sure?');">
                                                          <input type="hidden" name="_method" value="DELETE">
                                                          <input type="hidden" name="id" value="<?= $quotation['id'] ?>">
@@ -488,7 +488,7 @@ use Core\Role;
       for (let i = 0; i < tabContents.children.length; i++) {
 
          tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");  tabContents.children[i].classList.remove("hidden");
-         if ("#" + tabContents.children[i].id === tabName) {
+         if ("#" + tabContents.children[i].id == tabName) {
          continue;
          }
          tabContents.children[i].classList.add("hidden");

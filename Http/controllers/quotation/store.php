@@ -9,7 +9,7 @@ use Http\Forms\QuotationCreateForm;
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
 
-authorize((int)$_SESSION['user']['role_id'] === Role::SALES);
+authorize((int)$_SESSION['user']['role_id'] == Role::SALES);
 
 // $form = QuotationCreateForm::validate($attributes = [
 //     'name' => $_POST['customer_name'],

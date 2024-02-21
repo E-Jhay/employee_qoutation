@@ -6,7 +6,7 @@ use Core\Session;
 
 $db = App::resolve('Core\Database');
 
-authorize((int)$_SESSION['user']['role_id'] === Role::ADMIN);
+authorize((int)$_SESSION['user']['role_id'] == Role::ADMIN);
 
 $managers = $db->query("SELECT id, name FROM user WHERE role_id = :role_id
                         AND NOT EXISTS (

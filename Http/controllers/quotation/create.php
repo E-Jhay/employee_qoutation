@@ -10,7 +10,7 @@ $db = App::resolve('Core\Database');
 // ])->get();
 // $regions = $db->query("SELECT id, name FROM region")->get();
 
-authorize((int)$_SESSION['user']['role_id'] === Role::SALES);
+authorize((int)$_SESSION['user']['role_id'] == Role::SALES);
 view("quotation/create.view.php", [
     'heading' => 'Create Quotation',
     // 'managers' => $managers,

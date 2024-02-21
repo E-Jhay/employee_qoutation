@@ -589,7 +589,7 @@
    }
 
    const updateProduct = (id, product) => {
-      const index = productLists.findIndex(item => item.id === id)
+      const index = productLists.findIndex(item => item.id == id)
 
       // Check if the object with the given ID was found
       if (index !== -1) {
@@ -677,7 +677,7 @@
    
    // Create a new array with unique items
    const uniqueOptions = [...uniqueNamesSet].map((uniqueName) => {
-      return allOptions.find((option) => option.name === uniqueName);
+      return allOptions.find((option) => option.name == uniqueName);
    });
    // console.log(allOptions.length)
    // console.log(uniqueOptions.length)

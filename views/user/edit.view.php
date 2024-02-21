@@ -65,7 +65,7 @@
                            <select id="role_id" name="role_id" autocomplete="role_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['role_id']) ? 'border-red-500' : '' ?>">
                               <!-- <option value="" selected>-- Select role --</option > -->
                               <?php foreach($roles as $role): ?>
-                                 <option <?= $user['role_id'] === $role['id'] ? 'selected' : '' ?> value="<?= $role['id'] ?>"><?= ucwords($role['name']) ?></option >
+                                 <option <?= $user['role_id'] == $role['id'] ? 'selected' : '' ?> value="<?= $role['id'] ?>"><?= ucwords($role['name']) ?></option >
                               <?php endforeach; ?>
                            </select>
                            <?php if(isset($errors['role_id'])): ?>

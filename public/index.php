@@ -21,7 +21,7 @@ spl_autoload_register(function($class) {
     $phpMailerNamespace = 'PHPMailer\PHPMailer\\';
 
     // Check if the class belongs to PHPMailer namespace
-    if (strpos($class, $phpMailerNamespace) === 0) {
+    if (strpos($class, $phpMailerNamespace) == 0) {
         // Construct the file path for PHPMailer class
         $classFile = base_path("vendor/phpmailer/phpmailer/src/" . str_replace($phpMailerNamespace, '', $class) . ".php");
         
