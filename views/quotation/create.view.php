@@ -124,7 +124,7 @@
                               <span class="text-red-500 text-xs"><?= $errors['delivery'] ?></span>
                            <?php endif; ?>
                         </div> -->
-                        <div class="md:col-span-6">
+                        <div class="md:col-span-3">
                            <label for="term_id">Terms</label>
                            <select id="term_id" name="term_id" autocomplete="term_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['term_id']) ? 'border-red-500' : '' ?>">
                               <option value="" selected>-- Select term --</option >
@@ -134,6 +134,18 @@
                            </select>
                            <?php if(isset($errors['term_id'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['term_id'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-3">
+                           <label for="delivery">Delivery</label>
+                           <select id="delivery" name="delivery" autocomplete="delivery-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['delivery']) ? 'border-red-500' : '' ?>">
+                              <option value="" selected>-- Select delivery --</option >
+                              <?php foreach(\Core\Delivery::OPTIONS as $option): ?>
+                                 <option value="<?= $option ?>"><?= ucwords($option) ?></option >
+                              <?php endforeach; ?>
+                           </select>
+                           <?php if(isset($errors['delivery'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['delivery'] ?></span>
                            <?php endif; ?>
                         </div>
                         <div class="md:col-span-3">

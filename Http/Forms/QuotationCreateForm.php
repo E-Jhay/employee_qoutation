@@ -64,6 +64,9 @@ class QuotationCreateForm {
         if(! Validator::string($attributes['vat'])) {
             $this->errors['vat'] = "VAT is required.";
         }
+        if(! Validator::string($attributes['delivery'])) {
+            $this->errors['delivery'] = "Delivery is required.";
+        }
         if(! Validator::string($attributes['needed_at'])) {
             $this->errors['needed_at'] = "Date needed is required.";
         }

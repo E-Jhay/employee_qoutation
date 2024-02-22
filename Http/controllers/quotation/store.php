@@ -34,6 +34,7 @@ $attributes = [
     // 'delivery' => $_POST['delivery'],
     'term_id' => $_POST['term_id'],
     'vat' => $_POST['vat'],
+    'delivery' => $_POST['delivery'],
     'needed_at' => $_POST['needed_at'],
 ];
 
@@ -73,14 +74,14 @@ try {
 
     
     $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find()['validity'];
-    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, term_id, validity, vat, status, team_id, needed_at, expired_at) VALUES(:control_no, :created_by, :customer_id, :term_id, :validity, :vat, :status, :team_id, :needed_at, :expired_at)", [
+    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, delivery, term_id, validity, vat, status, team_id, needed_at, expired_at) VALUES(:control_no, :created_by, :customer_id, :delivery, :term_id, :validity, :vat, :status, :team_id, :needed_at, :expired_at)", [
         'control_no' => generateControlNumber($latestControlNo),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $customerInsertedId,
         // 'territory' => $_POST['territory'],
         // 'tel_no' => $_POST['tel_no'],
         'validity' => $validity,
-        // 'delivery' => $_POST['delivery'],
+        'delivery' => $_POST['delivery'],
         'term_id' => $_POST['term_id'],
         'status' => QuotationStatus::PENDING,
         'team_id' => $team_id,
