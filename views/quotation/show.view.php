@@ -36,7 +36,7 @@ use Core\Role;
                <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
                   <div class="">
                      <p class="font-bold text-gray-800">
-                        Bill to :
+                        Quotation for :
                      </p>
                      <p class="text-gray-500">
                         <?= $quotation['customer_name'] ?>
