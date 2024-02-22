@@ -244,16 +244,18 @@ use Core\Role;
                            <?= $quotation['sales_phone'] ?>
                         </p>
                      </div>
-                     <div class="my-4">
-                        <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                           Attachments
-                        </h2>
-                        <div class="flex flex-col">
-                           <?php foreach($attachments as $attachment) : ?>
-                              <a class="text-blue-500 hover:underline" href="../images/quotation/<?= $attachment['name'] ?>" target="_blank"><?= $attachment['name'] ?></a>
-                           <?php endforeach; ?>
+                     <?php if($attachments): ?>
+                        <div class="my-4">
+                           <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                              Attachments
+                           </h2>
+                           <div class="flex flex-col">
+                              <?php foreach($attachments as $attachment) : ?>
+                                 <a class="text-blue-500 hover:underline" href="../images/quotation/<?= $attachment['name'] ?>" target="_blank"><?= $attachment['name'] ?></a>
+                              <?php endforeach; ?>
+                           </div>
                         </div>
-                     </div>
+                     <?php endif; ?>
                   </div>
 
                   <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>

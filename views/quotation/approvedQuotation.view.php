@@ -283,6 +283,18 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          <?= $quotation['sales_phone'] ?>
       </p>
    </div>
+   <?php if($attachments): ?>
+      <div class="my-4" id="attachments">
+         <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+            Attachments
+         </h2>
+         <div class="flex flex-col">
+            <?php foreach($attachments as $attachment) : ?>
+               <a class="text-blue-500 hover:underline" href="../images/quotation/<?= $attachment['name'] ?>" target="_blank"><?= $attachment['name'] ?></a>
+            <?php endforeach; ?>
+         </div>
+      </div>
+   <?php endif; ?>
 </div>
 
 
@@ -304,6 +316,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
    async function generatePdf(action) {
 
       document.getElementById('actionButtons').style.display = 'none'
+      document.getElementById('attachments').style.display = 'none'
       document.getElementById('invoice').className = 'w-full mx-auto p-6 bg-white'
       if(action == 'print') {
          window.print();
@@ -393,6 +406,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
       //             html2pdf(clonedBody, options);
       }
       document.getElementById('actionButtons').style.display = ''
+      document.getElementById('attachments').style.display = ''
       document.getElementById('invoice').className = 'w-full sm:w-2/3 mx-auto p-6 bg-white'
       
    }
