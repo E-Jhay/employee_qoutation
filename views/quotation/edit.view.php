@@ -25,7 +25,7 @@ use Core\QuotationStatus;
                         Quotation Details
                      </h3>
                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
-                        <div class="md:col-span-3">
+                        <div class="md:col-span-6">
                            <label for="customer_name">Customer</label>
                            <input type="text" name="customer_name" id="customer_name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['customer_name']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_name'] ?>" />
                            <input type="hidden" name="quotation_id" id="quotation_id" value="<?= $_GET['id'] ?>">
@@ -42,12 +42,47 @@ use Core\QuotationStatus;
                            <?php endif; ?>
                         </div>
 
-                        <div class="md:col-span-6">
-                           <label for="address">Address</label>
+                        <div class="md:col-span-3">
+                           <label for="confirm_email">Confirm email</label>
+                           <input type="text" name="confirm_email" id="confirm_email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['confirm_email']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_email'] ?>" />
+                           <?php if(isset($errors['confirm_email'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['confirm_email'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
+                        <div class="md:col-span-3">
+                           <label for="address_line_1">Address line 1</label>
                            <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
-                           <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_address']  ?>" placeholder="" />
-                           <?php if(isset($errors['address'])): ?>
-                              <span class="text-red-500 text-xs"><?= $errors['address'] ?></span>
+                           <input type="text" name="address_line_1" id="address_line_1" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address_line_1']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_address_line_1'] ?>" placeholder="" />
+                           <?php if(isset($errors['address_line_1'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['address_line_1'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
+                        <div class="md:col-span-3">
+                           <label for="address_line_2">Address line 2</label>
+                           <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
+                           <input type="text" name="address_line_2" id="address_line_2" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address_line_2']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_address_line_2'] ?>" placeholder="" />
+                           <?php if(isset($errors['address_line_2'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['address_line_2'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
+                        <div class="md:col-span-3">
+                           <label for="city">City</label>
+                           <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
+                           <input type="text" name="city" id="city" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['city']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_city'] ?>" placeholder="" />
+                           <?php if(isset($errors['city'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['city'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        
+                        <div class="md:col-span-3">
+                           <label for="province">Province</label>
+                           <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
+                           <input type="text" name="province" id="province" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['province']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_province'] ?>" placeholder="" />
+                           <?php if(isset($errors['province'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['province'] ?></span>
                            <?php endif; ?>
                         </div>
 
@@ -67,13 +102,41 @@ use Core\QuotationStatus;
                            <?php endif; ?>
                         </div>
 
-                        <div class="md:col-span-6">
-                           <label for="terms">Terms</label>
-                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" cols="30" rows="10"><?= $quotation['terms']  ?></textarea>
-                           <?php if(isset($errors['terms'])): ?>
-                              <span class="text-red-500 text-xs"><?= $errors['terms'] ?></span>
+                        <div class="md:col-span-3">
+                           <label for="term_id">Terms</label>
+                           <select id="term_id" name="term_id" autocomplete="term_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['term_id']) ? 'border-red-500' : '' ?>">
+                              <?php foreach($terms as $term): ?>
+                                 <option value="<?= $term['id'] ?>" <?= $quotation['term_id'] === $term['id'] ? 'selected' : '' ?>><?= ucwords($term['description']) ?></option >
+                              <?php endforeach; ?>
+                           </select>
+                           <?php if(isset($errors['term_id'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['term_id'] ?></span>
                            <?php endif; ?>
                         </div>
+
+                        <div class="md:col-span-3">
+                           <label for="delivery">Delivery</label>
+                           <select id="delivery" name="delivery" autocomplete="delivery-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['delivery']) ? 'border-red-500' : '' ?>">
+                              <?php foreach(\Core\Delivery::OPTIONS as $option): ?>
+                                 <option value="<?= $option ?>" <?= $quotation['delivery'] === $option ? 'selected' : '' ?>><?= $option ?></option >
+                              <?php endforeach; ?>
+                           </select>
+                           <?php if(isset($errors['delivery'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['delivery'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-3">
+                           <label for="vat">VAT</label>
+                           <select id="vat" name="vat" autocomplete="vat-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['vat']) ? 'border-red-500' : '' ?>">
+                              <?php foreach(\Core\Vat::OPTIONS as $option): ?>
+                                 <option value="<?= $option ?>" <?= $quotation['vat'] === $option ? 'selected' : '' ?>><?= ucwords($option) ?></option >
+                              <?php endforeach; ?>
+                           </select>
+                           <?php if(isset($errors['vat'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['vat'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
                         <div class="md:col-span-3">
                            <label for="needed_at">Date Needed</label>
                            <input type="date" name="needed_at" id="needed_at" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['needed_at']) ? 'border-red-500' : '' ?>" value="<?php echo date('Y-m-d',strtotime($quotation["needed_at"])) ?>" />
@@ -623,8 +686,25 @@ use Core\QuotationStatus;
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
             console.log(data.message)
          } else {
+            errorMessage.innerHTML = ''
             errorPanel.classList.remove('hidden')
-            errorMessage.innerText = data.message
+            const ul = document.createElement('ul')
+            ul.className = 'px-4 list-disc'
+            if(typeof(data.message) === 'string') {
+               const li = document.createElement('li')
+               li.innerText = data.message
+               ul.appendChild(li)
+            } else {
+               Object.values(data.message).forEach(error => {
+                  // console.log(error)
+                  const li = document.createElement('li')
+                  li.innerText = error
+                  ul.appendChild(li)
+               })
+            }
+            console.log(data.message)
+            errorMessage.appendChild(ul)
+            errorPanel.classList.remove('hidden')
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
          }
          // resetQuotationForm()
