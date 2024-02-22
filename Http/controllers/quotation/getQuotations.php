@@ -98,22 +98,43 @@ if($status !== 'all'){
         $totalPagesquotations = $quotationsData['totalPages'];
     }
 } else {
-    $quotationsData = paginateQuery($db,
-        "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id
-        WHERE 
-        created_by = :created_by_id
-        AND
-        (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
-        OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
-        $currentPage,
-        $itemsPerPage,
-        [
-            'searchTerm' => $searchTerm,
-            'created_by_id' => $currentUserId
-        ]
-    );
-    $quotations = $quotationsData['results'];
-    $totalPagesquotations = $quotationsData['totalPages'];
+    if((int)$_SESSION['user']['role_id'] == Role::SALES) {
+        $quotationsData = paginateQuery($db,
+            "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id
+            WHERE 
+            created_by = :created_by_id
+            AND
+            (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+            $currentPage,
+            $itemsPerPage,
+            [
+                'searchTerm' => $searchTerm,
+                'created_by_id' => $currentUserId
+            ]
+        );
+        $quotations = $quotationsData['results'];
+        $totalPagesquotations = $quotationsData['totalPages'];
+    } elseif((int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
+        $currentUserTeamId = $db->query("SELECT id FROM team WHERE manager_id = :manager_id", [
+            'manager_id' => $_SESSION['user']['id']
+        ])->find()['id'] ?? '';
+
+        $quotationsData = paginateQuery($db,
+            "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id WHERE quotation.team_id = :team_id
+            AND
+            (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+            $currentPage,
+            $itemsPerPage,
+            [
+                'searchTerm' => $searchTerm,
+                'team_id' => $currentUserTeamId
+            ]
+        );
+        $quotations = $quotationsData['results'];
+        $totalPagesquotations = $quotationsData['totalPages'];
+    }
 }
 
 
