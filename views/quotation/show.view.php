@@ -160,11 +160,11 @@ use Core\Role;
                                  <?php endif; ?>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
-                                 <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
+                                 <!-- <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500">
                                     <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>, <?= $product['catalog_price'] ?>, <?= $product['quantity'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
                                  </td>
-                                 <?php endif; ?>
+                                 <?php endif; ?> -->
                                  <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
                               </tr>
                            <?php endforeach; ?>
