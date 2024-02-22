@@ -38,7 +38,7 @@ try {
         $db->query("UPDATE quotation SET updated_at = :updated_at, expired_at = :expired_at, validity = :validity WHERE id = :id", [
             'validity' => $validity,
             'updated_at' => date('Y-m-d H:i:s'),
-            'expired_at' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). ' + 30 days')),
+            'expired_at' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). " + {$validity} days")),
             'id' => $id,
         ]);
     }

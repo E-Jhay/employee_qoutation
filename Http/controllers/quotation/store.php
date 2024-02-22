@@ -71,19 +71,22 @@ try {
 
     $latestControlNo = $db->query("SELECT control_no FROM `quotation` ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-0';
 
-    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, term_id, vat, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :term_id, :vat, :status, :team_id, :needed_at)", [
+    
+    $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find()['validity'];
+    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, term_id, validity, vat, status, team_id, needed_at, expired_at) VALUES(:control_no, :created_by, :customer_id, :term_id, :validity, :vat, :status, :team_id, :needed_at, :expired_at)", [
         'control_no' => generateControlNumber($latestControlNo),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $customerInsertedId,
         // 'territory' => $_POST['territory'],
         // 'tel_no' => $_POST['tel_no'],
-        // 'validity' => $_POST['validity'],
+        'validity' => $validity,
         // 'delivery' => $_POST['delivery'],
         'term_id' => $_POST['term_id'],
         'status' => QuotationStatus::PENDING,
         'team_id' => $team_id,
         'vat' => $_POST['vat'],
         'needed_at' => $_POST['needed_at'],
+        'expired_at' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). " + {$validity} days")),
     ]);
     $quotationInsertId = $db->connection()->lastInsertId();
     
