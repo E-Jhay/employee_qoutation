@@ -82,12 +82,17 @@ require base_path('views/partials/head.php') ?>
       <p class="font-bold text-gray-800">
          Quotation for :
       </p>
-      <p class="text-gray-500">
+      <p class="text-gray-500 max-w-52">
          <?= $quotation['customer_name'] ?>
          <br />
-         <?= $quotation['customer_address'] ?>
+         <?= $quotation['customer_address_line_1'] ?>
+         <?= $quotation['customer_address_line_2'] ?>
          <!-- <br />
          <?= $quotation['tel_no'] ?> -->
+      </p>
+      <p class="text-gray-500 max-w-52">
+         <?= $quotation['customer_city'] ?>
+         <?= $quotation['customer_province'] ?>
       </p>
    </div>
 

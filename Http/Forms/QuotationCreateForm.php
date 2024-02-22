@@ -24,8 +24,14 @@ class QuotationCreateForm {
             $this->errors['confirm_email'] = "Email doesn't match.";
         }
 
-        if(! Validator::string($attributes['address'])) {
-            $this->errors['address'] = "Address is required.";
+        if(! Validator::string($attributes['address_line_1'])) {
+            $this->errors['address_line_1'] = "Address line 1 is required.";
+        }
+        if(! Validator::string($attributes['city'])) {
+            $this->errors['city'] = "City is required.";
+        }
+        if(! Validator::string($attributes['province'])) {
+            $this->errors['province'] = "Province is required.";
         }
         if(! Validator::string($attributes['contact_person'])) {
             $this->errors['contact_person'] = "Contact person is required.";

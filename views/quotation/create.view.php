@@ -45,12 +45,39 @@
                            <?php endif; ?>
                         </div>
 
-                        <div class="md:col-span-6">
-                           <label for="address">Address</label>
+                        <div class="md:col-span-3">
+                           <label for="address_line_1">Address line 1</label>
                            <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
-                           <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address']) ? 'border-red-500' : '' ?>" value="<?= old('address') ?>" placeholder="" />
-                           <?php if(isset($errors['address'])): ?>
-                              <span class="text-red-500 text-xs"><?= $errors['address'] ?></span>
+                           <input type="text" name="address_line_1" id="address_line_1" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address_line_1']) ? 'border-red-500' : '' ?>" value="<?= old('address_line_1') ?>" placeholder="" />
+                           <?php if(isset($errors['address_line_1'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['address_line_1'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
+                        <div class="md:col-span-3">
+                           <label for="address_line_2">Address line 2</label>
+                           <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
+                           <input type="text" name="address_line_2" id="address_line_2" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['address_line_2']) ? 'border-red-500' : '' ?>" value="<?= old('address_line_2') ?>" placeholder="" />
+                           <?php if(isset($errors['address_line_2'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['address_line_2'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
+                        <div class="md:col-span-3">
+                           <label for="city">City</label>
+                           <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
+                           <input type="text" name="city" id="city" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['city']) ? 'border-red-500' : '' ?>" value="<?= old('city') ?>" placeholder="" />
+                           <?php if(isset($errors['city'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['city'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        
+                        <div class="md:col-span-3">
+                           <label for="province">Province</label>
+                           <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
+                           <input type="text" name="province" id="province" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['province']) ? 'border-red-500' : '' ?>" value="<?= old('province') ?>" placeholder="" />
+                           <?php if(isset($errors['province'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['province'] ?></span>
                            <?php endif; ?>
                         </div>
 

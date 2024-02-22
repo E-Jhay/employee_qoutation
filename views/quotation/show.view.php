@@ -38,12 +38,15 @@ use Core\Role;
                      <p class="font-bold text-gray-800">
                         Quotation for :
                      </p>
-                     <p class="text-gray-500">
+                     <p class="text-gray-500 max-w-52">
                         <?= $quotation['customer_name'] ?>
                         <br />
-                        <?= $quotation['customer_address'] ?>
-                        <!-- <br />
-                        <?= $quotation['tel_no'] ?> -->
+                        <?= $quotation['customer_address_line_1'] ?>
+                        <?= $quotation['customer_address_line_2'] ?>
+                     </p>
+                     <p class="text-gray-500 max-w-52">
+                        <?= $quotation['customer_city'] ?>
+                        <?= $quotation['customer_province'] ?>
                      </p>
                   </div>
 
@@ -141,7 +144,9 @@ use Core\Role;
                                  <td class="py-5 pl-4 pr-3 text-sm sm:pl-0">
                                     <div class="font-medium truncate text-gray-900"><?= $product['description'] ?></div>
                                     <div class="mt-1 text-gray-500"><?= $product['code'] ?></div>
-                                    <div class="mt-1 text-gray-500">( <?= $product['comment'] ?> )</div>
+                                    <?php if($product['comment']): ?>
+                                       <div class="mt-1 text-gray-500">( <?= $product['comment'] ?> )</div>
+                                    <?php endif; ?>
                                  </td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['code'] ?></td> -->

@@ -23,7 +23,9 @@ $attributes = [
     'name' => $_POST['customer_name'],
     'email' => $_POST['email'],
     'confirm_email' => $_POST['confirm_email'],
-    'address' => $_POST['address'],
+    'address_line_1' => $_POST['address_line_1'],
+    'city' => $_POST['city'],
+    'province' => $_POST['province'],
     'contact_person' => $_POST['contact_person'],
     'position' => $_POST['position'],
     // 'territory' => $_POST['territory'],
@@ -46,10 +48,13 @@ if(count($form->errors()) > 0) {
 try {
     $db->beginTransaction();
 
-    $db->query("INSERT INTO customer (name, address, contact_person, position, email) VALUES(:name, :address, :contact_person, :position, :email)", [
+    $db->query("INSERT INTO customer (name, address_line_1, address_line_2, city, province, contact_person, position, email) VALUES(:name, :address_line_1, :address_line_2, :city, :province, :contact_person, :position, :email)", [
         'name' => $_POST['customer_name'],
         'email' => $_POST['email'],
-        'address' => $_POST['address'],
+        'address_line_1' => $_POST['address_line_1'],
+        'address_line_2' => $_POST['address_line_2'],
+        'city' => $_POST['city'],
+        'province' => $_POST['province'],
         'contact_person' => $_POST['contact_person'],
         'position' => $_POST['position'],
     ]);
