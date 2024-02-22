@@ -203,6 +203,11 @@ use Core\Role;
                   <div class="my-8">
                      <div class="my-4">
                         <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           <?= $quotation['vat'] ?>
+                        </h2>
+                     </div>
+                     <div class="my-4">
+                        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
                            Terms
                         </h2>
                         <p class="text-gray-500">

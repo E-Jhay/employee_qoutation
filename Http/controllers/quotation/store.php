@@ -33,6 +33,7 @@ $attributes = [
     // 'validity' => $_POST['validity'],
     // 'delivery' => $_POST['delivery'],
     'term_id' => $_POST['term_id'],
+    'vat' => $_POST['vat'],
     'needed_at' => $_POST['needed_at'],
 ];
 
@@ -70,7 +71,7 @@ try {
 
     $latestControlNo = $db->query("SELECT control_no FROM `quotation` ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-0';
 
-    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, term_id, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :term_id, :status, :team_id, :needed_at)", [
+    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, term_id, vat, status, team_id, needed_at) VALUES(:control_no, :created_by, :customer_id, :term_id, :vat, :status, :team_id, :needed_at)", [
         'control_no' => generateControlNumber($latestControlNo),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $customerInsertedId,
@@ -81,6 +82,7 @@ try {
         'term_id' => $_POST['term_id'],
         'status' => QuotationStatus::PENDING,
         'team_id' => $team_id,
+        'vat' => $_POST['vat'],
         'needed_at' => $_POST['needed_at'],
     ]);
     $quotationInsertId = $db->connection()->lastInsertId();

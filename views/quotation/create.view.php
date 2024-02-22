@@ -137,6 +137,18 @@
                            <?php endif; ?>
                         </div>
                         <div class="md:col-span-3">
+                           <label for="vat">VAT</label>
+                           <select id="vat" name="vat" autocomplete="vat-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['vat']) ? 'border-red-500' : '' ?>">
+                              <option value="" selected>-- Select VAT --</option >
+                              <?php foreach(\Core\Vat::OPTIONS as $option): ?>
+                                 <option value="<?= $option ?>"><?= ucwords($option) ?></option >
+                              <?php endforeach; ?>
+                           </select>
+                           <?php if(isset($errors['vat'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['vat'] ?></span>
+                           <?php endif; ?>
+                        </div>
+                        <div class="md:col-span-3">
                            <label for="needed_at">Date Needed</label>
                            <input type="date" name="needed_at" id="needed_at" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['needed_at']) ? 'border-red-500' : '' ?>" value="<?= old('needed_at') ?>" />
                            <?php if(isset($errors['needed_at'])): ?>
