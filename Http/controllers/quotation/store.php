@@ -112,14 +112,20 @@ try {
         ]);
     }
 
-    if(isset($_FILES['attachments'])) {
+    if($_FILES['attachments']['size'][0] > 0) {
         $files = $_FILES['attachments'];
+
         // move the files
         for($i = 0; $i < count($files['name']); $i++) {
             // $path = pathinfo($files[$i]);
             // $ext = $path['extension'];
             $filename = $files['name'][$i];
             $tmp = $files['tmp_name'][$i];
+            
+            if(pathinfo($filename, PATHINFO_EXTENSION) !== 'pdf') {
+                throw new Exception("Only accepts pdf file.");
+                exit;
+            }
     
             // set the filename as the basename + extension
             $uploaded_file = pathinfo($filename, PATHINFO_FILENAME) . '-' . time() . '.' . pathinfo($filename, PATHINFO_EXTENSION);
@@ -128,7 +134,7 @@ try {
     
             // move the file to the upload dir
             if (file_exists($filepath)) {
-                echo json_encode(array('type' => 'error', 'message' => 'Sorry, file already exists.'));
+                throw new Exception("Sorry, file already exists.");
                 exit;
             }else{
                 if(move_uploaded_file($tmp, $filepath)) {

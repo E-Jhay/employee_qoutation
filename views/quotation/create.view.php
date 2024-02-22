@@ -709,12 +709,19 @@
             errorPanel.classList.remove('hidden')
             const ul = document.createElement('ul')
             ul.className = 'px-4 list-disc'
-            Object.values(data.message).forEach(error => {
-               // console.log(error)
+            if(typeof(data.message) === 'string') {
                const li = document.createElement('li')
-               li.innerText = error
+               li.innerText = data.message
                ul.appendChild(li)
-            })
+            } else {
+               Object.values(data.message).forEach(error => {
+                  // console.log(error)
+                  const li = document.createElement('li')
+                  li.innerText = error
+                  ul.appendChild(li)
+               })
+            }
+            console.log(data.message)
             errorMessage.appendChild(ul)
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
             errorPanel.focus()
