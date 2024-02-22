@@ -45,6 +45,15 @@ $router->put('/role/update', 'role/update.php')->only('auth');
 $router->get('/validity', 'validity/index.php')->only('auth');
 $router->post('/validity/update', 'validity/update.php')->only('auth');
 
+// Validity route
+$router->get('/terms', 'term/index.php')->only('auth');
+$router->get('/term/show', 'term/show.php')->only('auth');
+$router->delete('/term/delete', 'term/destroy.php')->only('auth');
+$router->get('/term/create', 'term/create.php')->only('auth');
+$router->post('/term', 'term/store.php')->only('auth');
+$router->get('/term/edit', 'term/edit.php')->only('auth');
+$router->put('/term/update', 'term/update.php')->only('auth');
+
 // Role route
 $router->get('/teams', 'team/index.php')->only('auth');
 $router->get('/team/show', 'team/show.php')->only('auth');

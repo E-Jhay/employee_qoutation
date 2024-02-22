@@ -125,10 +125,15 @@
                            <?php endif; ?>
                         </div> -->
                         <div class="md:col-span-6">
-                           <label for="terms">Terms</label>
-                           <textarea name="terms" id="terms" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['terms']) ? 'border-red-500' : '' ?>" cols="30" rows="10"></textarea>
-                           <?php if(isset($errors['terms'])): ?>
-                              <span class="text-red-500 text-xs"><?= $errors['terms'] ?></span>
+                           <label for="term_id">Terms</label>
+                           <select id="term_id" name="term_id" autocomplete="term_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['term_id']) ? 'border-red-500' : '' ?>">
+                              <option value="" selected>-- Select term --</option >
+                              <?php foreach($terms as $term): ?>
+                                 <option value="<?= $term['id'] ?>"><?= ucwords($term['description']) ?></option >
+                              <?php endforeach; ?>
+                           </select>
+                           <?php if(isset($errors['term_id'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['term_id'] ?></span>
                            <?php endif; ?>
                         </div>
                         <div class="md:col-span-3">

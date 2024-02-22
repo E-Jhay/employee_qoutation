@@ -2,6 +2,7 @@
 
 namespace Http\Forms;
 
+use Core\App;
 use Core\ValidationException;
 use Core\Validator;
 
@@ -51,8 +52,14 @@ class QuotationCreateForm {
         // if(! Validator::string($attributes['delivery'])) {
         //     $this->errors['delivery'] = "Delivery is required.";
         // }
-        if(! Validator::string($attributes['terms'])) {
-            $this->errors['terms'] = "Terms is required.";
+        
+        $db = App::resolve('Core\Database');
+        $terms = $db->query("SELECT id FROM term")->get();
+        $terms = array_map(function($item) {
+            return $item['id'];
+        }, $terms);
+        if(! in_array($attributes['term_id'], $terms)) {
+            $this->errors['term_id'] = "Terms is required.";
         }
         if(! Validator::string($attributes['needed_at'])) {
             $this->errors['needed_at'] = "Date needed is required.";

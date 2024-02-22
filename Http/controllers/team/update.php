@@ -42,5 +42,5 @@ try {
     throw new Exception('There\'s something wrong happened upon updating team.');
 }
 
-Session::flash('success', "Team '{$_POST["name"]}' Created.");
+Session::flash('success', "Team Updated.");
 redirect('/teams');
