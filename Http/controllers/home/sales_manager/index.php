@@ -93,7 +93,7 @@ $agentsCount = $db->query("SELECT COUNT(*) as count FROM user WHERE team_id = :t
     'role_id' => Role::SALES,
 ])->find()['count'];
 
-$latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE team_id = :team_id AND status = :status ORDER BY customer.id DESC LIMIT 5",[
+$latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address_line_1, customer.address_line_2, customer.city, customer.province FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE team_id = :team_id AND status = :status ORDER BY customer.id DESC LIMIT 5",[
     'team_id' => $currentUserTeamId,
     'status' => QuotationStatus::APPROVED,
 ])->get();

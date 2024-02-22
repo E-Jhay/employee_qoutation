@@ -73,9 +73,12 @@
                                     <p class="text-sm font-medium text-gray-900 truncate">
                                        <?= $customer['name'] ?>
                                     </p>
-                                    <p class="text-sm text-gray-500 truncate">
+                                    <p class="text-sm text-gray-500 max-w-52">
                                        <!-- <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="17727a767e7b57607e7973646372653974787a">[email&#160;protected]</a> -->
-                                       <?= $customer['address'] ?>
+                                       <?= $customer['address_line_1'] ?>
+                                       <?= $customer['address_line_2'] ?>
+                                       <?= $customer['city'] ?>
+                                       <?= $customer['province'] ?>
                                     </p>
                                  </div>
                                  <!-- <div class="inline-flex items-center text-base font-semibold text-gray-900">
