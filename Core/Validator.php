@@ -53,4 +53,8 @@ class Validator {
     {
         return $password == $reTypePassword;
     }
+    public static function emailConfirmed($email, $confirmEmail)
+    {
+        return $email == $confirmEmail;
+    }
 }

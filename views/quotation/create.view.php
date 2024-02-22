@@ -21,7 +21,7 @@
                         Quotation Details
                      </h3>
                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
-                        <div class="md:col-span-3">
+                        <div class="md:col-span-6">
                            <label for="customer_name">Customer</label>
                            <input type="text" name="customer_name" id="customer_name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['customer_name']) ? 'border-red-500' : '' ?>" value="<?= old('customer_name') ?>" />
                            <?php if(isset($errors['customer_name'])): ?>
@@ -34,6 +34,14 @@
                            <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= old('email') ?>" />
                            <?php if(isset($errors['email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
+                        <div class="md:col-span-3">
+                           <label for="confirm_email">Confirm email</label>
+                           <input type="text" name="confirm_email" id="confirm_email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['confirm_email']) ? 'border-red-500' : '' ?>" value="<?= old('confirm_email') ?>" />
+                           <?php if(isset($errors['confirm_email'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['confirm_email'] ?></span>
                            <?php endif; ?>
                         </div>
 
@@ -641,8 +649,17 @@
             productLists = []
             refreshTableRow()
          } else {
+            errorMessage.innerHTML = ''
             errorPanel.classList.remove('hidden')
-            errorMessage.innerText = data.message
+            const ul = document.createElement('ul')
+            ul.className = 'px-4 list-disc'
+            Object.values(data.message).forEach(error => {
+               // console.log(error)
+               const li = document.createElement('li')
+               li.innerText = error
+               ul.appendChild(li)
+            })
+            errorMessage.appendChild(ul)
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
             errorPanel.focus()
             submitButton.className = '';

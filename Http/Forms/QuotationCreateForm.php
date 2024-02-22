@@ -20,6 +20,9 @@ class QuotationCreateForm {
         if(! Validator::email($attributes['email'])) {
             $this->errors['email'] = "Email is required.";
         }
+        if(! Validator::emailConfirmed($attributes['email'], $attributes['confirm_email'])) {
+            $this->errors['confirm_email'] = "Email doesn't match.";
+        }
 
         if(! Validator::string($attributes['address'])) {
             $this->errors['address'] = "Address is required.";

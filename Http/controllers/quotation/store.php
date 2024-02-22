@@ -22,6 +22,7 @@ authorize((int)$_SESSION['user']['role_id'] == Role::SALES);
 $attributes = [
     'name' => $_POST['customer_name'],
     'email' => $_POST['email'],
+    'confirm_email' => $_POST['confirm_email'],
     'address' => $_POST['address'],
     'contact_person' => $_POST['contact_person'],
     'position' => $_POST['position'],
@@ -36,7 +37,7 @@ $attributes = [
 $form = QuotationCreateForm::validate($attributes);
 
 if(count($form->errors()) > 0) {
-    $response = array('success' => false, 'message' => 'Please fill out all required fields.');
+    $response = array('success' => false, 'message' => $form->errors());
     echo json_encode($response);
     exit;
 }
