@@ -113,7 +113,7 @@
 
                         <div class="mt-4 md:col-span-6 text-left">
                            <div class="inline-flex items-end">
-                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">Submit</button>
+                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">Update</button>
                            </div>
                         </div>
 
