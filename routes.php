@@ -41,11 +41,20 @@ $router->post('/role', 'role/store.php')->only('auth');
 $router->get('/role/edit', 'role/edit.php')->only('auth');
 $router->put('/role/update', 'role/update.php')->only('auth');
 
+// Company route
+$router->get('/companies', 'company/index.php')->only('auth');
+$router->get('/company/show', 'company/show.php')->only('auth');
+$router->delete('/company/delete', 'company/destroy.php')->only('auth');
+$router->get('/company/create', 'company/create.php')->only('auth');
+$router->post('/company', 'company/store.php')->only('auth');
+$router->get('/company/edit', 'company/edit.php')->only('auth');
+$router->put('/company/update', 'company/update.php')->only('auth');
+
 // Validity route
 $router->get('/validity', 'validity/index.php')->only('auth');
 $router->post('/validity/update', 'validity/update.php')->only('auth');
 
-// Validity route
+// Term route
 $router->get('/terms', 'term/index.php')->only('auth');
 $router->get('/term/show', 'term/show.php')->only('auth');
 $router->delete('/term/delete', 'term/destroy.php')->only('auth');
