@@ -244,6 +244,30 @@ use Core\Role;
                            <?= $quotation['sales_phone'] ?>
                         </p>
                      </div>
+                     <div class="my-4">
+                        <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           Or contact the company directly
+                        </h2>
+                        <p class="">
+                           <?= $company['name'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm max-w-64">
+                           <?= $company['address_line_1'] ?>
+                           <?= $company['address_line_2'] ?>
+                           </br>
+                           <?= $company['city'] ?>
+                           <?= $company['province'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm">
+                           <?= $company['email'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm mt-1">
+                           <?= $company['tel_no'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm mt-1">
+                           <?= $company['mobile_no'] ?>
+                        </p>
+                     </div>
                      <?php if($attachments): ?>
                         <div class="my-4">
                            <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">

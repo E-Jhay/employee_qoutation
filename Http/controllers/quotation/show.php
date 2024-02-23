@@ -15,6 +15,8 @@ $attachments = $db->query("SELECT * FROM file_quotation WHERE quotation_id = :id
     'id' => $_GET['id']
 ])->get();
 
+$company = $db->query("SELECT * FROM company WHERE isActive = 1 LIMIT 1")->find();
+
 $grand_total = $db->query("SELECT SUM(total) as grand_total FROM product_quotation WHERE quotation_id = :id", [
     'id' => $_GET['id']
 ])->find()['grand_total'];
@@ -27,4 +29,5 @@ view("quotation/show.view.php", [
     'products' => $products,
     'grand_total' => $grand_total,
     'attachments' => $attachments,
+    'company' => $company,
 ]);
