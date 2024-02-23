@@ -8,7 +8,7 @@
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
          <main class="pt-6 px-2 lg:px-8">
             <div class="flex justify-start gap-2">
-               <a href="/comapnies" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
+               <a href="/companies" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
             </div>
             <?php require base_path('views/partials/banner.php') ?>
             <?php if(isset($_SESSION['success'])): ?>
