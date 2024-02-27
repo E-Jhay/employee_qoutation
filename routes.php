@@ -90,5 +90,8 @@ $router->get('/quotation/initially-approved', 'quotation/initiallyApproved.php')
 
 $router->get('/approved-quotation', 'quotation/approvedQuotation.php');
 $router->post('/generate-pdf', 'quotation/generatePdf.php');
+$router->get('/pricelist', 'product/pricelist.php');
+$router->post('/saveProductLists', 'product/saveProductLists.php');
+$router->get('/getProductLists', 'product/getProductLists.php');
 
 // dd($router->routes);
