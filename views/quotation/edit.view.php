@@ -147,6 +147,26 @@ use Core\QuotationStatus;
                         <div class="md:col-span-6 my-4">
                            <hr>
                         </div>
+
+                        
+                        <?php if($comments): ?>
+                           <div class="md:col-span-6 mt-4  text-blue-800">
+                              <!-- <h2 class="mb-2 font-semibold text-xl leading-tight">
+                                 Comments
+                              </h2> -->
+                              <div class="border border-blue-400 px-4 py-3 rounded">
+                                 <?php foreach($comments as $comment): ?>
+                                    <div class="mb-2">
+                                       <h4 class="font-semibold">
+                                          <?= $comment['comment_heading'] ?>
+                                          <span class="text-green-500"><?= $comment['comment_by'] == $_SESSION['user']['id'] ? '(Me)' : '' ?></span>
+                                       </h4>
+                                       <p><?= $comment['comments'] ?></p>
+                                    </div>
+                                 <?php endforeach; ?>
+                              </div>
+                           </div>
+                        <?php endif; ?>
                         
                         <div class="md:col-span-3">
                            <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -204,11 +224,11 @@ use Core\QuotationStatus;
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Proposed price/ (Discount in %)
                                                       </th>
-                                                      <?php if($quotation['status'] == QuotationStatus::DISAPPROVED): ?>
+                                                      <!-- <?php if($quotation['status'] == QuotationStatus::DISAPPROVED): ?>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Recommended price
                                                       </th>
-                                                      <?php endif; ?>
+                                                      <?php endif; ?> -->
                                                       <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Approved price
                                                       </th> -->
@@ -545,7 +565,7 @@ use Core\QuotationStatus;
             'catalog_price',
             'proposed_price',
             'proposed_price_discount',
-            'approved_price',
+            // 'approved_price',
             // 'approved_price',
             'product_total',
             // 'deal_equivalent',

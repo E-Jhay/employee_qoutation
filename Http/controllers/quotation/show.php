@@ -15,6 +15,13 @@ $attachments = $db->query("SELECT * FROM file_quotation WHERE quotation_id = :id
     'id' => $_GET['id']
 ])->get();
 
+$comments = $db->query("SELECT comment_quotation.user_id as comment_by, CONCAT('Comments from ', user.name) as comment_heading,
+GROUP_CONCAT(comment_quotation.description SEPARATOR '</br>') as comments FROM comment_quotation LEFT JOIN user ON comment_quotation.user_id = user.id WHERE quotation_id = :id GROUP BY comment_quotation.user_id", [
+    'id' => $_GET['id']
+])->get();
+
+// dd($comments);
+
 $company = $db->query("SELECT * FROM company WHERE isActive = 1 LIMIT 1")->find();
 
 $grand_total = $db->query("SELECT SUM(total) as grand_total FROM product_quotation WHERE quotation_id = :id", [
@@ -29,5 +36,6 @@ view("quotation/show.view.php", [
     'products' => $products,
     'grand_total' => $grand_total,
     'attachments' => $attachments,
+    'comments' => $comments,
     'company' => $company,
 ]);

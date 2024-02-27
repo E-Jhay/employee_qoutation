@@ -100,15 +100,34 @@ use Core\Role;
                      </p>
                   </div>
                </div>
+               
+               <?php if($comments): ?>
+                  <div class="mx-auto mt-4 sm:text-base text-xs text-blue-800">
+                     <!-- <h2 class="mb-2 font-semibold text-xl leading-tight">
+                        Comments
+                     </h2> -->
+                     <div class="border border-blue-400 px-4 py-3 rounded">
+                        <?php foreach($comments as $comment): ?>
+                           <div class="mb-2">
+                              <h4 class="font-semibold">
+                                 <?= $comment['comment_heading'] ?>
+                                 <span class="text-green-500"><?= $comment['comment_by'] == $_SESSION['user']['id'] ? '(Me)' : '' ?></span>
+                              </h4>
+                              <p><?= $comment['comments'] ?></p>
+                           </div>
+                        <?php endforeach; ?>
+                     </div>
+                  </div>
+               <?php endif; ?>
 
-               <div class="mx-auto mt-8">
+               <div class="mx-auto mt-4">
                   <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                      Products
                   </h2>
                </div>
 
                   <!-- Invoice Items -->
-                  <div class="-mx-4 mt-8 flow-root sm:mx-0 overflow-x-auto">
+                  <div class="-mx-4 mt-4 flow-root sm:mx-0 overflow-x-auto">
                      <table class="min-w-full">
                         <thead class="border-b border-gray-300 text-gray-900">
                            <tr>
@@ -120,9 +139,6 @@ use Core\Role;
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
-                              <?php if($quotation['status'] == QuotationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] == Role::SALES): ?>
-                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Recommended price</th>
-                              <?php endif; ?>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
                               <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
@@ -155,9 +171,6 @@ use Core\Role;
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'] / 100 * $product['proposed_price_discount'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500"><?= number_format($product['proposed_price'], 2) ?></td>
-                                 <?php if($quotation['status'] == QuotationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] == Role::SALES): ?>
-                                 <td class="px-3 py-5 text-center text-sm text-green-500"><?= number_format($product['approved_price'], 2) ?></td>
-                                 <?php endif; ?>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
                                  <!-- <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
@@ -186,7 +199,7 @@ use Core\Role;
                            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
                            </tr> -->
                            <tr>
-                           <th scope="row" colspan="<?=$quotation['status'] == QuotationStatus::DISAPPROVED && (int)$_SESSION['user']['role_id'] == Role::SALES ? '7' : '6' ?>" class="pl-4 pr-6 sm:pr-<?=$quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
+                           <th scope="row" colspan="6" class="pl-4 pr-6 sm:pr-<?=$quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
                            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
                            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
                            </tr>
@@ -282,9 +295,10 @@ use Core\Role;
                      <?php endif; ?>
                   </div>
 
-                  <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) : ?>
+                  <?php if(($quotation['status'] == QuotationStatus::PENDING || $quotation['status'] == QuotationStatus::INITIAL_APPROVED) && (int)$_SESSION['user']['role_id'] != Role::SALES) : ?>
                      <div id="remarksField" class="col-span-6 md:col-span-6">
                         <label for="remarks">Comments</label>
+                        <input type="hidden" id="current_status" value="<?= $quotation['status_name'] ?>">
                         <textarea name="remarks" id="remarks" class="h-20 border mt-1 rounded p-2 w-full bg-transparent <?= isset($errors['remarks']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
                         <?php if(isset($errors['remarks'])): ?>
                            <span class="text-red-500 text-xs"><?= $errors['remarks'] ?></span>
@@ -524,11 +538,10 @@ use Core\Role;
       const errorMessage = document.querySelector('.errorMessage')
       const mode = document.querySelector('.modalText').innerHTML
       const remarks = document.getElementById('remarks').value
+      const current_status = document.getElementById('current_status').value
       const formData = new FormData()
       const actionBtn = document.getElementById('actionBtn')
       
-      actionBtn.innerText = 'Loading...'
-      actionBtn.className = 'actionBtn bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50'
       // actionButtons.forEach(button => {
       //    button.className = 'actionBtn w-32 bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50'
       // })
@@ -536,9 +549,18 @@ use Core\Role;
       formData.append("id", id)
       formData.append("mode", mode)
       formData.append("remarks", remarks)
-      if(mode == 'Disapprove') {
-         formData.append("approvedPrices", JSON.stringify(approvedPrices))
+      formData.append("current_status", current_status)
+      if(mode == 'Disapprove' && remarks === '') {
+         // formData.append("approvedPrices", JSON.stringify(approvedPrices))
+         errorPanel.classList.remove('hidden')
+         errorMessage.innerText = "Comments is required for disapproval"
+         document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
+         toggleModal('quotationModal')
+         return
       }
+      
+      actionBtn.innerText = 'Loading...'
+      actionBtn.className = 'actionBtn bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50'
       try {
          const response = await fetch("/quotation/change-status", {
             method: "POST",

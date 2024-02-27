@@ -343,9 +343,11 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
    // }
 
    async function generatePdf(action) {
-
+      const attachments = document.getElementById('attachments')
       document.getElementById('actionButtons').style.display = 'none'
-      document.getElementById('attachments').style.display = 'none'
+      if(attachments) {
+         attachments.style.display = 'none'
+      }
       document.getElementById('invoice').className = 'w-full mx-auto p-6 bg-white'
       if(action == 'print') {
          window.print();
@@ -435,7 +437,9 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
       //             html2pdf(clonedBody, options);
       }
       document.getElementById('actionButtons').style.display = ''
-      document.getElementById('attachments').style.display = ''
+      if(attachments) {
+         attachments.style.display = ''
+      }
       document.getElementById('invoice').className = 'w-full sm:w-2/3 mx-auto p-6 bg-white'
       
    }

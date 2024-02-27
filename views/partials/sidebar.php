@@ -4,8 +4,8 @@
         <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <div class="flex-1 px-3 bg-white divide-y space-y-1">
                 <ul class="space-y-2 pb-2">
-                <li class="group <?= urlIs(['/', '/dashboard', '/admin']) ? 'active' : '' ?>">
-                    <a href="<?= (int)$_SESSION['user']['role_id'] == \Core\Role::SALES ? '/' : ((int)$_SESSION['user']['role_id'] == \Core\Role::SALES_MANAGER ? '/dashboard' : '/admin') ?>" class="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white">
+                <li class="group <?= urlIs(['/', '/dashboard', '/admin', '/gm-dashboard']) ? 'active' : '' ?>">
+                    <a href="<?= (int)$_SESSION['user']['role_id'] == \Core\Role::SALES ? '/' : ((int)$_SESSION['user']['role_id'] == \Core\Role::SALES_MANAGER ? '/dashboard' : ((int)$_SESSION['user']['role_id'] == \Core\Role::GENERAL_MANAGER ? '/gm-dashboard' : '/admin')) ?>" class="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M13 21V11H21V21H13ZM3 13V3H11V13H3ZM9 11V5H5V11H9ZM3 21V15H11V21H3ZM5 19H9V17H5V19ZM15 19H19V13H15V19ZM13 3H21V9H13V3ZM15 5V7H19V5H15Z" fill="currentColor"></path></svg>
                         <span class="ml-3">Dashboard</span>
                     </a>

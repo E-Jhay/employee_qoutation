@@ -27,6 +27,8 @@ if((int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
     return redirect('/dashboard');
 } elseif((int)$_SESSION['user']['role_id'] == Role::SALES) {
     return redirect('/');
+} elseif((int)$_SESSION['user']['role_id'] == Role::GENERAL_MANAGER) {
+    return redirect('/gm-dashboard');
 } else {
     return redirect('/admin');
 }

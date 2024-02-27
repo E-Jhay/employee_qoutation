@@ -21,6 +21,7 @@ $router->post('/reset-password', 'session/update_password.php')->only('guest');
 
 $router->get('/dashboard', 'home/sales_manager/index.php')->only('auth');
 $router->get('/', 'home/sales/index.php')->only('auth');
+$router->get('/gm-dashboard', 'home/general_manager/index.php')->only('auth');
 $router->get('/admin', 'home/admin/index.php')->only('auth');
 
 // User route
@@ -82,6 +83,7 @@ $router->post('/quotation', 'quotation/store.php')->only('auth');
 $router->get('/quotation/edit', 'quotation/edit.php')->only('auth');
 $router->post('/quotation/update', 'quotation/update.php')->only('auth'); 
 $router->post('/quotation/change-status', 'quotation/changeStatus.php')->only('auth'); 
+$router->get('/quotation/initially-approved', 'quotation/initiallyApproved.php');
 
 //     '/user/create' => 'user/create.php',
 

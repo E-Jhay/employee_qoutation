@@ -134,6 +134,25 @@ if($status !== 'all'){
         );
         $quotations = $quotationsData['results'];
         $totalPagesquotations = $quotationsData['totalPages'];
+    } else {
+        $currentUserTeamId = $db->query("SELECT id FROM team WHERE manager_id = :manager_id", [
+            'manager_id' => $_SESSION['user']['id']
+        ])->find()['id'] ?? '';
+
+        $quotationsData = paginateQuery($db,
+            "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id WHERE quotation.status != :status
+            AND
+            (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+            $currentPage,
+            $itemsPerPage,
+            [
+                'status' => QuotationStatus::PENDING,
+                'searchTerm' => $searchTerm,
+            ]
+        );
+        $quotations = $quotationsData['results'];
+        $totalPagesquotations = $quotationsData['totalPages'];
     }
 }
 

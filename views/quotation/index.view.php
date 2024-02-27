@@ -32,7 +32,10 @@ use Core\Role;
                <div class="rounded">
                   <!-- Tabs -->
                   <ul id="tabs" class="inline-flex w-full px-1 pt-2 ">
-                     <li class="active px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><button id="<?= QuotationStatus::PENDING ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::PENDING ?>)">Pending</button></li>
+                     <?php if((int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER) : ?>
+                        <li class="active px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><button id="<?= QuotationStatus::PENDING ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::PENDING ?>)">Pending</button></li>
+                     <?php endif; ?>
+                     <li class="<?= (int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER ? '' : 'active border-b-2 border-blue-400 rounded-t ' ?>px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::INITIAL_APPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::INITIAL_APPROVED ?>)"><?= (int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER ? 'Initially Approved' : 'Pending' ?></button></li>
                      <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::APPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::APPROVED ?>)">Approved</button></li>
                      <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::DISAPPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::DISAPPROVED ?>)">Disapproved</button></li>
                      <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="all" type="button" onclick="filterBystatus(this, 'all')">All</button></li>
@@ -104,7 +107,7 @@ use Core\Role;
 
 <script>
    document.addEventListener("DOMContentLoaded", function () {
-      getData(<?= QuotationStatus::PENDING ?>)
+      getData(<?= (int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER ? QuotationStatus::PENDING : QuotationStatus::INITIAL_APPROVED ?>)
    })
    let sortOrders = {}; // Object to track sorting order for each column
 

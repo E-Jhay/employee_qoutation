@@ -8,29 +8,58 @@ use Core\Role;
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
 
-authorize((int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER);
+authorize((int)$_SESSION['user']['role_id'] != Role::SALES);
 
 $id = $_POST['id'];
 $mode = $_POST['mode'];
 $remarks = $_POST['remarks'];
+$currentStatus = $_POST['current_status'];
 $status = QuotationStatus::PENDING;
 
 try {
-    $mode == 'Approve' ? $status = QuotationStatus::APPROVED : ($mode == 'Disapprove' ? $status = QuotationStatus::DISAPPROVED : $status = QuotationStatus::PENDING);
-    
-    if($mode == 'Disapprove') {
-        $approvedPrices = json_decode($_POST['approvedPrices'], true);
-        foreach($approvedPrices as $prices) {
-            $db->query("UPDATE product_quotation SET approved_price = :approved_price WHERE id = :id", [
-                'id' => $prices['id'],
-                'approved_price' => $prices['approved_price'],
-            ]);
+    $db->beginTransaction();
+    if($mode == 'Approve') {
+        if($currentStatus == 'pending') {
+            $status = QuotationStatus::INITIAL_APPROVED;
+        } else {
+            $status = QuotationStatus::APPROVED;
         }
+    } else {
+        $status = QuotationStatus::DISAPPROVED;
     }
-    $db->query("UPDATE quotation SET status = :status, remarks = :remarks WHERE id = :id", [
+    // $mode == 'Approve' ? $status = QuotationStatus::APPROVED : ($mode == 'Disapprove' ? $status = QuotationStatus::DISAPPROVED : $status = QuotationStatus::PENDING);
+    
+    // if($mode == 'Disapprove') {
+    //     $approvedPrices = json_decode($_POST['approvedPrices'], true);
+    //     foreach($approvedPrices as $prices) {
+    //         $db->query("UPDATE product_quotation SET approved_price = :approved_price WHERE id = :id", [
+    //             'id' => $prices['id'],
+    //             'approved_price' => $prices['approved_price'],
+    //         ]);
+    //     }
+    // }
+    // $db->query("UPDATE quotation SET status = :status, remarks = :remarks WHERE id = :id", [
+    //     'status' => $status,
+    //     'remarks' => $remarks,
+    //     'id' => $id,
+    // ]);
+    $db->query("UPDATE quotation SET status = :status WHERE id = :id", [
         'status' => $status,
-        'remarks' => $remarks,
         'id' => $id,
+    ]);
+
+    if($_SESSION['user']['id']) {
+        $commented_by = $_SESSION['user']['id'];
+    } else {
+        $commented_by = $db->query("SELECT id FROM user WHERE role_id :role_id", [
+            'role_id' => Role::GENERAL_MANAGER
+        ])->find()['id'];
+    }
+    // Add comments
+    $db->query("INSERT INTO comment_quotation (quotation_id, user_id, description) VALUES (:quotation_id, :user_id, :description)", [
+        'quotation_id' => $id,
+        'user_id' => $commented_by,
+        'description' => $remarks,
     ]);
 
     if($mode == 'Approve') {
@@ -73,12 +102,26 @@ try {
         // // $mail->Body = $htmlContent;
 
         $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
+    } else {
+        $to = ['bumacodejhay@gmail.com'];
+
+        // // Read HTML content from a file and replace placeholders with data
+        $htmlContent = getHtmlContent('../views/mail/initiallyApprovedQuotation.html', [
+            'id' => $id
+        ]);
+        
+        $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
     }
+    $db->commit();
     $response = array('success' => true, 'message' => "Quotation {$_POST['mode']}d");
     echo json_encode($response);
 } catch(Exception $e) {
+    // An error occurred, rollback the transaction
+    if ($db->connection() !== null) {
+        $db->rollback();
+    }
 
-    $response = array('success' => false, 'message' => $e->getMessage());
+    $response = array('success' => false, 'message' => 'There\'s an error updating the quotation. Please try again later.');
     echo json_encode($response);
     // throw new Exception('There\'s something wrong happened upon creating team.');
 }
