@@ -82,7 +82,7 @@ $router->get('/quotation/create', 'quotation/create.php')->only('auth');
 $router->post('/quotation', 'quotation/store.php')->only('auth');
 $router->get('/quotation/edit', 'quotation/edit.php')->only('auth');
 $router->post('/quotation/update', 'quotation/update.php')->only('auth'); 
-$router->post('/quotation/change-status', 'quotation/changeStatus.php')->only('auth'); 
+$router->post('/quotation/change-status', 'quotation/changeStatus.php'); 
 $router->get('/quotation/initially-approved', 'quotation/initiallyApproved.php');
 
 //     '/user/create' => 'user/create.php',

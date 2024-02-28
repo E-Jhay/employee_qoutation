@@ -8,7 +8,7 @@ use Core\Role;
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
 
-authorize((int)$_SESSION['user']['role_id'] != Role::SALES);
+// authorize((int)$_SESSION['user']['role_id'] != Role::SALES);
 
 $id = $_POST['id'];
 $mode = $_POST['mode'];
@@ -48,19 +48,21 @@ try {
         'id' => $id,
     ]);
 
-    if($_SESSION['user']['id']) {
+    $commented_by = $db->query("SELECT id FROM user WHERE role_id = :role_id", [
+        'role_id' => Role::GENERAL_MANAGER
+    ])->find()['id'];
+
+    if($_SESSION) {
         $commented_by = $_SESSION['user']['id'];
-    } else {
-        $commented_by = $db->query("SELECT id FROM user WHERE role_id :role_id", [
-            'role_id' => Role::GENERAL_MANAGER
-        ])->find()['id'];
     }
-    // Add comments
-    $db->query("INSERT INTO comment_quotation (quotation_id, user_id, description) VALUES (:quotation_id, :user_id, :description)", [
-        'quotation_id' => $id,
-        'user_id' => $commented_by,
-        'description' => $remarks,
-    ]);
+    if($remarks){
+        // Add comments
+        $db->query("INSERT INTO comment_quotation (quotation_id, user_id, description) VALUES (:quotation_id, :user_id, :description)", [
+            'quotation_id' => $id,
+            'user_id' => $commented_by,
+            'description' => $remarks,
+        ]);
+    }
 
     if($mode == 'Approve') {
         $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find()['validity'];
@@ -82,7 +84,7 @@ try {
 
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/disapprovedQuotation.html', [
-            'manager' => $_SESSION['user']['name'],
+            'manager' => $_SESSION ? $_SESSION['user']['name'] : 'Susan T. Panugayan',
             'id' => $id
         ]);
         // $mail->Body = $htmlContent;
@@ -121,7 +123,7 @@ try {
         $db->rollback();
     }
 
-    $response = array('success' => false, 'message' => 'There\'s an error updating the quotation. Please try again later.');
+    $response = array('success' => false, 'message' => $e->getMessage());
     echo json_encode($response);
     // throw new Exception('There\'s something wrong happened upon creating team.');
 }
