@@ -171,7 +171,12 @@ use Core\Role;
       pagination.innerHTML = '';
 
       if (currentPage > 1) {
-         pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage - 1})">Previous</button>`;
+         pagination.innerHTML += `
+         <button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage - 1})"><i class="ri-arrow-left-s-line"></i></button>`;
+         if (totalPages  > 3) {
+            pagination.innerHTML += `
+         <button class="relative inline-flex items-center text-sm font-medium text-gray-700 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', 1)"><i class="ri-arrow-left-double-fill"></i></button>`;
+         }
       }
 
       let startPage = Math.max(1, currentPage - 1);
@@ -193,7 +198,12 @@ use Core\Role;
       }
 
       if (currentPage < totalPages) {
-         pagination.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage + 1})">Next</button>`;
+         if (totalPages  > 3) {
+            pagination.innerHTML += `
+            <button class="relative inline-flex items-center text-sm font-medium text-gray-700 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${totalPages})"><i class="ri-arrow-right-double-fill"></i></button>`;
+         }
+         pagination.innerHTML += `
+         <button class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-300 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" onclick="getData('${getActiveStatus()}', ${getItemsPerPage()}, '${getSearchTerm()}', ${currentPage + 1})"><i class="ri-arrow-right-s-line"></i></button>`;
       }
    }
 
