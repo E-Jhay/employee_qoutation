@@ -166,10 +166,10 @@ use Core\Role;
                                     <?php endif; ?>
                                  </td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] ? number_format($product['catalog_price'], 2) : '' ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500"><?= number_format($product['proposed_price'], 2) ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['wo_scd_price'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500 <?= number_format($product['applied_discount'], 2) < -10 ? 'text-green-500' : 'text-red-500' ?>"><?= number_format($product['applied_discount'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500 <?= $product['applied_discount'] ? (number_format($product['applied_discount'], 2) < -10 ? 'text-green-500' : 'text-red-500') : '' ?>"><?= $product['applied_discount'] ? number_format($product['applied_discount'], 2) : '' ?></td>
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td> -->
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
                                  <!-- <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
