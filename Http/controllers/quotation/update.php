@@ -1,6 +1,7 @@
 <?php
 
 use Core\App;
+use Core\Mailer;
 use Core\QuotationStatus;
 use Core\Role;
 use Core\Session;
@@ -115,6 +116,23 @@ try {
             'id' => $quotation['id'],
             'status' => QuotationStatus::PENDING,
         ]);
+
+        $config = require base_path("config.php");
+        $mailer = new Mailer($config['mail']);
+        $manager_email = (array)$db->query("SELECT email FROM team LEFT JOIN user ON team.manager_id = user.id WHERE team.id = :team_id", [
+            'team_id' => $_SESSION['user']['team_id'],
+        ])->find()['email'] ?? '';
+        // $to = $manager_email;
+        $to = ['bumacodejhay@gmail.com'];
+
+        // Read HTML content from a file and replace placeholders with data
+        $htmlContent = getHtmlContent('../views/mail/initiallyApprovedQuotation.html', [
+            // 'created_by' => $_SESSION['user']['name'],
+            'id' => $quotation['id']
+        ]);
+        // $mail->Body = $htmlContent;
+
+        $mailer->sendMail($to, 'PMC Quotation ' . $quotation['control_no'], $htmlContent);
     }
 
     $db->commit();

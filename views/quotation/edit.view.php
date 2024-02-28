@@ -9,7 +9,7 @@ use Core\QuotationStatus;
    <div class="flex overflow-hidden bg-white pt-16">
       <!-- Sidebar -->
       <?php require base_path('views/partials/sidebar.php') ?>
-      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
+      <div id="main-content" class="h-full w-full bg-gray-50 relative lg:ml-64">
          <main class="pt-6 px-2 lg:px-8">
             <div class="flex justify-start gap-2">
                <a href="/quotations" title="Export" class="cursor-pointer bg-transparent hover:bg-gray-500 text-gray-700 font-semibold text-sm hover:text-white py-1.5 px-2 border border-gray-500 hover:border-transparent rounded">Go back</a>
@@ -269,7 +269,7 @@ use Core\QuotationStatus;
                   
                         <div class="mt-4 md:col-span-6 text-left">
                            <div class="inline-flex items-end">
-                              <button type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
+                              <button id="submitButton" type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
                            </div>
                         </div>
 
@@ -651,11 +651,11 @@ use Core\QuotationStatus;
          let c = document.createElement("td")
          if(cell !== 'action') {
             c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'whitespace-nowrap', 'dark:text-white')
-            if(cell == 'approved_price'){
-               c.classList.add('text-green-500')
-            } else if(cell == 'proposed_price' && <?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
-               c.classList.add('text-red-500')
-            }
+            // if(cell == 'approved_price'){
+            //    c.classList.add('text-green-500')
+            // } else if(cell == 'proposed_price' && <?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
+            //    c.classList.add('text-red-500')
+            // }
             c.innerText = product[cell]
             // if(cell == 'applied_discount'){
             //    c.innerText = ((product['catalog_price'] / product['wo_scd_price'] * 100) - 100).toFixed(2)
@@ -751,7 +751,13 @@ use Core\QuotationStatus;
       const errorPanel = document.querySelector('.error-panel')
       const successMessage = document.querySelector('.successMessage')
       const errorMessage = document.querySelector('.errorMessage')
+      const submitButton = document.getElementById('submitButton')
       try {
+         // hideMessage()
+         submitButton.className = '';
+         submitButton.className = 'w-32 bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50';
+         submitButton.disabled = true;
+         submitButton.innerText = "Loading...";
          const response = await fetch("/quotation/update", {
             method: "POST",
             body: formData,
@@ -760,8 +766,11 @@ use Core\QuotationStatus;
          if (data.success) {
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
-            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            console.log(data.message)
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' })
+            submitButton.className = '';
+            submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
+            submitButton.disabled = false;
+            submitButton.innerText = 'Save'
          } else {
             errorMessage.innerHTML = ''
             errorPanel.classList.remove('hidden')
@@ -782,7 +791,11 @@ use Core\QuotationStatus;
             console.log(data.message)
             errorMessage.appendChild(ul)
             errorPanel.classList.remove('hidden')
-            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' })
+            submitButton.className = '';
+            submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
+            submitButton.disabled = false;
+            submitButton.innerText = 'Save'
          }
          // resetQuotationForm()
          // productLists = []
@@ -792,6 +805,12 @@ use Core\QuotationStatus;
          console.error(e);
       }
    }
+
+   // const hideMessage = () => {
+   //    successPanel.classList.add('hidden')
+      
+   //    errorPanel.classList.add('hidden')
+   // }
 
 </script>
 
