@@ -82,8 +82,10 @@ try {
 
         $to = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
 
+        
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/disapprovedQuotation.html', [
+            'APP_URL' => $config['server']['APP_URL'],
             'manager' => $_SESSION ? $_SESSION['user']['name'] : 'Susan T. Panugayan',
             'id' => $id
         ]);
@@ -99,6 +101,7 @@ try {
 
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/approvedQuotation.html', [
+            'APP_URL' => $config['server']['APP_URL'],
             'id' => $id
         ]);
         // // $mail->Body = $htmlContent;
@@ -110,6 +113,7 @@ try {
 
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/initiallyApprovedQuotation.html', [
+            'APP_URL' => $config['server']['APP_URL'],
             'id' => $id
         ]);
         

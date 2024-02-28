@@ -163,6 +163,7 @@ try {
 
     // Read HTML content from a file and replace placeholders with data
     $htmlContent = getHtmlContent('../views/mail/storeQuotation.html', [
+        'APP_URL' => $config['server']['APP_URL'],
         'created_by' => $_SESSION['user']['name'],
         'id' => $quotationInsertId
     ]);

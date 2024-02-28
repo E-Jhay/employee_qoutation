@@ -14,5 +14,8 @@ return [
         'port' => 587,
         'from' => 'no-reply@pmc.ph',
         'fromName' => 'Progressive Medical Corporation',
+    ],
+    'server' => [
+        'APP_URL' => 'http://localhost:8000/',
     ]
 ];
