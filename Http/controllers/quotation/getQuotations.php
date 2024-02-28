@@ -49,7 +49,7 @@ if($status !== 'all'){
         "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id WHERE status = :status AND created_by = :created_by_id
         AND
         (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
-        OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+        OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id asc",
             $currentPage,
             $itemsPerPage,
             [
@@ -69,7 +69,7 @@ if($status !== 'all'){
             "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id WHERE status = :status AND quotation.team_id = :team_id
             AND
             (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
-            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id asc",
             $currentPage,
             $itemsPerPage,
             [
@@ -86,7 +86,7 @@ if($status !== 'all'){
             "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id WHERE status = :status
             AND
             (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
-            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id asc",
             $currentPage,
             $itemsPerPage,
             [
@@ -105,7 +105,7 @@ if($status !== 'all'){
             created_by = :created_by_id
             AND
             (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
-            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id asc",
             $currentPage,
             $itemsPerPage,
             [
@@ -124,7 +124,7 @@ if($status !== 'all'){
             "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id WHERE quotation.team_id = :team_id
             AND
             (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
-            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id asc",
             $currentPage,
             $itemsPerPage,
             [
@@ -143,7 +143,7 @@ if($status !== 'all'){
             "SELECT quotation.*, customer.name as customer_name, user.name as created_by_name, quotation_status.name as status_name FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id LEFT JOIN user ON quotation.created_by = user.id LEFT JOIN quotation_status ON quotation.status = quotation_status.id WHERE quotation.status != :status
             AND
             (quotation.control_no LIKE CONCAT('%', :searchTerm, '%')
-            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id desc",
+            OR customer.name LIKE CONCAT('%', :searchTerm, '%')) ORDER BY id asc",
             $currentPage,
             $itemsPerPage,
             [

@@ -31,7 +31,7 @@ use Core\Role;
                <?php Core\Session::unflash('success'); endif; ?>
                <div class="rounded">
                   <!-- Tabs -->
-                  <ul id="tabs" class="inline-flex w-full px-1 pt-2 ">
+                  <ul id="tabs" class="inline-flex w-full flex-wrap px-1 pt-2 ">
                      <?php if((int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER) : ?>
                         <li class="active px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><button id="<?= QuotationStatus::PENDING ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::PENDING ?>)">Pending</button></li>
                      <?php endif; ?>
@@ -59,25 +59,28 @@ use Core\Role;
                                     <table id="table" class="min-w-full divide-y divide-gray-200 w-full">
                                        <thead>
                                           <tr>
+                                             <th scope="col" class="hidden px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
+                                                ID
+                                             </th>
                                              <th onclick="sortTable(0)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
                                                 Control no
                                              </th>
-                                             <th onclick="sortTable(1)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
+                                             <th onclick="sortTable(2)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
                                                 Created by
                                              </th>
-                                             <th onclick="sortTable(2)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
+                                             <th onclick="sortTable(3)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
                                                 Customer
                                              </th>
-                                             <th onclick="sortTable(3)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
+                                             <th onclick="sortTable(4)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
                                                 Status
                                              </th>
-                                             <th onclick="sortTable(4)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
+                                             <th onclick="sortTable(5)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
                                                 Created at
                                              </th>
-                                             <th onclick="sortTable(5)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
+                                             <th onclick="sortTable(6)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
                                                 Needed at
                                              </th>
-                                             <th onclick="sortTable(6)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
+                                             <th onclick="sortTable(7)" scope="col" class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-800 uppercase tracking-wider cursor-pointer">
                                                 Released at
                                              </th>
                                              <th scope="col" width="100" class="px-6 py-3 bg-gray-100">
@@ -197,6 +200,7 @@ use Core\Role;
    const loadTable = (quotations) => {
       document.getElementById('tbody').innerHTML = ""
       let cells = [
+         'id',
          'control_no',
          'created_by_name',
          'customer_name',
@@ -214,7 +218,11 @@ use Core\Role;
          cells.forEach(cell => {
             const td = document.createElement('td')
             if(cell !== 'action') {
-               td.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+               if(cell === 'id'){
+                  td.className = "hidden px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+               }else {
+                  td.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+               }
                if(cell == 'status_name') {
                   const span = document.createElement('span')
                   let status_color = 'amber'
