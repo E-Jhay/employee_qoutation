@@ -106,7 +106,7 @@ try {
         $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
     } else {
         $to = (array)$db->query("SELECT email FROM user WHERE role_id = :role_id", ['role_id' => Role::GENERAL_MANAGER])->find()['email'];
-        $to = ['bumacodejhay@gmail.com'];
+        // $to = ['bumacodejhay@gmail.com'];
 
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/initiallyApprovedQuotation.html', [
