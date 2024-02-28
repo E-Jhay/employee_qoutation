@@ -208,6 +208,9 @@ use Core\QuotationStatus;
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Quantity
                                                       </th>
+                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                         UOM
+                                                      </th>
                                                       <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Unit
                                                       </th> -->
@@ -291,12 +294,31 @@ use Core\QuotationStatus;
                                  Product Details
                               </h3>
                               <div class="grid gap-4 gap-y-2 text-sm grid-cols-6 md:grid-cols-6">
+                                 <div class="col-span-6 md:col-span-6">
+                                    <label for="product_code">Code</label>
+                                    <input type="text" name="product_code" id="product_code" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_code']) ? 'border-red-500' : '' ?>" value="<?= old('product_code') ?>" required/>
+                                    <?php if(isset($errors['product_code'])): ?>
+                                       <span class="text-red-500 text-xs"><?= $errors['product_code'] ?></span>
+                                    <?php endif; ?>
+                                    <ul id="dropdownOptions" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
+                                          <!-- Options will be dynamically added here -->
+                                    </ul>
+                                 </div>
+
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="product_qty">Quantity</label>
                                     <input type="hidden" name="id" id="id" value="" />
                                     <input type="text" name="product_qty" id="product_qty" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_qty']) ? 'border-red-500' : '' ?>" value="<?= old('product_qty') ?>" required/>
                                     <?php if(isset($errors['product_qty'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_qty'] ?></span>
+                                    <?php endif; ?>
+                                 </div>
+
+                                 <div class="col-span-3 md:col-span-3">
+                                    <label for="uom">UOM</label>
+                                    <input readonly type="text" name="uom" id="uom" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['uom']) ? 'border-red-500' : '' ?>" value="<?= old('uom') ?>" required/>
+                                    <?php if(isset($errors['uom'])): ?>
+                                       <span class="text-red-500 text-xs"><?= $errors['uom'] ?></span>
                                     <?php endif; ?>
                                  </div>
 
@@ -307,17 +329,6 @@ use Core\QuotationStatus;
                                        <span class="text-red-500 text-xs"><?= $errors['product_unit'] ?></span>
                                     <?php endif; ?>
                                  </div> -->
-
-                                 <div class="col-span-3 md:col-span-3">
-                                    <label for="product_code">Code</label>
-                                    <input type="text" name="product_code" id="product_code" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_code']) ? 'border-red-500' : '' ?>" value="<?= old('product_code') ?>" required/>
-                                    <?php if(isset($errors['product_code'])): ?>
-                                       <span class="text-red-500 text-xs"><?= $errors['product_code'] ?></span>
-                                    <?php endif; ?>
-                                    <ul id="dropdownOptions" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
-                                          <!-- Options will be dynamically added here -->
-                                    </ul>
-                                 </div>
 
                                  <!-- <div class="col-span-3 md:col-span-6">
                                     <label for="product_name">Product name</label>
@@ -603,6 +614,7 @@ use Core\QuotationStatus;
       if(<?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 1 : 0 ?>) {
          cells = [
             'product_qty',
+            'uom',
             // 'product_unit',
             'product_code',
             // 'product_name',
@@ -622,6 +634,7 @@ use Core\QuotationStatus;
       } else {
          cells = [
             'product_qty',
+            'uom',
             // 'product_unit',
             'product_code',
             // 'product_name',
@@ -692,6 +705,7 @@ use Core\QuotationStatus;
    const editProduct = (product) => {
       let cells = [
          'product_qty',
+         'uom',
          // 'product_unit',
          'product_code',
          // 'product_name',
@@ -922,6 +936,7 @@ function renderOptions(options) {
       li.addEventListener("click", function () {
             searchInput.value = option.code
             document.getElementById('product_description').value  = option.description
+            document.getElementById('uom').value  = option.uom
             if(region !== 'manila')
                document.getElementById('catalog_price').value  = option.manila_price ?? ''
             else
@@ -930,6 +945,9 @@ function renderOptions(options) {
 
             // Close the dropdown
             dropdownOptions.style.display = "none";
+            
+            computeScdPrice()
+            computeAppliedDiscount()
       });
 
       dropdownOptions.appendChild(li);

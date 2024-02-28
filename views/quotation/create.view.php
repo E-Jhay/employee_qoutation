@@ -917,6 +917,8 @@ function renderOptions(options) {
 
             // Close the dropdown
             dropdownOptions.style.display = "none";
+            computeScdPrice()
+            computeAppliedDiscount()
       });
 
       dropdownOptions.appendChild(li);
