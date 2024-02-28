@@ -158,8 +158,8 @@ try {
     $manager_email = (array)$db->query("SELECT email FROM team LEFT JOIN user ON team.manager_id = user.id WHERE team.id = :team_id", [
         'team_id' => $_SESSION['user']['team_id'],
     ])->find()['email'] ?? '';
-    // $to = $manager_email;
-    $to = ['bumacodejhay@gmail.com'];
+    $to = $manager_email;
+    // $to = ['bumacodejhay@gmail.com'];
 
     // Read HTML content from a file and replace placeholders with data
     $htmlContent = getHtmlContent('../views/mail/storeQuotation.html', [
