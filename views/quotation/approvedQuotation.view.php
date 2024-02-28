@@ -160,6 +160,7 @@ require base_path('views/partials/head.php') ?>
          <tr>
             <th scope="col" class="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
             <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Quantity</th>
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">UOM</th>
             <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
             <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Price after discount</th>
             <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">SCD Price</th> -->
@@ -181,8 +182,12 @@ require base_path('views/partials/head.php') ?>
                <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
                   <div class="font-medium text-gray-900"><?= $product['description'] ?></div>
                   <div class="mt-1 truncate text-gray-500"><?= $product['code'] ?></div>
+                  <?php if($product['comment']): ?>
+                     <div class="mt-1 text-gray-500">( <?= $product['comment'] ?> )</div>
+                  <?php endif; ?>
                </td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['uom'] ?></td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['scd_price'], 2) ?></td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['proposed_price'], 2) ?></td>
                <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td> -->
