@@ -40,6 +40,9 @@ class QuotationCreateForm {
         if(! Validator::string($attributes['position'])) {
             $this->errors['position'] = "Position is required.";
         }
+        if(! in_array($attributes['region'], ['manila', 'province'])) {
+            $this->errors['region'] = "Region is invalid.";
+        }
         // if(! Validator::string($attributes['territory'])) {
         //     $this->errors['territory'] = "Territory is required.";
         // }

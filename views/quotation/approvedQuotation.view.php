@@ -160,14 +160,10 @@ require base_path('views/partials/head.php') ?>
          <tr>
             <th scope="col" class="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
             <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Quantity</th>
-            <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Unit</th>
-            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Stock available</th>
-            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Comparative price</th>
             <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
-            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th> -->
-            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Price</th>
-            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
             <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Price after discount</th>
+            <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">SCD Price</th> -->
+            <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
             <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
             <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
          </tr>
@@ -187,14 +183,10 @@ require base_path('views/partials/head.php') ?>
                   <div class="mt-1 truncate text-gray-500"><?= $product['code'] ?></div>
                </td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
-               <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['unit'] ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['stock'] ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['comparative_price'] ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price'] ?></td> -->
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['scd_price'], 2) ?></td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['proposed_price'], 2) ?></td>
+               <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td> -->
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format(100 - ($product['proposed_price'] / $product['scd_price'] * 100) , 2) ?>%</td>
                <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
                <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
             </tr>

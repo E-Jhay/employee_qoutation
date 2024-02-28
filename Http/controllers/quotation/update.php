@@ -27,6 +27,7 @@ $attributes = [
     'province' => $_POST['province'],
     'contact_person' => $_POST['contact_person'],
     'position' => $_POST['position'],
+    'region' => $_POST['region'],
     // 'territory' => $_POST['territory'],
     // 'tel_no' => $_POST['tel_no'],
     // 'validity' => $_POST['validity'],
@@ -67,7 +68,7 @@ try {
     
     // $lastInsertId = $db->connection()->lastInsertId();
 
-    $db->query("UPDATE quotation SET created_by = :created_by, term_id = :term_id, delivery = :delivery, vat = :vat, needed_at = :needed_at WHERE id = :id", [
+    $db->query("UPDATE quotation SET created_by = :created_by, term_id = :term_id, delivery = :delivery, vat = :vat, region = :region, needed_at = :needed_at WHERE id = :id", [
         'id' => $_POST['quotation_id'],
         'created_by' => $_SESSION['user']['id'],
         // 'territory' => 'territory2',
@@ -78,6 +79,7 @@ try {
         'term_id' => $_POST['term_id'],
         'term_id' => $_POST['term_id'],
         'vat' => $_POST['vat'],
+        'region' => $_POST['region'],
         'needed_at' => $_POST['needed_at'],
     ]);
     // $lastInsertId = $db->connection()->lastInsertId();
@@ -89,7 +91,7 @@ try {
     
     $products = json_decode($_POST['products'], true);
     foreach($products as $product) {
-        $db->query("INSERT INTO product_quotation (quotation_id, code, description, comment, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:quotation_id, :code, :description, :comment, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
+        $db->query("INSERT INTO product_quotation (quotation_id, code, description, comment, quantity, comparative_price, catalog_price, proposed_price, applied_discount, wo_scd_price, total) VALUES(:quotation_id, :code, :description, :comment, :quantity, :comparative_price, :catalog_price, :proposed_price, :applied_discount, :wo_scd_price, :total)", [
             'quotation_id' => $_POST['quotation_id'],
             // 'unit' => $product['product_unit'],
             'code' => $product['product_code'],
@@ -100,7 +102,8 @@ try {
             'comparative_price' => $product['comparative_price'],
             'catalog_price' => $product['catalog_price'],
             'proposed_price' => $product['proposed_price'],
-            'proposed_price_discount' => $product['proposed_price_discount'],
+            'applied_discount' => $product['applied_discount'],
+            'wo_scd_price' => $product['wo_scd_price'],
             // 'approved_price' => $product['approved_price'],
             'total' => $product['product_total'],
             // 'deal_equivalent' => $product['deal_equivalent'],

@@ -28,6 +28,7 @@ $attributes = [
     'province' => $_POST['province'],
     'contact_person' => $_POST['contact_person'],
     'position' => $_POST['position'],
+    'region' => $_POST['region'],
     // 'territory' => $_POST['territory'],
     // 'tel_no' => $_POST['tel_no'],
     // 'validity' => $_POST['validity'],
@@ -74,7 +75,7 @@ try {
 
     
     $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find()['validity'];
-    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, delivery, term_id, validity, vat, status, team_id, needed_at, expired_at) VALUES(:control_no, :created_by, :customer_id, :delivery, :term_id, :validity, :vat, :status, :team_id, :needed_at, :expired_at)", [
+    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, delivery, term_id, validity, vat, region, status, team_id, needed_at, expired_at) VALUES(:control_no, :created_by, :customer_id, :delivery, :term_id, :validity, :vat, :region, :status, :team_id, :needed_at, :expired_at)", [
         'control_no' => generateControlNumber($latestControlNo),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $customerInsertedId,
@@ -86,6 +87,7 @@ try {
         'status' => QuotationStatus::PENDING,
         'team_id' => $team_id,
         'vat' => $_POST['vat'],
+        'region' => $_POST['region'],
         'needed_at' => $_POST['needed_at'],
         'expired_at' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). " + {$validity} days")),
     ]);
@@ -94,7 +96,7 @@ try {
     $products = json_decode($_POST['products'], true);
 
     foreach($products as $product) {
-        $db->query("INSERT INTO product_quotation (quotation_id, code, description, comment, quantity, comparative_price, catalog_price, proposed_price, proposed_price_discount, total) VALUES(:quotation_id, :code, :description, :comment, :quantity, :comparative_price, :catalog_price, :proposed_price, :proposed_price_discount, :total)", [
+        $db->query("INSERT INTO product_quotation (quotation_id, code, description, comment, quantity, comparative_price, catalog_price, proposed_price, applied_discount, wo_scd_price, total) VALUES(:quotation_id, :code, :description, :comment, :quantity, :comparative_price, :catalog_price, :proposed_price, :applied_discount, :wo_scd_price, :total)", [
             'quotation_id' => $quotationInsertId,
             // 'unit' => $product['product_unit'],
             'code' => $product['product_code'],
@@ -105,7 +107,9 @@ try {
             'comparative_price' => $product['comparative_price'],
             'catalog_price' => $product['catalog_price'],
             'proposed_price' => $product['proposed_price'],
-            'proposed_price_discount' => $product['proposed_price_discount'],
+            'applied_discount' => $product['applied_discount'],
+            'wo_scd_price' => $product['wo_scd_price'],
+            // 'proposed_price_discount' => $product['proposed_price_discount'],
             // 'approved_price' => $product['approved_price'],
             'total' => $product['product_total'],
             // 'deal_equivalent' => $product['deal_equivalent'],

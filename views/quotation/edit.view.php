@@ -25,12 +25,23 @@ use Core\QuotationStatus;
                         Quotation Details
                      </h3>
                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6">
-                        <div class="md:col-span-6">
+                        <div class="md:col-span-3">
                            <label for="customer_name">Customer</label>
                            <input type="text" name="customer_name" id="customer_name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['customer_name']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_name'] ?>" />
                            <input type="hidden" name="quotation_id" id="quotation_id" value="<?= $_GET['id'] ?>">
                            <?php if(isset($errors['customer_name'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['customer_name'] ?></span>
+                           <?php endif; ?>
+                        </div>
+
+                        <div class="md:col-span-3">
+                           <label for="region">Region</label>
+                           <select id="region" name="region" autocomplete="region-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['region']) ? 'border-red-500' : '' ?>">
+                              <option value="manila" <?= $quotation['region'] === 'manila' ? 'selected' : '' ?>>Metro Manila</option >
+                              <option value="province" <?= $quotation['region'] === 'province' ? 'selected' : '' ?>>Province</option >
+                           </select>
+                           <?php if(isset($errors['region'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['region'] ?></span>
                            <?php endif; ?>
                         </div>
 
@@ -222,7 +233,10 @@ use Core\QuotationStatus;
                                                          Proposed price/deal
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Proposed price/ (Discount in %)
+                                                         W/O SCD Price
+                                                      </th>
+                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                         Applied Discount
                                                       </th>
                                                       <!-- <?php if($quotation['status'] == QuotationStatus::DISAPPROVED): ?>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -300,6 +314,9 @@ use Core\QuotationStatus;
                                     <?php if(isset($errors['product_code'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_code'] ?></span>
                                     <?php endif; ?>
+                                    <ul id="dropdownOptions" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
+                                          <!-- Options will be dynamically added here -->
+                                    </ul>
                                  </div>
 
                                  <!-- <div class="col-span-3 md:col-span-6">
@@ -322,7 +339,7 @@ use Core\QuotationStatus;
                                     <label for="product_description">Product description</label>
                                     <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
                                     <!-- <input type="text" name="product_description" id="product_description" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" value="<?= old('product_description') ?>" placeholder="" /> -->
-                                    <textarea name="product_description" id="product_description" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
+                                    <textarea readonly name="product_description" id="product_description" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
                                     <?php if(isset($errors['product_description'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_description'] ?></span>
                                     <?php endif; ?>
@@ -358,7 +375,7 @@ use Core\QuotationStatus;
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="catalog_price">Catalog price</label>
-                                    <input type="text" name="catalog_price" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
+                                    <input readonly type="text" name="catalog_price" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
                                     <?php if(isset($errors['catalog_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['catalog_price'] ?></span>
                                     <?php endif; ?>
@@ -373,12 +390,27 @@ use Core\QuotationStatus;
                                  </div>
 
                                  <div class="col-span-3 md:col-span-3">
+                                    <label for="wo_scd_price">W/O SCD Price</label>
+                                    <input readonly type="number" step="0.01" name="wo_scd_price" id="wo_scd_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['wo_scd_price']) ? 'border-red-500' : '' ?>" value="<?= old('wo_scd_price') ?>" required/>
+                                    <?php if(isset($errors['wo_scd_price'])): ?>
+                                       <span class="text-red-500 text-xs"><?= $errors['wo_scd_price'] ?></span>
+                                    <?php endif; ?>
+                                 </div>
+                                 <div class="col-span-3 md:col-span-3">
+                                    <label for="applied_discount">Applied Discount</label>
+                                    <input readonly type="number" name="applied_discount" id="applied_discount" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['applied_discount']) ? 'border-red-500' : '' ?>" value="<?= old('applied_discount') ?>" required/>
+                                    <?php if(isset($errors['applied_discount'])): ?>
+                                       <span class="text-red-500 text-xs"><?= $errors['applied_discount'] ?></span>
+                                    <?php endif; ?>
+                                 </div>
+
+                                 <!-- <div class="col-span-3 md:col-span-3">
                                     <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
                                     <input type="text" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
                                     <?php if(isset($errors['proposed_price_discount'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price_discount'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
                                  
                                  <!-- <div class="col-span-3 md:col-span-3">
                                     <label for="approved_price">Approved price</label>
@@ -425,38 +457,53 @@ use Core\QuotationStatus;
    document.addEventListener("DOMContentLoaded", () => {
       refreshTableRow()
       document.getElementById('proposed_price').addEventListener('input', (e) => {
-         computeProposedPriceDiscount()
+         // computeProposedPriceDiscount()
+         computeScdPrice()
+         computeAppliedDiscount()
          computeTotal()
       })
-      document.getElementById('proposed_price_discount').addEventListener('input', (e) => {
-         computeProposedPrice()
-         computeTotal()
-      })
+      // document.getElementById('proposed_price_discount').addEventListener('input', (e) => {
+      //    computeProposedPrice()
+      //    computeTotal()
+      // })
 
       document.getElementById('product_qty').addEventListener('input', (e) => {
          // computeProposedPrice(e)
          computeTotal()
       })
 
-      document.getElementById('catalog_price').addEventListener('change', (e) => {
-         if(document.getElementById('proposed_price').value !== '') {
-            computeProposedPriceDiscount()
-         } else {
-            computeProposedPrice()
-         }
-         // // computeProposedPrice(e)
-         computeTotal()
-      })
+      // document.getElementById('catalog_price').addEventListener('change', (e) => {
+      //    if(document.getElementById('proposed_price').value !== '') {
+      //       computeProposedPriceDiscount()
+      //    } else {
+      //       computeProposedPrice()
+      //    }
+      //    // // computeProposedPrice(e)
+      //    computeTotal()
+      // })
    });
 
-   const computeProposedPriceDiscount = () => {
-      const catalog_price = document.getElementById('catalog_price').value
+   const computeScdPrice = () => {
+      const proposed_price = document.getElementById('proposed_price').value
       // console.log(catalog_price)
-      if(catalog_price){
-         const proposed_price_discount = (catalog_price - document.getElementById('proposed_price').value) / catalog_price * 100
-         document.getElementById('proposed_price_discount').value = proposed_price_discount
-      }
+      const wo_scd_price = parseInt(proposed_price) / 0.8
+      document.getElementById('wo_scd_price').value = wo_scd_price
    }
+   const computeAppliedDiscount = () => {
+      const wo_scd_price = parseFloat(document.getElementById('wo_scd_price').value)
+      const catalog_price = parseFloat(document.getElementById('catalog_price').value)
+      const applied_discount = (catalog_price / wo_scd_price * 100) - 100
+      document.getElementById('applied_discount').value = applied_discount.toFixed(2)
+   }
+
+   // const computeProposedPriceDiscount = () => {
+   //    const catalog_price = document.getElementById('catalog_price').value
+   //    // console.log(catalog_price)
+   //    if(catalog_price){
+   //       const proposed_price_discount = (catalog_price - document.getElementById('proposed_price').value) / catalog_price * 100
+   //       document.getElementById('proposed_price_discount').value = proposed_price_discount
+   //    }
+   // }
 
    const computeProposedPrice = () => {
       const catalog_price = document.getElementById('catalog_price').value
@@ -564,7 +611,8 @@ use Core\QuotationStatus;
             'comparative_price',
             'catalog_price',
             'proposed_price',
-            'proposed_price_discount',
+            'wo_scd_price',
+            'applied_discount',
             // 'approved_price',
             // 'approved_price',
             'product_total',
@@ -582,7 +630,8 @@ use Core\QuotationStatus;
             'comparative_price',
             'catalog_price',
             'proposed_price',
-            'proposed_price_discount',
+            'wo_scd_price',
+            'applied_discount',
             // 'approved_price',
             // 'approved_price',
             'product_total',
@@ -608,6 +657,9 @@ use Core\QuotationStatus;
                c.classList.add('text-red-500')
             }
             c.innerText = product[cell]
+            // if(cell == 'applied_discount'){
+            //    c.innerText = ((product['catalog_price'] / product['wo_scd_price'] * 100) - 100).toFixed(2)
+            // }
          }
          else {
             c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'text-right', 'whitespace-nowrap')
@@ -649,7 +701,8 @@ use Core\QuotationStatus;
          'comparative_price',
          'catalog_price',
          'proposed_price',
-         'proposed_price_discount',
+         'wo_scd_price',
+         'applied_discount',
          // 'approved_price',
          'product_total',
          // 'deal_equivalent',
@@ -658,6 +711,10 @@ use Core\QuotationStatus;
 
       cells.forEach(cell =>  {
          document.getElementById(cell).value = product[cell]
+         
+         // if(cell == 'applied_discount'){
+         //    document.getElementById(cell).value = ((product['catalog_price'] / product['wo_scd_price'] * 100) - 100).toFixed(2)
+         // }
       })
       toggleProductModal()
    }
@@ -738,67 +795,135 @@ use Core\QuotationStatus;
 
 </script>
 
-<script src="../js/products.js"></script>
+<!-- <script src="../js/products.js"></script> -->
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById("product_description");
-    const dropdownOptions = document.getElementById("dropdownOptions");
+//    document.addEventListener("DOMContentLoaded", function () {
+//     const searchInput = document.getElementById("product_description");
+//     const dropdownOptions = document.getElementById("dropdownOptions");
 
-   // allOptions = [...new Set(allOptions)]
-   // console.log(allOptions)
-   // Create a Set with unique names
-   const uniqueNamesSet = new Set(allOptions.map((option) => option.name));
+//    // allOptions = [...new Set(allOptions)]
+//    // console.log(allOptions)
+//    // Create a Set with unique names
+//    const uniqueNamesSet = new Set(allOptions.map((option) => option.name));
    
-   // Create a new array with unique items
-   const uniqueOptions = [...uniqueNamesSet].map((uniqueName) => {
-      return allOptions.find((option) => option.name == uniqueName);
-   });
-   // console.log(allOptions.length)
-   // console.log(uniqueOptions.length)
+//    // Create a new array with unique items
+//    const uniqueOptions = [...uniqueNamesSet].map((uniqueName) => {
+//       return allOptions.find((option) => option.name == uniqueName);
+//    });
+//    // console.log(allOptions.length)
+//    // console.log(uniqueOptions.length)
 
-    // Event listener for input changes
-    searchInput.addEventListener("input", function () {
-        const searchTerm = searchInput.value.toLowerCase();
-        const filteredOptions = uniqueOptions.filter(option =>
-            option.name.toLowerCase().includes(searchTerm)
-        );
+//     // Event listener for input changes
+//     searchInput.addEventListener("input", function () {
+//         const searchTerm = searchInput.value.toLowerCase();
+//         const filteredOptions = uniqueOptions.filter(option =>
+//             option.name.toLowerCase().includes(searchTerm)
+//         );
 
-        // Update the dropdown with filtered options
-        renderOptions(filteredOptions);
-    });
+//         // Update the dropdown with filtered options
+//         renderOptions(filteredOptions);
+//     });
 
-    function renderOptions(options) {
-        // Clear existing options
-        dropdownOptions.innerHTML = "";
+//     function renderOptions(options) {
+//         // Clear existing options
+//         dropdownOptions.innerHTML = "";
 
-        // Render filtered options
-        options.forEach(option => {
-            const li = document.createElement("li");
-            li.textContent = option.name;
-            li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500'
+//         // Render filtered options
+//         options.forEach(option => {
+//             const li = document.createElement("li");
+//             li.textContent = option.name;
+//             li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500'
 
-            // Event listener for option click
-            li.addEventListener("click", function () {
-                searchInput.value = option.name;
-                document.getElementById('product_code').value  = option.code;
-                // Additional action when an option is selected
+//             // Event listener for option click
+//             li.addEventListener("click", function () {
+//                 searchInput.value = option.name;
+//                 document.getElementById('product_code').value  = option.code;
+//                 // Additional action when an option is selected
 
-                // Close the dropdown
-                dropdownOptions.style.display = "none";
-            });
+//                 // Close the dropdown
+//                 dropdownOptions.style.display = "none";
+//             });
 
-            dropdownOptions.appendChild(li);
-        });
+//             dropdownOptions.appendChild(li);
+//         });
 
-        // Show or hide the dropdown based on the number of filtered options
-        dropdownOptions.style.display = options.length > 0 ? "block" : "none";
-    }
+//         // Show or hide the dropdown based on the number of filtered options
+//         dropdownOptions.style.display = options.length > 0 ? "block" : "none";
+//     }
 
-    // Close dropdown when clicking outside
-    document.addEventListener("click", function (event) {
-        if (!event.target.closest(".searchable-dropdown")) {
+//     // Close dropdown when clicking outside
+//     document.addEventListener("click", function (event) {
+//         if (!event.target.closest(".searchable-dropdown")) {
+//             dropdownOptions.style.display = "none";
+//         }
+//     });
+// });
+const searchInput = document.getElementById("product_code");
+const dropdownOptions = document.getElementById("dropdownOptions");
+
+const getProductLists = async () => {
+try{
+   const response = await fetch("/getProductLists")
+   const data = await response.json()
+   return data
+} catch(e) {
+   console.error(e)
+}
+}
+
+// Event listener for input changes
+searchInput.addEventListener("input", async function () {
+   const searchTerm = searchInput.value.toLowerCase();
+   try {
+      const data = await getProductLists();
+      
+      const filteredOptions = data.filter(option =>
+         option.code.toLowerCase().includes(searchTerm)
+      );
+
+      // Update the dropdown with filtered options
+      renderOptions(filteredOptions);
+   } catch (error) {
+      console.error(error);
+   }
+});
+
+function renderOptions(options) {
+   // Clear existing options
+   dropdownOptions.innerHTML = "";
+   const region = document.getElementById('region').value
+
+   // Render filtered options
+   options.forEach(option => {
+      const li = document.createElement("li");
+      li.textContent = option.code;
+      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500'
+
+      // Event listener for option click
+      li.addEventListener("click", function () {
+            searchInput.value = option.code
+            document.getElementById('product_description').value  = option.description
+            if(region !== 'manila')
+               document.getElementById('catalog_price').value  = option.manila_price ?? ''
+            else
+               document.getElementById('catalog_price').value  = option.province_price ?? ''
+            // Additional action when an option is selected
+
+            // Close the dropdown
             dropdownOptions.style.display = "none";
-        }
-    });
+      });
+
+      dropdownOptions.appendChild(li);
+   });
+
+   // Show or hide the dropdown based on the number of filtered options
+   dropdownOptions.style.display = options.length > 0 ? "block" : "none";
+}
+
+// Close dropdown when clicking outside
+document.addEventListener("click", function (event) {
+   if (!event.target.closest(".searchable-dropdown")) {
+      dropdownOptions.style.display = "none";
+   }
 });
 </script>
