@@ -2,6 +2,7 @@
 
 use Core\App;
 use Core\Role;
+use Core\ValidationException;
 use Core\Validator;
 
 require base_path("Core/Validator.php");
@@ -17,10 +18,7 @@ if(! Validator::string($_POST['name'])) {
 }
 
 if(! empty($errors)) {
-    return view("role/create.php", [
-        'heading' => 'Create Role',
-        'errors' => $errors
-    ]);
+    ValidationException::throw($errors, $_POST);
 }
 
 $db->query("INSERT INTO role(name) VALUES(:name)", [
