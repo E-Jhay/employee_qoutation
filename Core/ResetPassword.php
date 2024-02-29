@@ -25,10 +25,15 @@ class ResetPassword {
         // $to = (array)$user['email'];
         $to = ['bumacodejhay@gmail.com'];
 
+        // Session::destroy();
+        $otp = generateOTP();
+        Session::put('otp', $otp);
+
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/resetPasswordLink.html', [
             'email' => $user['email'],
             'APP_URL' => $config['server']['APP_URL'],
+            'OTP' => $otp,
         ]);
         // $mail->Body = $htmlContent;
 

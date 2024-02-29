@@ -8,6 +8,7 @@ use Http\Forms\UpdatePassword;
 $db = App::resolve(Database::class);
 
 $form = UpdatePassword::validate($attributes = [
+    'otp' => $_POST['otp'],
     'password' => $_POST['password'],
     'confirm_password' => $_POST['confirm_password'],
     'email' => $_POST['email'],

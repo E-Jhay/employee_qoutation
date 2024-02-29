@@ -2,6 +2,7 @@
 
 namespace Http\Forms;
 
+use Core\Session;
 use Core\ValidationException;
 use Core\Validator;
 
@@ -23,6 +24,9 @@ class UpdatePassword {
         }
         if($attributes['email'] == '') {
             $this->errors['password'] = "Account not found, please click the link sent to your email.";
+        }
+        if($attributes['otp'] != Session::get('otp')) {
+            $this->errors['otp'] = "Invalid OTP.";
         }
     }
 

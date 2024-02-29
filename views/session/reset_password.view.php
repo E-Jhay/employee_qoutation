@@ -37,6 +37,17 @@
             <?php unset($_SESSION['error']); endif; ?>
             <div>
                 <div class="flex items-center justify-between">
+                <label for="otp" class="block text-sm font-medium leading-6 text-gray-900">Enter OTP</label>
+                </div>
+                <div class="mt-2">
+                    <input id="otp" name="otp" type="otp" autocomplete="current-otp" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['otp']) ? 'border-red-500' : '' ?>">
+                </div>
+                <?php if(isset($errors['otp'])): ?>
+                    <span class="text-red-500 text-xs"><?= $errors['otp'] ?></span>
+                <?php endif; ?>
+            </div>
+            <div>
+                <div class="flex items-center justify-between">
                 <label for="password" class="block text-sm font-medium leading-6 text-gray-900">New Password</label>
                 </div>
                 <div class="mt-2">

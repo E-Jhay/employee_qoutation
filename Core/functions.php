@@ -11,6 +11,22 @@ function dd($value) {
     die();
 }
 
+function generateOTP($length = 6) {
+    // Generate random bytes
+    $randomBytes = random_bytes($length);
+
+    // Convert random bytes to hexadecimal format
+    $hex = bin2hex($randomBytes);
+
+    // Convert hexadecimal to decimal and keep only digits
+    $otp = preg_replace('/[^0-9]/', '', $hex);
+
+    // Trim or pad OTP to desired length
+    $otp = substr($otp, 0, $length);
+
+    return $otp;
+}
+
 if (!function_exists('array_key_last')) {
     function array_key_last($array) {
         if (!is_array($array) || empty($array)) {
