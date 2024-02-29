@@ -33,6 +33,7 @@ $router->post('/user', 'user/store.php')->only('auth');
 $router->get('/user/edit', 'user/edit.php')->only('auth');
 $router->put('/user/update', 'user/update.php')->only('auth');
 
+$router->get('/sales', 'sales_agent/index.php')->only('auth');
 // Role route
 $router->get('/roles', 'role/index.php')->only('auth');
 $router->get('/role/show', 'role/show.php')->only('auth');
