@@ -72,8 +72,21 @@
                               <span class="text-red-500 text-xs"><?= $errors['role_id'] ?></span>
                            <?php endif; ?>
                         </div>
+                        <div class="md:col-span-6">
+                           <label for="team">Team</label>
+                           <!-- <input type="text" name="team" id="team" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" value="" placeholder="" /> -->
+                           <select id="team_id" name="team_id" autocomplete="team_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['team_id']) ? 'border-red-500' : '' ?>">
+                              <option value="">-- Not Specified --</option >
+                              <?php foreach($teams as $team): ?>
+                                 <option value="<?= $team['id'] ?>" <?= $team['id'] == $user['team_id'] ? 'selected' : '' ?>><?= ucwords($team['name']) ?></option >
+                              <?php endforeach; ?>
+                           </select>
+                           <?php if(isset($errors['team_id'])): ?>
+                              <span class="text-red-500 text-xs"><?= $errors['team_id'] ?></span>
+                           <?php endif; ?>
+                        </div>
 
-                        <div class="md:col-span-3">
+                        <!-- <div class="md:col-span-3">
                            <label for="password">Password</label>
                            <input type="password" name="password" id="password" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['password']) ? 'border-red-500' : '' ?>" value="" placeholder="" />
                            <?php if(isset($errors['password'])): ?>
@@ -83,7 +96,7 @@
                         <div class="md:col-span-3">
                            <label for="re-type-password">Re-Type Password</label>
                            <input type="password" name="re-type-password" id="re-type-password" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['password']) ? 'border-red-500' : '' ?>" value="" placeholder="" />
-                        </div>
+                        </div> -->
 
                         <!-- <div class="md:col-span-3">
                            <label for="country">Country / region</label>
