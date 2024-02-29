@@ -27,7 +27,8 @@ class ResetPassword {
 
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/resetPasswordLink.html', [
-            'email' => $user['email']
+            'email' => $user['email'],
+            'APP_URL' => $config['server']['APP_URL'],
         ]);
         // $mail->Body = $htmlContent;
 
