@@ -83,7 +83,7 @@ $pendingQuotations = $db->query("SELECT COUNT(*) as count FROM quotation WHERE t
 ])->find()['count'];
 
 $approvedQuotations = $db->query("SELECT COUNT(*) as count FROM quotation WHERE team_id = :team_id AND status = :status AND
-MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())",[
+MONTH(updated_at) = MONTH(CURDATE()) AND YEAR(updated_at) = YEAR(CURDATE())",[
     'team_id' => $currentUserTeamId,
     'status' => QuotationStatus::APPROVED,
 ])->find()['count'];
@@ -93,7 +93,7 @@ $agentsCount = $db->query("SELECT COUNT(*) as count FROM user WHERE team_id = :t
     'role_id' => Role::SALES,
 ])->find()['count'];
 
-$latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address_line_1, customer.address_line_2, customer.city, customer.province FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE team_id = :team_id AND status = :status ORDER BY customer.id DESC LIMIT 5",[
+$latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address_line_1, customer.address_line_2, customer.city, customer.province FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE team_id = :team_id AND status = :status ORDER BY customer.id DESC LIMIT 4",[
     'team_id' => $currentUserTeamId,
     'status' => QuotationStatus::APPROVED,
 ])->get();
@@ -104,13 +104,13 @@ $latestCustomers = $db->query("SELECT DISTINCT (customer.name), customer.address
 //                             ])->find()['total'];
 
 $topAgents = $db->query("SELECT user.name, COUNT(*) as total, (COUNT(*) / :approved_quotations) * 100 AS percentage FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.team_id = :team_id AND status = :status AND
-MONTH(quotation.created_at) = MONTH(CURDATE()) AND YEAR(quotation.created_at) = YEAR(CURDATE()) GROUP BY quotation.created_by ORDER BY total DESC LIMIT 5",[
+MONTH(quotation.updated_at) = MONTH(CURDATE()) AND YEAR(quotation.updated_at) = YEAR(CURDATE()) GROUP BY quotation.created_by ORDER BY total DESC LIMIT 5",[
     'team_id' => $currentUserTeamId,
     'status' => QuotationStatus::APPROVED,
     'approved_quotations' => $approvedQuotations,
 ])->get();
 
-$qoutedThisYear = $db->query("SELECT COUNT(*) as total, MONTHNAME(created_at) as month_name FROM quotation WHERE team_id = :team_id AND status = :status AND YEAR(quotation.created_at) = YEAR(CURDATE()) GROUP BY MONTH(created_at)", [
+$qoutedThisYear = $db->query("SELECT COUNT(*) as total, MONTHNAME(updated_at) as month_name FROM quotation WHERE team_id = :team_id AND status = :status AND YEAR(quotation.updated_at) = YEAR(CURDATE()) GROUP BY MONTH(updated_at)", [
     'team_id' => $currentUserTeamId,
     'status' => QuotationStatus::APPROVED,
 ])->get();
