@@ -40,7 +40,7 @@
                 <label for="otp" class="block text-sm font-medium leading-6 text-gray-900">Enter OTP</label>
                 </div>
                 <div class="mt-2">
-                    <input id="otp" name="otp" type="otp" autocomplete="current-otp" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['otp']) ? 'border-red-500' : '' ?>">
+                    <input id="otp" name="otp" type="otp" autocomplete="current-otp" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['otp']) ? 'border-red-500' : '' ?>" value="<?= old('otp') ?>">
                 </div>
                 <?php if(isset($errors['otp'])): ?>
                     <span class="text-red-500 text-xs"><?= $errors['otp'] ?></span>
