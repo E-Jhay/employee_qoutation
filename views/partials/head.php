@@ -6,6 +6,7 @@
     <title>PMC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../images/pmc-ico.png">
 </head>
 <body>
-   <div>
+   <div id="app">

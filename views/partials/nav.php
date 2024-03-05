@@ -12,8 +12,8 @@
                 </svg>
             </button>
             <a href="#" class="text-xl font-bold flex items-center lg:ml-2.5">
-            <img src="https://demo.themesberg.com/windster/images/logo.svg" class="h-6 mr-2" alt="Windster Logo">
-            <span class="self-center whitespace-nowrap">PMC</span>
+            <img src="../images/logo.png" alt="company-logo" class="h-8">
+            <!-- <span class="self-center whitespace-nowrap">PMC</span> -->
             </a>
         </div>
     </div>
