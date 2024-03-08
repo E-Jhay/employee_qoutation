@@ -6,8 +6,9 @@ class Authenticator {
 
     public function attempt($email, $password)
     {
+        $email = strtolower($email);
         $user = App::resolve(Database::class)->query('SELECT * FROM user WHERE email = :email', [
-            'email' => $email
+            'email' => strtolower($email)
         ])->find();
 
         if($user) {
