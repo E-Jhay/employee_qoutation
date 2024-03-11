@@ -251,7 +251,7 @@
                                                          Catalog price
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Proposed price/deal
+                                                         Quoted price/deal
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          W/O SCD Price
@@ -400,7 +400,7 @@
                                  </div>
 
                                  <div class="col-span-3 md:col-span-3">
-                                    <label for="proposed_price">Proposed price / deal</label>
+                                    <label for="proposed_price">Quoted price / deal</label>
                                     <input type="number" step="0.01" name="proposed_price" id="proposed_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price') ?>" required/>
                                     <?php if(isset($errors['proposed_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price'] ?></span>
@@ -421,7 +421,7 @@
                                     <?php endif; ?>
                                  </div>
                                  <!-- <div class="col-span-3 md:col-span-3">
-                                    <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
+                                    <label for="proposed_price_discount">Quoted price / deal (Discount in %)</label>
                                     <input type="number" min="20" max="99" step="0.01" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
                                     <?php if(isset($errors['proposed_price_discount'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price_discount'] ?></span>
@@ -508,10 +508,11 @@
       document.getElementById('wo_scd_price').value = wo_scd_price
    }
    const computeAppliedDiscount = () => {
-      const wo_scd_price = parseFloat(document.getElementById('wo_scd_price').value)
+      const proposed_price = parseFloat(document.getElementById('proposed_price').value)
       const catalog_price = parseFloat(document.getElementById('catalog_price').value)
-      const applied_discount = (catalog_price / wo_scd_price * 100) - 100
-      document.getElementById('applied_discount').value = applied_discount.toFixed(2)
+      const applied_discount = 100 - (proposed_price / catalog_price * 100)
+      // document.getElementById('applied_discount').value = applied_discount.toFixed(2)
+      document.getElementById('applied_discount').value = Math.trunc(applied_discount*Math.pow(10, 2))/Math.pow(10, 2)
    }
    // const computeProposedPriceDiscount = () => {
    //    const catalog_price = document.getElementById('catalog_price').value
