@@ -198,25 +198,14 @@ require base_path('views/partials/head.php') ?>
          <?php endforeach; ?>
       </tbody>
          <tfoot>
-            <!-- <tr>
-            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
-            <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
-            <td class="pl-3 pr-6 pt-6 text-center text-sm text-gray-500 sm:pr-0">$10,500.00</td>
-            </tr>
             <tr>
-            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
-            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
-            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">$1,050.00</td>
-            </tr>
-            <tr>
-            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
-            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
-            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
-            </tr> -->
-            <tr>
-            <th scope="row" colspan="5" class="pl-4 pr-6 sm:pr-16 pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
-            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
-            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <th scope="row" class="pt-4 text-sm font-semibold text-gray-900">Total</th>
+               <td class="pt-4 text-right text-sm font-semibold text-gray-900 pr-4 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
             </tr>
          </tfoot>
    </table>
