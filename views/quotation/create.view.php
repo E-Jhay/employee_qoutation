@@ -502,9 +502,9 @@
    });
 
    const computeScdPrice = () => {
-      const proposed_price = document.getElementById('proposed_price').value
+      const proposed_price = parseFloat(document.getElementById('proposed_price').value)
       // console.log(catalog_price)
-      const wo_scd_price = parseInt(proposed_price) / 0.8
+      const wo_scd_price = proposed_price / 0.8
       document.getElementById('wo_scd_price').value = wo_scd_price
    }
    const computeAppliedDiscount = () => {
