@@ -191,7 +191,7 @@ require base_path('views/partials/head.php') ?>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['wo_scd_price'], 2) ?></td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['proposed_price'], 2) ?></td>
                <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td> -->
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format(100 - ($product['proposed_price'] / $product['wo_scd_price'] * 100) , 2) ?>%</td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format(($product['wo_scd_price'] - $product['proposed_price']) / $product['wo_scd_price'] * 100 , 2) ?>%</td>
                <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
                <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
             </tr>
