@@ -174,7 +174,7 @@ use Core\Role;
                                  <?php
                                     $discount = number_format(100 - ($product['proposed_price'] / $product['catalog_price'] * 100), 2);
                                  ?>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500 <?= $discount ? ($discount < 20 ? 'text-green-500' : 'text-red-500') : '' ?>"><?= $discount ?? '' ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500 <?= $discount ? ((float)$discount < 20 ? 'text-green-500' : 'text-red-500') : '' ?>"><?= is_numeric($discount) ? $discount . '%' : '' ?></td>
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td> -->
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
                                  <!-- <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
