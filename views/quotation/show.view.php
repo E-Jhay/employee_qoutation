@@ -52,7 +52,8 @@ use Core\Role;
 
                   <div class="text-right">
                      <p class="">
-                        Quote created by:
+                        <span class="font-bold">Quote created by:</span>
+                        <br>
                         <span class="text-gray-500">
                            <?= $quotation['created_by'] ?>
                         </span>
@@ -83,7 +84,7 @@ use Core\Role;
                   </div>
                   <div class="text-right">
                      <p>
-                        Qoute created: 
+                        <span class="font-bold">On: </span>
                         <span class="text-gray-500">
                            <?= date('m-d-Y',strtotime($quotation['created_at'])) ?>
                         </span>
@@ -93,7 +94,7 @@ use Core\Role;
                            <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
                         </span> -->
                         <br />
-                        Qoute expires:
+                        <span class="font-bold">Expires:</span>
                         <span class="text-gray-500">
                            <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
                         </span>
