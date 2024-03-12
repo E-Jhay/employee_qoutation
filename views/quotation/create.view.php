@@ -385,7 +385,7 @@
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="comparative_price">Previous price</label>
-                                    <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>" required/>
+                                    <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>"/>
                                     <?php if(isset($errors['comparative_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['comparative_price'] ?></span>
                                     <?php endif; ?>
@@ -412,6 +412,10 @@
                                     <?php if(isset($errors['wo_scd_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['wo_scd_price'] ?></span>
                                     <?php endif; ?>
+                                 </div>
+                                 <div class="col-span-3 md:col-span-3">
+                                    <label for="additional_discount">Additional discount <span class="text-gray-400">(optional)</span></label>
+                                    <input type="number" max="79" name="additional_discount" id="additional_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['additional_discount']) ? 'border-red-500' : '' ?>" value="<?= old('additional_discount') ?>"/>
                                  </div>
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="applied_discount">Applied Discount</label>
@@ -480,6 +484,12 @@
          computeAppliedDiscount()
          computeTotal()
       })
+      document.getElementById('additional_discount').addEventListener('input', (e) => {
+         // computeProposedPriceDiscount()
+         computeScdPrice()
+         computeAppliedDiscount()
+         computeTotal()
+      })
       // document.getElementById('proposed_price_discount').addEventListener('input', (e) => {
       //    computeProposedPrice()
       //    computeTotal()
@@ -503,8 +513,12 @@
 
    const computeScdPrice = () => {
       const proposed_price = parseFloat(document.getElementById('proposed_price').value)
-      // console.log(catalog_price)
-      const wo_scd_price = proposed_price / 0.8
+      const additional_discount = parseFloat(document.getElementById('additional_discount').value)
+      let reverse_cal = 0.8
+      if(additional_discount && additional_discount < (reverse_cal * 100)) {
+         reverse_cal -= (additional_discount / 100)
+      }
+      const wo_scd_price = proposed_price / reverse_cal
       document.getElementById('wo_scd_price').value = wo_scd_price
    }
    const computeAppliedDiscount = () => {
@@ -694,6 +708,7 @@
          'catalog_price',
          'proposed_price',
          'wo_scd_price',
+         'additional_discount',
          'applied_discount',
          // 'approved_price',
          'product_total',
