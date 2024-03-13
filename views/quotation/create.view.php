@@ -251,7 +251,7 @@
                                                          Catalog price
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Proposed price/deal
+                                                         Quote price/deal
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          W/O SCD Price
@@ -263,7 +263,7 @@
                                                          Approved price
                                                       </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Discounted Total
+                                                         Discounte Total
                                                       </th>
                                                       <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Deal equivalent
@@ -385,33 +385,43 @@
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="comparative_price">Previous price</label>
-                                    <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>" required/>
+                                    <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>"/>
                                     <?php if(isset($errors['comparative_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['comparative_price'] ?></span>
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-3">
+                                 <!-- <div class="col-span-3 md:col-span-3">
                                     <label for="catalog_price">Catalog price</label>
                                     <input readonly type="text" name="catalog_price" id="catalog_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
                                     <?php if(isset($errors['catalog_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['catalog_price'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
                                  <div class="col-span-3 md:col-span-3">
-                                    <label for="proposed_price">Proposed price / deal</label>
+                                    <label for="proposed_price">Quote price / deal</label>
                                     <input type="number" step="0.01" name="proposed_price" id="proposed_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price') ?>" required/>
                                     <?php if(isset($errors['proposed_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price'] ?></span>
                                     <?php endif; ?>
+                                    <div class="max-w-80">
+                                       <span id="proposed_price_message" class="text-red-500"></span>
+                                    </div>
                                  </div>
                                  <div class="col-span-3 md:col-span-3">
-                                    <label for="wo_scd_price">W/O SCD Price</label>
-                                    <input readonly type="number" step="0.01" name="wo_scd_price" id="wo_scd_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['wo_scd_price']) ? 'border-red-500' : '' ?>" value="<?= old('wo_scd_price') ?>" required/>
+                                    <!-- <label for="wo_scd_price">W/O SCD Price</label> -->
+                                    <label for="wo_scd_price">Catalog Price</label>
+                                    <input readonly type="text" step="0.01" name="wo_scd_price" id="wo_scd_price" class="hidden cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['wo_scd_price']) ? 'border-red-500' : '' ?>" value="<?= old('wo_scd_price') ?>" required/>
+                                    
+                                    <input readonly type="text" name="catalog_price" id="catalog_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
                                     <?php if(isset($errors['wo_scd_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['wo_scd_price'] ?></span>
                                     <?php endif; ?>
+                                 </div>
+                                 <div class="col-span-3 md:col-span-3">
+                                    <label for="additional_discount">Additional discount <span class="text-gray-400">(optional)</span></label>
+                                    <input readonly type="number" max="79" name="additional_discount" id="additional_discount" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['additional_discount']) ? 'border-red-500' : '' ?>" value="<?= old('additional_discount') ?>"/>
                                  </div>
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="applied_discount">Applied Discount</label>
@@ -421,7 +431,7 @@
                                     <?php endif; ?>
                                  </div>
                                  <!-- <div class="col-span-3 md:col-span-3">
-                                    <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
+                                    <label for="proposed_price_discount">Quoted price / deal (Discount in %)</label>
                                     <input type="number" min="20" max="99" step="0.01" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
                                     <?php if(isset($errors['proposed_price_discount'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price_discount'] ?></span>
@@ -476,10 +486,40 @@
       refreshTableRow()
       document.getElementById('proposed_price').addEventListener('input', (e) => {
          // computeProposedPriceDiscount()
+         // computeScdPrice()
+         // computeAppliedDiscount()
+         // computeTotal()
+         handleDiscount()
+      })
+      document.getElementById('additional_discount').addEventListener('input', (e) => {
+         // computeProposedPriceDiscount()
          computeScdPrice()
          computeAppliedDiscount()
          computeTotal()
       })
+
+      const handleDiscount = () => {
+         // computeProposedPriceDiscount()
+         if(!isNaN(computeAppliedDiscount())){
+            if(parseFloat(computeAppliedDiscount()) <= 20) {
+               computeScdPrice()
+               document.getElementById('additional_discount').readOnly = false
+               document.getElementById('additional_discount').classList.remove('cursor-not-allowed')
+               document.getElementById('proposed_price_message').innerText = ""
+               document.getElementById('wo_scd_price').classList.remove('hidden')
+               document.getElementById('catalog_price').classList.add('hidden')
+            } else {
+               document.getElementById('additional_discount').readOnly = true
+               document.getElementById('additional_discount').classList.add('cursor-not-allowed')
+               document.getElementById('wo_scd_price').value = document.getElementById('catalog_price').value
+               document.getElementById('applied_discount').value = Math.trunc(computeAppliedDiscount()*Math.pow(10, 2))/Math.pow(10, 2)
+               document.getElementById('proposed_price_message').innerText = "Warning: Your offer price is below Minimum level."
+               document.getElementById('wo_scd_price').classList.add('hidden')
+               document.getElementById('catalog_price').classList.remove('hidden')
+            }
+         }
+         computeTotal()
+      }
       // document.getElementById('proposed_price_discount').addEventListener('input', (e) => {
       //    computeProposedPrice()
       //    computeTotal()
@@ -502,16 +542,23 @@
    });
 
    const computeScdPrice = () => {
-      const proposed_price = document.getElementById('proposed_price').value
-      // console.log(catalog_price)
-      const wo_scd_price = parseInt(proposed_price) / 0.8
-      document.getElementById('wo_scd_price').value = wo_scd_price
+      const proposed_price = parseFloat(document.getElementById('proposed_price').value)
+      const additional_discount = parseFloat(document.getElementById('additional_discount').value)
+      let reverse_cal = 0.8
+      if(additional_discount && additional_discount < (reverse_cal * 100)) {
+         reverse_cal -= (additional_discount / 100)
+      }
+      const wo_scd_price = proposed_price / reverse_cal
+      document.getElementById('wo_scd_price').value = Math.trunc(wo_scd_price*Math.pow(10, 2))/Math.pow(10, 2)
+      document.getElementById('applied_discount').value = Math.trunc(((wo_scd_price - proposed_price) / wo_scd_price * 100)*Math.pow(10, 2))/Math.pow(10, 2)
    }
    const computeAppliedDiscount = () => {
-      const wo_scd_price = parseFloat(document.getElementById('wo_scd_price').value)
+      const proposed_price = parseFloat(document.getElementById('proposed_price').value)
       const catalog_price = parseFloat(document.getElementById('catalog_price').value)
-      const applied_discount = (catalog_price / wo_scd_price * 100) - 100
-      document.getElementById('applied_discount').value = applied_discount.toFixed(2)
+      const applied_discount = 100 - (proposed_price / catalog_price * 100)
+      // document.getElementById('applied_discount').value = applied_discount.toFixed(2)
+      // document.getElementById('applied_discount').value = Math.trunc(applied_discount*Math.pow(10, 2))/Math.pow(10, 2)
+      return applied_discount
    }
    // const computeProposedPriceDiscount = () => {
    //    const catalog_price = document.getElementById('catalog_price').value
@@ -693,6 +740,7 @@
          'catalog_price',
          'proposed_price',
          'wo_scd_price',
+         'additional_discount',
          'applied_discount',
          // 'approved_price',
          'product_total',
@@ -909,16 +957,20 @@ function renderOptions(options) {
             searchInput.value = option.code
             document.getElementById('product_description').value  = option.description
             document.getElementById('uom').value  = option.uom
-            if(region !== 'manila')
+            if(region !== 'manila'){
                document.getElementById('catalog_price').value  = option.manila_price ?? ''
-            else
+               document.getElementById('wo_scd_price').value  = option.manila_price ?? ''
+            }
+            else{
                document.getElementById('catalog_price').value  = option.province_price ?? ''
+               document.getElementById('wo_scd_price').value  = option.province_price ?? ''
+            }
             // Additional action when an option is selected
 
             // Close the dropdown
             dropdownOptions.style.display = "none";
-            computeScdPrice()
-            computeAppliedDiscount()
+            // computeScdPrice()
+            // computeAppliedDiscount()
       });
 
       dropdownOptions.appendChild(li);

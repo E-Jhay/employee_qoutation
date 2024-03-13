@@ -52,7 +52,8 @@ use Core\Role;
 
                   <div class="text-right">
                      <p class="">
-                        Quote created by:
+                        <span class="font-bold">Quote created by:</span>
+                        <br>
                         <span class="text-gray-500">
                            <?= $quotation['created_by'] ?>
                         </span>
@@ -83,7 +84,7 @@ use Core\Role;
                   </div>
                   <div class="text-right">
                      <p>
-                        Qoute created: 
+                        <span class="font-bold">On: </span>
                         <span class="text-gray-500">
                            <?= date('m-d-Y',strtotime($quotation['created_at'])) ?>
                         </span>
@@ -93,7 +94,7 @@ use Core\Role;
                            <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
                         </span> -->
                         <br />
-                        Qoute expires:
+                        <span class="font-bold">Expires:</span>
                         <span class="text-gray-500">
                            <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
                         </span>
@@ -138,11 +139,11 @@ use Core\Role;
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Stock available</th> -->
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Comparative price</th> -->
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
-                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
-                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">W/O SCD price</th>
+                              <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">W/O SCD price</th> -->
+                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Quote price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th> -->
-                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
+                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Total</th>
                               <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900"></th>
                               <?php endif; ?>
@@ -168,12 +169,25 @@ use Core\Role;
                                  </td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['uom'] ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] ? number_format($product['catalog_price'], 2) : '' ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500"><?= number_format($product['proposed_price'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['wo_scd_price'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500 <?= $product['applied_discount'] ? (number_format($product['applied_discount'], 2) < -10 ? 'text-green-500' : 'text-red-500') : '' ?>"><?= $product['applied_discount'] ? number_format($product['applied_discount'], 2) : '' ?></td>
+                                 <?php
+                                    $discountPercentage = number_format(100 - ($product['proposed_price'] / $product['catalog_price'] * 100), 2);
+                                    $cat_price = $product['catalog_price'];
+                                    $discount = $product['catalog_price'] - $product['proposed_price'];
+                                    if($discountPercentage < 20) {
+                                       $cat_price = $discountPercentage < 20 ? $product['wo_scd_price'] : $product['catalog_price'];
+                                       $discount = $product['wo_scd_price'] - $product['proposed_price'];
+                                       $discountPercentage = number_format(100 - ($product['proposed_price'] / $product['wo_scd_price'] * 100), 2);
+                                    }
+                                 ?>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= $cat_price ? number_format($cat_price, 2) : '' ?></td>
+                                 <!-- <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['wo_scd_price'], 2) ?></td> -->
+                                 <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500">₱<?= number_format($product['proposed_price'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500">
+                                    ₱<?= number_format($discount, 2) ?>
+                                    ( <?= is_numeric($discountPercentage) ? $discountPercentage . '%' : '' ?> )
+                                 </td>
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td> -->
-                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
+                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">₱<?= number_format($product['total'], 2) ?></td>
                                  <!-- <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500">
                                     <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>, <?= $product['catalog_price'] ?>, <?= $product['quantity'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
@@ -184,25 +198,14 @@ use Core\Role;
                            <?php endforeach; ?>
                         </tbody>
                         <tfoot>
-                           <!-- <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
-                           <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
-                           <td class="pl-3 pr-6 pt-6 text-center text-sm text-gray-500 sm:pr-0">$10,500.00</td>
-                           </tr>
                            <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
-                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
-                           <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">$1,050.00</td>
-                           </tr>
-                           <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
-                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
-                           <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
-                           </tr> -->
-                           <tr>
-                           <th scope="row" colspan="7" class="pl-4 pr-6 lg:pr-14 ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
-                           <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
-                           <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <th scope="row" class="pt-4 text-sm font-semibold text-gray-900">Total</th>
+                              <td class="pt-4 text-right text-sm font-semibold text-gray-900 pr-4 sm:pr-0">₱<?= number_format($grand_total, 2) ?></td>
                            </tr>
                         </tfoot>
                      </table>
@@ -225,7 +228,9 @@ use Core\Role;
                            Terms
                         </h2>
                         <p class="text-gray-500">
-                           <?= $quotation['terms'] ?>
+                           <?= $quotation['terms'] ?> <br>
+                           No approved signed PO received, no processing <br>
+                           P5000.00 Minimum order
                         </p>
                      </div>
                      <div class="my-4">
@@ -392,14 +397,14 @@ use Core\Role;
                                     </h3>
                                  </div>
                                  <div class="col-span-6 md:col-span-2">
-                                    <label for="proposed_price">Proposed price / deal</label>
+                                    <label for="proposed_price">Quoted price / deal</label>
                                     <input type="number" id="proposed_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
                                     <input type="hidden" name="id" id="id" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                     <input type="hidden" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                     <input type="hidden" id="quantity" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                  </div>
                                  <div class="col-span-6 md:col-span-2">
-                                    <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
+                                    <label for="proposed_price_discount">Quoted price / deal (Discount in %)</label>
                                     <input type="number" id="proposed_price_discount" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50" disabled/>
                                  </div>
 
@@ -415,11 +420,11 @@ use Core\Role;
                                  </div>
 
                                  <div class="col-span-6 md:col-span-2">
-                                    <label for="approved_price">Proposed price / deal</label>
+                                    <label for="approved_price">Quoted price / deal</label>
                                     <input type="number" step="0.01" name="approved_price" id="approved_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                  </div>
                                  <div class="col-span-6 md:col-span-2">
-                                    <label for="approved_price_discount">Proposed price / deal (Discount in %)</label>
+                                    <label for="approved_price_discount">Quoted price / deal (Discount in %)</label>
                                     <input type="number" step="0.01" id="approved_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
                                  </div>
                                  <div class="col-span-6 md:col-span-2">

@@ -20,7 +20,7 @@
             <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                 <div class="mt-2">
-                    <input id="email" name="email" type="email" autocomplete="email" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= old('email') ?>">
+                    <input tabindex="1" id="email" name="email" type="email" autocomplete="email" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= old('email') ?>">
                 </div>
                 <?php if(isset($errors['email'])): ?>
                     <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
@@ -35,7 +35,7 @@
                 </div>
                 </div>
                 <div class="mt-2">
-                    <input id="password" name="password" type="password" autocomplete="current-password" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['password']) ? 'border-red-500' : '' ?>">
+                    <input tabindex="2" id="password" name="password" type="password" autocomplete="current-password" class="h-10 border mt-1 rounded px-2 w-full bg-trasparent <?= isset($errors['password']) ? 'border-red-500' : '' ?>">
                 </div>
                 <?php if(isset($errors['password'])): ?>
                     <span class="text-red-500 text-xs"><?= $errors['password'] ?></span>
@@ -43,7 +43,7 @@
             </div>
 
             <div>
-                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                <button tabindex="3" type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
             </div>
         </form>
 <!-- 

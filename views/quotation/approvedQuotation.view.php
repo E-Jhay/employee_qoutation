@@ -98,7 +98,8 @@ require base_path('views/partials/head.php') ?>
 
    <div class="text-right">
       <p class="">
-         Quote created by:
+         <span class="font-bold">Quote created by:</span>
+         <br>
          <span class="text-gray-500">
             <?= $quotation['created_by'] ?>
          </span>
@@ -129,7 +130,7 @@ require base_path('views/partials/head.php') ?>
    </div>
    <div class="text-right">
       <p>
-         Qoute created: 
+         <span class="font-bold">On: </span>
          <span class="text-gray-500">
             <?= date('m-d-Y',strtotime($quotation['created_at'])) ?>
          </span>
@@ -139,7 +140,7 @@ require base_path('views/partials/head.php') ?>
             <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
          </span> -->
          <br />
-         Qoute expires:
+         <span class="font-bold">Expires:</span>
          <span class="text-gray-500">
             <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
          </span>
@@ -165,7 +166,7 @@ require base_path('views/partials/head.php') ?>
             <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Price after discount</th>
             <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">SCD Price</th> -->
             <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
-            <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
+            <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Total</th>
             <!-- <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Deal equivalent</th> -->
          </tr>
       </thead>
@@ -188,35 +189,27 @@ require base_path('views/partials/head.php') ?>
                </td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['uom'] ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['wo_scd_price'], 2) ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['proposed_price'], 2) ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['wo_scd_price'], 2) ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['proposed_price'], 2) ?></td>
                <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td> -->
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format(100 - ($product['proposed_price'] / $product['wo_scd_price'] * 100) , 2) ?>%</td>
-               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500">
+                  ₱<?= number_format($product['wo_scd_price'] - $product['proposed_price'], 2)?>
+                  (<?= number_format(($product['wo_scd_price'] - $product['proposed_price']) / $product['wo_scd_price'] * 100 , 2) ?>%)
+               </td>
+               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">₱<?= number_format($product['total'], 2) ?></td>
                <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
             </tr>
          <?php endforeach; ?>
       </tbody>
          <tfoot>
-            <!-- <tr>
-            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
-            <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
-            <td class="pl-3 pr-6 pt-6 text-center text-sm text-gray-500 sm:pr-0">$10,500.00</td>
-            </tr>
             <tr>
-            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
-            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
-            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">$1,050.00</td>
-            </tr>
-            <tr>
-            <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
-            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
-            <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
-            </tr> -->
-            <tr>
-            <th scope="row" colspan="5" class="pl-4 pr-6 sm:pr-16 pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
-            <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
-            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <th scope="row" class="pt-4 text-sm font-semibold text-gray-900">Total</th>
+               <td class="pt-4 text-right text-sm font-semibold text-gray-900 pr-4 sm:pr-0">₱<?= number_format($grand_total, 2) ?></td>
             </tr>
          </tfoot>
    </table>
@@ -252,7 +245,9 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          Terms
       </h2>
       <p class="text-gray-500">
-         <?= $quotation['terms'] ?>
+         <?= $quotation['terms'] ?> <br>
+         No approved signed PO received, no processing <br>
+         P5000.00 Minimum order
       </p>
    </div>
    <div class="my-4">
