@@ -229,7 +229,9 @@ use Core\Role;
                            Terms
                         </h2>
                         <p class="text-gray-500">
-                           <?= $quotation['terms'] ?>
+                           <?= $quotation['terms'] ?> <br>
+                           No approved signed PO received, no processing <br>
+                           P5000.00 Minimum order
                         </p>
                      </div>
                      <div class="my-4">

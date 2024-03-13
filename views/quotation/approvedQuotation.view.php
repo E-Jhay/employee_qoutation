@@ -242,7 +242,9 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
          Terms
       </h2>
       <p class="text-gray-500">
-         <?= $quotation['terms'] ?>
+         <?= $quotation['terms'] ?> <br>
+         No approved signed PO received, no processing <br>
+         P5000.00 Minimum order
       </p>
    </div>
    <div class="my-4">
