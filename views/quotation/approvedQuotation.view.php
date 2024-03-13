@@ -189,11 +189,14 @@ require base_path('views/partials/head.php') ?>
                </td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
                <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['uom'] ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['wo_scd_price'], 2) ?></td>
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['proposed_price'], 2) ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['wo_scd_price'], 2) ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['proposed_price'], 2) ?></td>
                <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td> -->
-               <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format(($product['wo_scd_price'] - $product['proposed_price']) / $product['wo_scd_price'] * 100 , 2) ?>%</td>
-               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
+               <td class="px-3 py-5 text-center text-sm text-gray-500">
+                  ₱<?= number_format($product['wo_scd_price'] - $product['proposed_price'], 2)?>
+                  (<?= number_format(($product['wo_scd_price'] - $product['proposed_price']) / $product['wo_scd_price'] * 100 , 2) ?>%)
+               </td>
+               <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">₱<?= number_format($product['total'], 2) ?></td>
                <!-- <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
             </tr>
          <?php endforeach; ?>
@@ -206,7 +209,7 @@ require base_path('views/partials/head.php') ?>
                <td></td>
                <td></td>
                <th scope="row" class="pt-4 text-sm font-semibold text-gray-900">Total</th>
-               <td class="pt-4 text-right text-sm font-semibold text-gray-900 pr-4 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
+               <td class="pt-4 text-right text-sm font-semibold text-gray-900 pr-4 sm:pr-0">₱<?= number_format($grand_total, 2) ?></td>
             </tr>
          </tfoot>
    </table>
