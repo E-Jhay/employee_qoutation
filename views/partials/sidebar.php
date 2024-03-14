@@ -89,7 +89,7 @@
                 </li>
                 <?php endif; ?>
 
-                <li class="group">
+                <!-- <li class="group">
                     <form method="POST" action="/session">
                         <input type="hidden" name="_method" value="DELETE"/>
 
@@ -98,7 +98,7 @@
                             <span class="ml-3 whitespace-nowrap">Logout</span>
                         </button>
                     </form>
-                </li>
+                </li> -->
                 <!-- <li class="group">
                     <a href="#" class="flex items-center p-2 text-gray-900 hover:bg-gray-200 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white sidebar-dropdown-toggle">
                         <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 group-[.active]:text-white transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
