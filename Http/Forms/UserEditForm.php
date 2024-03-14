@@ -25,9 +25,9 @@ class UserEditForm {
             $this->errors['email'] = "Email already taken.";
         }
 
-        if(! Validator::phone($attributes['phone'])) {
-            $this->errors['phone'] = "Please provide a valid phone.";
-        }
+        // if(! Validator::phone($attributes['phone'])) {
+        //     $this->errors['phone'] = "Please provide a valid phone.";
+        // }
 
         if(! Validator::string($attributes['address'])) {
             $this->errors['address'] = "Address is required.";

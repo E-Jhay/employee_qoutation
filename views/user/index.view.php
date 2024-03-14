@@ -62,7 +62,7 @@
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 <?= $user['phone'] ?>
                                              </td>
-                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                             <td class="max-w-80 px-6 py-4 whitespace-nowrap text-sm text-gray-900 truncate">
                                                 <?= htmlspecialchars($user['address']) ?>
                                              </td>
                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
