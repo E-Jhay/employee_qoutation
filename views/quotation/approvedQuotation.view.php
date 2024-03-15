@@ -5,8 +5,8 @@ use Core\QuotationStatus;
 use Core\Role;
 
 require base_path('views/partials/head.php') ?>
-<div class="flex overflow-hidden bg-white pt-4">
-<div class="w-full sm:w-3/5 mx-auto p-6 bg-white" id="invoice">
+<div class="flex overflow-hidden pt-4">
+<div class="w-full sm:w-3/5 mx-auto p-6" id="invoice">
 
 
 <!-- Client info -->
