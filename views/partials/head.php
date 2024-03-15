@@ -38,6 +38,9 @@ transform: rotate(-40deg);
       z-index: -1; /* Place the watermark behind other content */
     }
   }
+  @page {
+    size:A4 portrait;
+  }
 </style>
 </head>
 <body>
