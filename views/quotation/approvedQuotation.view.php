@@ -432,7 +432,7 @@ Please pay the invoice before the due date. You can pay the invoice by logging i
       if(attachments) {
          attachments.style.display = ''
       }
-      document.getElementById('invoice').className = 'w-full sm:w-2/3 mx-auto p-6 bg-white'
+      document.getElementById('invoice').className = 'w-full sm:w-2/3 mx-auto p-6'
       
    }
 
