@@ -334,13 +334,16 @@ use Core\Role;
          const errorPanel = document.querySelector('.error-panel')
          const successMessage = document.querySelector('.successMessage')
          const errorMessage = document.querySelector('.errorMessage')
+         
+         const formData = new FormData()
+         formData.append("id", id)
          try {
             const response = await fetch("/quotation/delete", {
-               method: "DELETE",
-               headers: {
-                  'Content-Type': 'application/json'
-               },
-               body: JSON.stringify({id : id})
+               method: "POST",
+               // headers: {
+               //    'Content-Type': 'application/json'
+               // },
+               body: formData
             });
             const data = await response.json()
             // const status = document.querySelector('#tabs li.active button').id
