@@ -12,21 +12,29 @@ use Core\Role;
             <div class="bg-white rounded shadow-lg p-4 px-2 md:p-8 mb-6">
                <div class="mx-auto p-6 bg-white rounded shadow-sm my-6" id="invoice">
 
-               <div class="grid grid-cols-2 items-center mb-8">
+               <div class="grid grid-cols-2 items-center mb-4">
                   <div>
                      <!--  Company logo  -->
-                     <img src="../images/logo.png" alt="company-logo" height="150" width="250">
+                     <img class="w-80" src="../images/logo.png" alt="company-logo">
+                     <img class="hidden" src="../images/pmc-logo.png" alt="company-logo" height="150" width="250">
                   </div>
-                  <div class="text-right">
-                     <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Quotation</h1>
-                     <h1 class="font-semibold text-gray-900 sm:text-xl text-xs">
-                        <?= $quotation['control_no'] ?>
-                     </h1>
+                  <div class="place-self-end grid grid-cols-2 max-w-28 items-center justify-items-end gap-2">
+                     <img class="max-w-12" src="../images/1.jpg" alt="">
+                     <img class="max-w-12" src="../images/2.jpg" alt="">
+                     <div class="col-span-2 justify-self-end text-[6px] font-semibold">
+                        <p>
+                           The first ISO 9001:2015 certified <br>
+                           Healthcare Products Distribution Company <br>
+                           in the Philippines
+                        </p>
+                     </div>
                   </div>
                </div>
-
-               <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
-                  <div class="">
+               <div class="grid grid-cols-2 mb-4">
+                  <div class="col-span-2 text-right">
+                     <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Quotation</h1>
+                  </div>
+                  <div>
                      <p class="font-bold text-gray-800">
                         Quotation for :
                      </p>
@@ -35,61 +43,66 @@ use Core\Role;
                         <br />
                         <?= $quotation['customer_address_line_1'] ?>
                         <?= $quotation['customer_address_line_2'] ?>
+                        <!-- <br />
+                        <?= $quotation['tel_no'] ?> -->
                      </p>
                      <p class="text-gray-500 max-w-52">
                         <?= $quotation['customer_city'] ?>
                         <?= $quotation['customer_province'] ?>
                      </p>
-                  </div>
-
-                  <div class="text-right">
-                     <p class="">
-                        Quote created by:
-                        <span class="text-gray-500">
+                     <div>
+                        <p class="">
+                           <span class="font-bold">Quote created by:</span>
+                           <br>
+                           <span class="text-gray-500">
+                              <?= $quotation['created_by'] ?>
+                           </span>
+                        </p>
+                        <!-- <p>
                            <?= $quotation['created_by'] ?>
-                        </span>
-                     </p>
-                     <!-- <p>
-                        <?= $quotation['created_by'] ?>
-                     </p> -->
-                     <p class="text-gray-500 text-sm">
-                        <?= $quotation['sales_email'] ?>
-                     </p>
-                     <p class="text-gray-500 text-sm mt-1">
-                        <?= $quotation['sales_phone'] ?>
-                     </p>
+                        </p> -->
+                        <p class="text-gray-500 text-sm">
+                           <?= $quotation['sales_email'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm mt-1">
+                           <?= $quotation['sales_phone'] ?>
+                        </p>
+                     </div>
                   </div>
-               </div>
 
-               <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
-                  <div class="">
-                     <p class="font-bold text-gray-800">
-                        <?= $quotation['customer_contact_person'] ?>
-                     </p>
-                     <p class="text-gray-500">
-                        <?= $quotation['customer_position'] ?>
-                     </p>
-                     <p class="text-gray-500">
-                        <?= $quotation['customer_email'] ?>
-                     </p>
-                  </div>
                   <div class="text-right">
-                     <p>
-                        Qoute created: 
-                        <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($quotation['created_at'])) ?>
-                        </span>
-                        <!-- <br />
-                        Qoute approved:
-                        <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
-                        </span> -->
-                        <br />
-                        Qoute expires:
-                        <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
-                        </span>
-                     </p>
+                     <h1 class="font-semibold text-gray-900 sm:text-xl text-xs">
+                        <?= $quotation['control_no'] ?>
+                     </h1>
+                     <div>
+                        <p class="font-bold text-gray-800">
+                           <?= $quotation['customer_contact_person'] ?>
+                        </p>
+                        <p class="text-gray-500">
+                           <?= $quotation['customer_position'] ?>
+                        </p>
+                        <p class="text-gray-500">
+                           <?= $quotation['customer_email'] ?>
+                        </p>
+                     </div>
+                     <div class="text-right mt-2">
+                        <p>
+                           <span class="font-bold">On: </span>
+                           <span class="text-gray-500">
+                              <?= $quotation['updated_at'] != NULL ? date('m-d-Y',strtotime($quotation['updated_at'])) : date('m-d-Y') ?>
+                           </span>
+                           <!-- <br />
+                           Qoute approved:
+                           <span class="text-gray-500">
+                              <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
+                           </span> -->
+                           <br />
+                           <span class="font-bold">Expires:</span>
+                           <span class="text-gray-500">
+                              <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
+                           </span>
+                        </p>
+                     </div>
                   </div>
                </div>
                
