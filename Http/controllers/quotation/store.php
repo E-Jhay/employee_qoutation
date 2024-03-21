@@ -71,7 +71,7 @@ try {
         $team_id = $_SESSION['user']['team_id'];
     }
 
-    $latestControlNo = $db->query("SELECT control_no FROM `quotation` ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-0';
+    $latestControlNo = $db->query("SELECT control_no FROM `quotation` WHERE YEAR(created_at) = YEAR(CURDATE()) ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-0-' . substr(date('Y'), 2);
 
     
     $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find()['validity'];

@@ -133,7 +133,7 @@ function generateControlNumber($controlNumber = 'Q-0') {
     // $formattedCounter = str_pad($numericPartWithoutZeros, $counterLength, '0', STR_PAD_LEFT);
 
     // Combine prefix and formatted counter
-    $controlNumber = $prefix . '-' . $numericPartWithZeros;
+    $controlNumber = $prefix . '-' . $numericPartWithZeros . '-' . substr(date('Y'), 2);
 
     return $controlNumber;
 }
