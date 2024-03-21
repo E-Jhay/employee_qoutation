@@ -219,18 +219,18 @@ use Core\Role;
 
                   <div class="my-8">
                      <div class="my-4">
-                        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                           <?= $quotation['vat'] ?>
+                        <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           Terms & Conditions: 
                         </h2>
-                     </div>
-                     <div class="my-4">
-                        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                           Terms
-                        </h2>
-                        <p class="text-gray-500">
-                           <?= $quotation['terms'] ?> <br>
-                           No approved signed PO received, no processing <br>
-                           P5000.00 Minimum order
+                        <p class="text-gray-500 text-sm">
+                           
+                           <?= $quotation['vat'] ?><br>
+                           We reserve the right to modify the quotation if apparent errors were made in the process. <br>
+                           Prices are subject to change without prior notice, even prior to the expiry indicated above. <br>
+                           Prices are NET of all discounts including Senior Citizen Discount (SCD) / Persons with Disability (PWD), etc. <br>
+                           No approved, signed Purchase Order received, no processing or delivery will be made. <br>
+                           Items are subject to availability at the time of receipt of Purchase Order. <br>
+                           We reserve the right not to accept or process orders below P5,000.00.
                         </p>
                      </div>
                      <div class="my-4">

@@ -123,18 +123,18 @@ use Core\Role;
                      <table class="min-w-full">
                         <thead class="border-b border-gray-300 text-gray-900">
                            <tr>
-                           <th scope="col" class="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
+                              <th scope="col" class="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Quantity</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">UOM</th>
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Code</th> -->
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Stock available</th> -->
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Comparative price</th> -->
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
-                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
-                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">W/O SCD price</th>
+                              <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">W/O SCD price</th> -->
+                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Quote price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th> -->
-                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
+                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Total</th>
                               <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900"></th>
                               <?php endif; ?>
@@ -160,12 +160,25 @@ use Core\Role;
                                  </td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['uom'] ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] ? number_format($product['catalog_price'], 2) : '' ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500"><?= number_format($product['proposed_price'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['wo_scd_price'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500 <?= $product['applied_discount'] ? (number_format($product['applied_discount'], 2) < -10 ? 'text-green-500' : 'text-red-500') : '' ?>"><?= $product['applied_discount'] ? number_format($product['applied_discount'], 2) : '' ?></td>
+                                 <?php
+                                    $discountPercentage = number_format(100 - ($product['proposed_price'] / $product['catalog_price'] * 100), 2);
+                                    $cat_price = $product['catalog_price'];
+                                    $discount = $product['catalog_price'] - $product['proposed_price'];
+                                    if($discountPercentage < 20) {
+                                       $cat_price = $discountPercentage < 20 ? $product['wo_scd_price'] : $product['catalog_price'];
+                                       $discount = $product['wo_scd_price'] - $product['proposed_price'];
+                                       $discountPercentage = number_format(100 - ($product['proposed_price'] / $product['wo_scd_price'] * 100), 2);
+                                    }
+                                 ?>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= $cat_price ? number_format($cat_price, 2) : '' ?></td>
+                                 <!-- <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['wo_scd_price'], 2) ?></td> -->
+                                 <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500">₱<?= number_format($product['proposed_price'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500">
+                                    ₱<?= number_format($discount, 2) ?>
+                                    ( <?= is_numeric($discountPercentage) ? $discountPercentage . '%' : '' ?> )
+                                 </td>
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td> -->
-                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
+                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">₱<?= number_format($product['total'], 2) ?></td>
                                  <!-- <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500">
                                     <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>, <?= $product['catalog_price'] ?>, <?= $product['quantity'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
@@ -176,25 +189,14 @@ use Core\Role;
                            <?php endforeach; ?>
                         </tbody>
                         <tfoot>
-                           <!-- <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
-                           <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
-                           <td class="pl-3 pr-6 pt-6 text-center text-sm text-gray-500 sm:pr-0">$10,500.00</td>
-                           </tr>
                            <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
-                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
-                           <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">$1,050.00</td>
-                           </tr>
-                           <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
-                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
-                           <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
-                           </tr> -->
-                           <tr>
-                           <th scope="row" colspan="7" class="pl-4 pr-6 sm:pr-<?=$quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
-                           <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
-                           <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <th scope="row" class="pt-4 text-sm font-semibold text-gray-900">Total</th>
+                              <td class="pt-4 text-right text-sm font-semibold text-gray-900 pr-4 sm:pr-0">₱<?= number_format($grand_total, 2) ?></td>
                            </tr>
                         </tfoot>
                      </table>
@@ -213,11 +215,18 @@ use Core\Role;
                         </h2>
                      </div>
                      <div class="my-4">
-                        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                           Terms
+                        <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           Terms & Conditions: 
                         </h2>
-                        <p class="text-gray-500">
-                           <?= $quotation['terms'] ?>
+                        <p class="text-gray-500 text-sm">
+                           
+                           <?= $quotation['vat'] ?><br>
+                           We reserve the right to modify the quotation if apparent errors were made in the process. <br>
+                           Prices are subject to change without prior notice, even prior to the expiry indicated above. <br>
+                           Prices are NET of all discounts including Senior Citizen Discount (SCD) / Persons with Disability (PWD), etc. <br>
+                           No approved, signed Purchase Order received, no processing or delivery will be made. <br>
+                           Items are subject to availability at the time of receipt of Purchase Order. <br>
+                           We reserve the right not to accept or process orders below P5,000.00.
                         </p>
                      </div>
                      <div class="my-4">
