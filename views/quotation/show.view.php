@@ -43,10 +43,10 @@ use Core\Role;
                      <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Quotation</h1>
                   </div>
                   <div>
-                     <p class="font-bold text-gray-800">
+                     <p class="font-bold text-gray-800 sm:text-[1.2rem] text-[1rem]">
                         Quotation for :
                      </p>
-                     <p class="text-gray-500 max-w-52">
+                     <p class="text-gray-500 max-w-52 sm:text-[1rem] text-[.7rem]">
                         <?= $quotation['customer_name'] ?>
                         <br />
                         <?= $quotation['customer_address_line_1'] ?>
@@ -54,49 +54,49 @@ use Core\Role;
                         <!-- <br />
                         <?= $quotation['tel_no'] ?> -->
                      </p>
-                     <p class="text-gray-500 max-w-52">
+                     <p class="text-gray-500 max-w-52 sm:text-[1rem] text-[.7rem]">
                         <?= $quotation['customer_city'] ?>
                         <?= $quotation['customer_province'] ?>
                      </p>
                      <div>
                         <p class="">
-                           <span class="font-bold">Quote created by:</span>
+                           <span class="font-bold sm:text-[1.2rem] text-[1rem]">Quote created by:</span>
                            <br>
-                           <span class="text-gray-500">
+                           <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                               <?= $quotation['created_by'] ?>
                            </span>
                         </p>
                         <!-- <p>
                            <?= $quotation['created_by'] ?>
                         </p> -->
-                        <p class="text-gray-500 text-sm">
+                        <p class="text-gray-500 text-sm sm:text-[1rem] text-[.7rem]">
                            <?= $quotation['sales_email'] ?>
                         </p>
-                        <p class="text-gray-500 text-sm mt-1">
+                        <p class="text-gray-500 text-sm mt-1 sm:text-[1rem] text-[.7rem]">
                            <?= $quotation['sales_phone'] ?>
                         </p>
                      </div>
                   </div>
 
                   <div class="text-right">
-                     <h1 class="font-semibold text-gray-900 sm:text-xl text-xs">
+                     <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">
                         <?= $quotation['control_no'] ?>
                      </h1>
                      <div>
-                        <p class="font-bold text-gray-800">
+                        <p class="font-bold text-gray-800 sm:text-[1.2rem] text-[1rem]">
                            <?= $quotation['customer_contact_person'] ?>
                         </p>
-                        <p class="text-gray-500">
+                        <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                            <?= $quotation['customer_position'] ?>
                         </p>
-                        <p class="text-gray-500">
+                        <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                            <?= $quotation['customer_email'] ?>
                         </p>
                      </div>
                      <div class="text-right mt-2">
                         <p>
-                           <span class="font-bold">On: </span>
-                           <span class="text-gray-500">
+                           <span class="font-bold sm:text-[1.2rem] text-[1rem]">On: </span>
+                           <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                               <?= $quotation['updated_at'] != NULL ? date('m-d-Y',strtotime($quotation['updated_at'])) : date('m-d-Y') ?>
                            </span>
                            <!-- <br />
@@ -105,8 +105,8 @@ use Core\Role;
                               <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
                            </span> -->
                            <br />
-                           <span class="font-bold">Expires:</span>
-                           <span class="text-gray-500">
+                           <span class="font-bold sm:text-[1.2rem] text-[1rem]">Expires:</span>
+                           <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                               <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
                            </span>
                         </p>
