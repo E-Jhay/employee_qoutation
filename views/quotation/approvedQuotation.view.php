@@ -218,7 +218,6 @@ use Core\Role;
                      <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['uom'] ?></td>
                      <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['wo_scd_price'], 2) ?></td>
                      <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['proposed_price'], 2) ?></td>
-                     <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td> -->
                      <td class="px-3 py-5 text-center text-sm text-gray-500">
                         ₱<?= number_format($product['wo_scd_price'] - $product['proposed_price'], 2)?>
                         (<?= number_format(($product['wo_scd_price'] - $product['proposed_price']) / $product['wo_scd_price'] * 100 , 2) ?>%)
@@ -503,13 +502,11 @@ use Core\Role;
                <td class="px-3 py-2 text-center text-sm text-gray-500"><?= $product['uom'] ?></td>
                <td class="px-3 py-2 text-center text-sm text-gray-500">₱<?= number_format($product['wo_scd_price'], 2) ?></td>
                <td class="px-3 py-2 text-center text-sm text-gray-500">₱<?= number_format($product['proposed_price'], 2) ?></td>
-               <!-- <td class="px-3 py-2 text-center text-sm text-gray-500"><?= number_format($product['catalog_price'], 2) ?></td> -->
                <td class="px-3 py-2 text-center text-sm text-gray-500">
                   ₱<?= number_format($product['wo_scd_price'] - $product['proposed_price'], 2)?>
                   (<?= number_format(($product['wo_scd_price'] - $product['proposed_price']) / $product['wo_scd_price'] * 100 , 2) ?>%)
                </td>
                <td class="py-2 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">₱<?= number_format($product['total'], 2) ?></td>
-               <!-- <td class="py-2 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= $product['deal_equivalent'] ?></td> -->
             </tr>
          <?php endforeach; ?>
          <tr class="border-b border-gray-700">

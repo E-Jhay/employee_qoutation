@@ -353,14 +353,14 @@
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Previous price
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Catalog price
+                                                      </th> -->
+                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                         Catalog Price
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Quote price/deal
-                                                      </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         W/O SCD Price
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Applied Discount
@@ -369,7 +369,7 @@
                                                          Approved price
                                                       </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Discounte Total
+                                                         Total
                                                       </th>
                                                       <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Deal equivalent
@@ -468,10 +468,13 @@
                                     <label for="product_description">Product description</label>
                                     <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
                                     <!-- <input type="text" name="product_description" id="product_description" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" value="<?= old('product_description') ?>" placeholder="" /> -->
-                                    <textarea readonly name="product_description" id="product_description" class="cursor-not-allowed h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
+                                    <textarea name="product_description" id="product_description" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
                                     <?php if(isset($errors['product_description'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_description'] ?></span>
                                     <?php endif; ?>
+                                    <ul id="dropdownOptionsDescription" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
+                                          <!-- Options will be dynamically added here -->
+                                    </ul>
                                  </div>
                                  <div class="col-span-6 md:col-span-6">
                                     <label for="product_comment">Product comment</label>
@@ -736,7 +739,7 @@
 <script>
    document.addEventListener("DOMContentLoaded", () => {
       refreshTableRow()
-      document.getElementById('proposed_price').addEventListener('input', (e) => {
+      document.getElementById('proposed_price').addEventListener('change', (e) => {
          // computeProposedPriceDiscount()
          // computeScdPrice()
          // computeAppliedDiscount()
@@ -769,6 +772,10 @@
                document.getElementById('wo_scd_price').classList.add('hidden')
                document.getElementById('catalog_price').classList.remove('hidden')
             }
+         } else {
+            
+            document.getElementById('catalog_price').value = computeScdPrice()
+            console.log(computeScdPrice())
          }
          computeTotal()
       }
@@ -803,6 +810,7 @@
       const wo_scd_price = proposed_price / reverse_cal
       document.getElementById('wo_scd_price').value = Math.trunc(wo_scd_price*Math.pow(10, 2))/Math.pow(10, 2)
       document.getElementById('applied_discount').value = Math.trunc(((wo_scd_price - proposed_price) / wo_scd_price * 100)*Math.pow(10, 2))/Math.pow(10, 2)
+      return Math.trunc(wo_scd_price*Math.pow(10, 2))/Math.pow(10, 2)
    }
    const computeAppliedDiscount = () => {
       const proposed_price = parseFloat(document.getElementById('proposed_price').value)
@@ -903,7 +911,7 @@
 
          let c = document.createElement("td")
          c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'text-gray-900', 'whitespace-nowrap', 'dark:text-white', 'text-center')
-         c.colSpan = "13"
+         c.colSpan = "9"
          c.innerText = "No products Selected"
 
          // Append cells to row
@@ -928,9 +936,9 @@
          'product_description',
          // 'stock',
          'comparative_price',
-         'catalog_price',
-         'proposed_price',
+         // 'catalog_price',
          'wo_scd_price',
+         'proposed_price',
          'applied_discount',
          // 'approved_price',
          'product_total',
@@ -1167,6 +1175,8 @@
 
 const searchInput = document.getElementById("product_code");
 const dropdownOptions = document.getElementById("dropdownOptions");
+const searchInputDescription = document.getElementById("product_description");
+const dropdownOptionsDescription = document.getElementById("dropdownOptionsDescription");
 
 const getProductLists = async () => {
 try{
@@ -1194,6 +1204,22 @@ searchInput.addEventListener("input", async function () {
       console.error(error);
    }
 });
+// Event listener for input changes
+searchInputDescription.addEventListener("input", async function () {
+   const searchTerm = searchInputDescription.value.toLowerCase();
+   try {
+      const data = await getProductLists();
+      
+      const filteredOptions = data.filter(option =>
+         option.description.toLowerCase().includes(searchTerm)
+      );
+
+      // Update the dropdown with filtered options
+      renderOptionsDescription(filteredOptions);
+   } catch (error) {
+      console.error(error);
+   }
+});
 
 function renderOptions(options) {
    // Clear existing options
@@ -1211,14 +1237,23 @@ function renderOptions(options) {
             searchInput.value = option.code
             document.getElementById('product_description').value  = option.description
             document.getElementById('uom').value  = option.uom
+            let price
             if(region !== 'manila'){
-               document.getElementById('catalog_price').value  = option.manila_price ?? ''
-               document.getElementById('wo_scd_price').value  = option.manila_price ?? ''
+               price = option.manila_price ?? ''
+               // document.getElementById('catalog_price').value  = price = option.manila_price ?? ''
+               // document.getElementById('wo_scd_price').value  = price = option.manila_price ?? ''
             }
             else{
-               document.getElementById('catalog_price').value  = option.province_price ?? ''
-               document.getElementById('wo_scd_price').value  = option.province_price ?? ''
+               price = option.province_price ?? ''
+               // document.getElementById('catalog_price').value  = price = option.province_price ?? ''
+               // document.getElementById('wo_scd_price').value  = price = option.province_price ?? ''
             }
+            document.getElementById('catalog_price').value  = price
+            document.getElementById('wo_scd_price').value  = price
+            // if(price == '' || price == null) {
+               document.getElementById('applied_discount').value  = ''
+               document.getElementById('proposed_price').value  = ''
+            // }
             // Additional action when an option is selected
 
             // Close the dropdown
@@ -1233,11 +1268,59 @@ function renderOptions(options) {
    // Show or hide the dropdown based on the number of filtered options
    dropdownOptions.style.display = options.length > 0 ? "block" : "none";
 }
+function renderOptionsDescription(options) {
+   // Clear existing options
+   dropdownOptionsDescription.innerHTML = "";
+   const region = document.getElementById('region').value
+
+   // Render filtered options
+   options.forEach(option => {
+      const li = document.createElement("li");
+      li.textContent = option.description;
+      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500'
+
+      // Event listener for option click
+      li.addEventListener("click", function () {
+            searchInputDescription.value = option.description
+            document.getElementById('product_code').value  = option.code
+            document.getElementById('uom').value  = option.uom
+            let price
+            if(region !== 'manila'){
+               price = option.manila_price ?? ''
+               // document.getElementById('catalog_price').value  = price = option.manila_price ?? ''
+               // document.getElementById('wo_scd_price').value  = price = option.manila_price ?? ''
+            }
+            else{
+               price = option.province_price ?? ''
+               // document.getElementById('catalog_price').value  = price = option.province_price ?? ''
+               // document.getElementById('wo_scd_price').value  = price = option.province_price ?? ''
+            }
+            document.getElementById('catalog_price').value  = price
+            document.getElementById('wo_scd_price').value  = price
+            // if(price == '' || price == null) {
+               document.getElementById('applied_discount').value  = ''
+               document.getElementById('proposed_price').value  = ''
+            // }
+            // Additional action when an option is selected
+
+            // Close the dropdown
+            dropdownOptionsDescription.style.display = "none";
+            // computeScdPrice()
+            // computeAppliedDiscount()
+      });
+
+      dropdownOptionsDescription.appendChild(li);
+   });
+
+   // Show or hide the dropdown based on the number of filtered options
+   dropdownOptionsDescription.style.display = options.length > 0 ? "block" : "none";
+}
 
 // Close dropdown when clicking outside
 document.addEventListener("click", function (event) {
    if (!event.target.closest(".searchable-dropdown")) {
       dropdownOptions.style.display = "none";
+      dropdownOptionsDescription.style.display = "none";
    }
 });
 </script>
