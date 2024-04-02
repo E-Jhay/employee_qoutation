@@ -8,10 +8,10 @@ return [
         'charset' => 'utf8mb4',
     ],
     'mail' => [
-        'host' => "smtp.pmc.ph",
+        'host' => "smtp.larksuite.com",
         'username' => "no-reply@pmc.ph",
-        'password' => "Unimex123!",
-        'port' => 587,
+        'password' => "Unimex123",
+        'port' => 465,
         'from' => 'no-reply@pmc.ph',
         'fromName' => 'Progressive Medical Corporation',
     ],
