@@ -106,7 +106,7 @@ try {
         ]);
         // // $mail->Body = $htmlContent;
 
-        $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
+        $mailer->sendMail($to, 'PMC Quotation', $htmlContent, ['homer.lim@pmc.ph']);
     } else {
         $to = (array)$db->query("SELECT email FROM user WHERE role_id = :role_id", ['role_id' => Role::GENERAL_MANAGER])->find()['email'];
         // $to = ['bumacodejhay@gmail.com'];
@@ -117,7 +117,7 @@ try {
             'id' => $id
         ]);
         
-        $mailer->sendMail($to, 'PMC Quotation', $htmlContent);
+        $mailer->sendMail($to, 'PMC Quotation', $htmlContent, ['homer.lim@pmc.ph']);
     }
     $db->commit();
     $response = array('success' => true, 'message' => "Quotation {$_POST['mode']}d");
