@@ -46,7 +46,7 @@ use Core\QuotationStatus;
                         </div>
 
                         <div class="md:col-span-3">
-                           <label for="email">Email</label>
+                           <label for="email">Customer Email</label>
                            <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_email'] ?>" />
                            <?php if(isset($errors['email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
@@ -54,7 +54,7 @@ use Core\QuotationStatus;
                         </div>
 
                         <div class="md:col-span-3">
-                           <label for="confirm_email">Confirm email</label>
+                           <label for="confirm_email">Confirm customer email</label>
                            <input type="text" name="confirm_email" id="confirm_email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['confirm_email']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_email'] ?>" />
                            <?php if(isset($errors['confirm_email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['confirm_email'] ?></span>

@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="md:col-span-3">
-                           <label for="email">Email</label>
+                           <label for="email">Customer Email</label>
                            <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= old('email') ?>" />
                            <?php if(isset($errors['email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="md:col-span-3">
-                           <label for="confirm_email">Confirm email</label>
+                           <label for="confirm_email">Customer Confirm email</label>
                            <input type="text" name="confirm_email" id="confirm_email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['confirm_email']) ? 'border-red-500' : '' ?>" value="<?= old('confirm_email') ?>" />
                            <?php if(isset($errors['confirm_email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['confirm_email'] ?></span>
