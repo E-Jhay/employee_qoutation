@@ -61,8 +61,8 @@ use Core\Role;
                         <?= $quotation['customer_city'] ?>
                         <?= $quotation['customer_province'] ?>
                      </p>
-                     <div>
-                        <p class="font-bold text-gray-800 sm:text-[1.2rem] text-[1rem]">
+                     <div class="mt-2">
+                        <p class="font-semibold text-gray-800 sm:text-[1.2rem] text-[1rem]">
                            <?= $quotation['customer_contact_person'] ?>
                         </p>
                         <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
