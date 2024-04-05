@@ -1230,7 +1230,7 @@ function renderOptions(options) {
    options.forEach(option => {
       const li = document.createElement("li");
       li.textContent = option.code;
-      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500'
+      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500 py-1'
 
       // Event listener for option click
       li.addEventListener("click", function () {
@@ -1277,7 +1277,7 @@ function renderOptionsDescription(options) {
    options.forEach(option => {
       const li = document.createElement("li");
       li.textContent = option.description;
-      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500'
+      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500 py-1'
 
       // Event listener for option click
       li.addEventListener("click", function () {
