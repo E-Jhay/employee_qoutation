@@ -185,8 +185,8 @@ try {
             'id' => $quotationInsertId
         ]);
     }
-    // $to = $manager_email;
-    $to = ['bumacodejhay@gmail.com'];
+    $to = $manager_email;
+    //$to = ['bumacodejhay@gmail.com'];
     // $mail->Body = $htmlContent;
 
     $mailer->sendMail($to, 'PMC Quotation ' . generateControlNumber($latestControlNo), $htmlContent);
