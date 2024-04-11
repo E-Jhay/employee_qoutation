@@ -12,84 +12,97 @@ use Core\Role;
             <div class="bg-white rounded shadow-lg p-4 px-2 md:p-8 mb-6">
                <div class="mx-auto p-6 bg-white rounded shadow-sm my-6" id="invoice">
 
-               <div class="grid grid-cols-2 items-center mb-8">
+               <div class="grid grid-cols-2 items-center mb-4">
                   <div>
                      <!--  Company logo  -->
-                     <img src="../images/logo.png" alt="company-logo" height="150" width="250">
+                     <img class="w-80" src="../images/logo.png" alt="company-logo">
+                     <img class="hidden" src="../images/pmc-logo.png" alt="company-logo" height="150" width="250">
                   </div>
-                  <div class="text-right">
+                  <div class="place-self-end grid grid-cols-2 max-w-28 items-center justify-items-end gap-2">
+                     <img class="max-w-12" src="../images/1.jpg" alt="">
+                     <img class="max-w-12" src="../images/2.jpg" alt="">
+                     <div class="col-span-2 justify-self-end text-[6px] font-semibold">
+                        <p>
+                           The first ISO 9001:2015 certified <br>
+                           Healthcare Products Distribution Company <br>
+                           in the Philippines
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="grid grid-cols-2 mb-4">
+                  <div class="col-span-2 text-right">
                      <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Quotation</h1>
-                     <h1 class="font-semibold text-gray-900 sm:text-xl text-xs">
+                     <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">
                         <?= $quotation['control_no'] ?>
                      </h1>
                   </div>
-               </div>
-
-               <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
-                  <div class="">
-                     <p class="font-bold text-gray-800">
+                  <div>
+                     <p class="font-bold text-gray-800 sm:text-[1.2rem] text-[1rem]">
                         Quotation for :
                      </p>
-                     <p class="text-gray-500 max-w-52">
+                     <p class="text-gray-500 max-w-52 sm:text-[1rem] text-[.7rem]">
                         <?= $quotation['customer_name'] ?>
                         <br />
                         <?= $quotation['customer_address_line_1'] ?>
                         <?= $quotation['customer_address_line_2'] ?>
+                        <!-- <br />
+                        <?= $quotation['tel_no'] ?> -->
                      </p>
-                     <p class="text-gray-500 max-w-52">
+                     <p class="text-gray-500 max-w-52 sm:text-[1rem] text-[.7rem]">
                         <?= $quotation['customer_city'] ?>
                         <?= $quotation['customer_province'] ?>
                      </p>
+                     <div class="mt-2">
+                        <p class="font-semibold text-gray-800 sm:text-[1.2rem] text-[1rem]">
+                           <?= $quotation['customer_contact_person'] ?>
+                        </p>
+                        <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
+                           <?= $quotation['customer_position'] ?>
+                        </p>
+                        <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
+                           <?= $quotation['customer_email'] ?>
+                        </p>
+                     </div>
                   </div>
 
                   <div class="text-right">
-                     <p class="">
-                        Quote created by:
-                        <span class="text-gray-500">
+                     <div>
+                        <p class="">
+                           <span class="font-bold sm:text-[1.2rem] text-[1rem]">Quote created by:</span>
+                           <br>
+                           <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
+                              <?= $quotation['created_by'] ?>
+                           </span>
+                        </p>
+                        <!-- <p>
                            <?= $quotation['created_by'] ?>
-                        </span>
-                     </p>
-                     <!-- <p>
-                        <?= $quotation['created_by'] ?>
-                     </p> -->
-                     <p class="text-gray-500 text-sm">
-                        <?= $quotation['sales_email'] ?>
-                     </p>
-                     <p class="text-gray-500 text-sm mt-1">
-                        <?= $quotation['sales_phone'] ?>
-                     </p>
-                  </div>
-               </div>
-
-               <div class="flex justify-between gap-4 mt-2 sm:text-base text-xs">
-                  <div class="">
-                     <p class="font-bold text-gray-800">
-                        <?= $quotation['customer_contact_person'] ?>
-                     </p>
-                     <p class="text-gray-500">
-                        <?= $quotation['customer_position'] ?>
-                     </p>
-                     <p class="text-gray-500">
-                        <?= $quotation['customer_email'] ?>
-                     </p>
-                  </div>
-                  <div class="text-right">
-                     <p>
-                        Qoute created: 
-                        <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($quotation['created_at'])) ?>
-                        </span>
-                        <!-- <br />
-                        Qoute approved:
-                        <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
-                        </span> -->
-                        <br />
-                        Qoute expires:
-                        <span class="text-gray-500">
-                           <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
-                        </span>
-                     </p>
+                        </p> -->
+                        <p class="text-gray-500 text-sm sm:text-[1rem] text-[.7rem]">
+                           <?= $quotation['sales_email'] ?>
+                        </p>
+                        <p class="text-gray-500 text-sm mt-1 sm:text-[1rem] text-[.7rem]">
+                           <?= $quotation['sales_phone'] ?>
+                        </p>
+                     </div>
+                     <div class="text-right mt-2">
+                        <p>
+                           <span class="font-bold sm:text-[1.2rem] text-[1rem]">On: </span>
+                           <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
+                              <?= $quotation['updated_at'] != NULL ? date('m-d-Y',strtotime($quotation['updated_at'])) : date('m-d-Y') ?>
+                           </span>
+                           <!-- <br />
+                           Qoute approved:
+                           <span class="text-gray-500">
+                              <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
+                           </span> -->
+                           <br />
+                           <span class="font-bold sm:text-[1.2rem] text-[1rem]">Expires:</span>
+                           <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
+                              <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
+                           </span>
+                        </p>
+                     </div>
                   </div>
                </div>
                
@@ -123,18 +136,18 @@ use Core\Role;
                      <table class="min-w-full">
                         <thead class="border-b border-gray-300 text-gray-900">
                            <tr>
-                           <th scope="col" class="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
+                              <th scope="col" class="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Items</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Quantity</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">UOM</th>
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Code</th> -->
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Stock available</th> -->
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Comparative price</th> -->
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Catalog price</th>
-                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Proposed price</th>
-                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">W/O SCD price</th>
+                              <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">W/O SCD price</th> -->
+                              <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Quote price</th>
                               <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th>
                               <!-- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Discount (%)</th> -->
-                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Discounted Total</th>
+                              <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Total</th>
                               <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
                               <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900"></th>
                               <?php endif; ?>
@@ -160,12 +173,25 @@ use Core\Role;
                                  </td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['uom'] ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['catalog_price'] ? number_format($product['catalog_price'], 2) : '' ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500"><?= number_format($product['proposed_price'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500"><?= number_format($product['wo_scd_price'], 2) ?></td>
-                                 <td class="px-3 py-5 text-center text-sm text-gray-500 <?= $product['applied_discount'] ? (number_format($product['applied_discount'], 2) < -10 ? 'text-green-500' : 'text-red-500') : '' ?>"><?= $product['applied_discount'] ? number_format($product['applied_discount'], 2) : '' ?></td>
+                                 <?php
+                                    $discountPercentage = number_format(100 - ($product['proposed_price'] / $product['catalog_price'] * 100), 2);
+                                    $cat_price = $product['catalog_price'];
+                                    $discount = $product['catalog_price'] - $product['proposed_price'];
+                                    if($discountPercentage < 20) {
+                                       $cat_price = $discountPercentage < 20 ? $product['wo_scd_price'] : $product['catalog_price'];
+                                       $discount = $product['wo_scd_price'] - $product['proposed_price'];
+                                       $discountPercentage = number_format(100 - ($product['proposed_price'] / $product['wo_scd_price'] * 100), 2);
+                                    }
+                                 ?>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= $cat_price ? number_format($cat_price, 2) : '' ?></td>
+                                 <!-- <td class="px-3 py-5 text-center text-sm text-gray-500">₱<?= number_format($product['wo_scd_price'], 2) ?></td> -->
+                                 <td class="px-3 py-5 text-center text-sm text-<?= $product['approved_price'] > 0 ? 'red' : 'gray' ?>-500">₱<?= number_format($product['proposed_price'], 2) ?></td>
+                                 <td class="px-3 py-5 text-center text-sm text-gray-500">
+                                    ₱<?= number_format($discount, 2) ?>
+                                    ( <?= is_numeric($discountPercentage) ? $discountPercentage . '%' : '' ?> )
+                                 </td>
                                  <!-- <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['proposed_price_discount'] ?>%</td> -->
-                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0"><?= number_format($product['total'], 2) ?></td>
+                                 <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">₱<?= number_format($product['total'], 2) ?></td>
                                  <!-- <?php if($quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER): ?>
                                  <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500">
                                     <button type="button" onclick="toggleApprovedPricesModal(<?= $product['id'] ?>, <?= $product['proposed_price'] ?>, <?= $product['proposed_price_discount'] ?>, <?= $product['total'] ?>, <?= $product['catalog_price'] ?>, <?= $product['quantity'] ?>)" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Change price</button>
@@ -176,25 +202,14 @@ use Core\Role;
                            <?php endforeach; ?>
                         </tbody>
                         <tfoot>
-                           <!-- <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
-                           <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
-                           <td class="pl-3 pr-6 pt-6 text-center text-sm text-gray-500 sm:pr-0">$10,500.00</td>
-                           </tr>
                            <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
-                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
-                           <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">$1,050.00</td>
-                           </tr>
-                           <tr>
-                           <th scope="row" colspan="8" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
-                           <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
-                           <td class="pl-3 pr-6 pt-4 text-center text-sm text-gray-500 sm:pr-0">- 10%</td>
-                           </tr> -->
-                           <tr>
-                           <th scope="row" colspan="7" class="pl-4 pr-6 sm:pr-<?=$quotation['status'] == QuotationStatus::PENDING && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER ? '14' : '16' ?> pt-4 text-right text-sm font-semibold text-gray-900">Total</th>
-                           <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
-                           <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"><?= number_format($grand_total, 2) ?></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <th scope="row" class="pt-4 text-sm font-semibold text-gray-900">Total</th>
+                              <td class="pt-4 text-right text-sm font-semibold text-gray-900 pr-4 sm:pr-0">₱<?= number_format($grand_total, 2) ?></td>
                            </tr>
                         </tfoot>
                      </table>
@@ -213,11 +228,18 @@ use Core\Role;
                         </h2>
                      </div>
                      <div class="my-4">
-                        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                           Terms
+                        <h2 class="mb-2 font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                           Terms & Conditions: 
                         </h2>
-                        <p class="text-gray-500">
-                           <?= $quotation['terms'] ?>
+                        <p class="text-gray-500 text-sm">
+                           
+                           <?= $quotation['vat'] ?><br>
+                           We reserve the right to modify the quotation if apparent errors were made in the process. <br>
+                           Prices are subject to change without prior notice, even prior to the expiry indicated above. <br>
+                           Prices are NET of all discounts including Senior Citizen Discount (SCD) / Persons with Disability (PWD), etc. <br>
+                           No approved, signed Purchase Order received, no processing or delivery will be made. <br>
+                           Items are subject to availability at the time of receipt of Purchase Order. <br>
+                           We reserve the right not to accept or process orders below P5,000.00.
                         </p>
                      </div>
                      <div class="my-4">
@@ -225,7 +247,7 @@ use Core\Role;
                            Validity
                         </h2>
                         <p class="text-gray-500">
-                           <?= $quotation['validity'] ?>
+                           <?= $quotation['validity'] ?> days
                         </p>
                      </div>
                      <div class="my-4">
@@ -261,7 +283,7 @@ use Core\Role;
                            <?= $company['address_line_1'] ?>
                            <?= $company['address_line_2'] ?>
                            </br>
-                           <?= $company['city'] ?>
+                           <?= $company['city'] ?>,
                            <?= $company['province'] ?>
                         </p>
                         <p class="text-gray-500 text-sm">

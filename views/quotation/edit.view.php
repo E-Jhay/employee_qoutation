@@ -46,7 +46,7 @@ use Core\QuotationStatus;
                         </div>
 
                         <div class="md:col-span-3">
-                           <label for="email">Email</label>
+                           <label for="email">Customer Email</label>
                            <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_email'] ?>" />
                            <?php if(isset($errors['email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
@@ -54,7 +54,7 @@ use Core\QuotationStatus;
                         </div>
 
                         <div class="md:col-span-3">
-                           <label for="confirm_email">Confirm email</label>
+                           <label for="confirm_email">Confirm customer email</label>
                            <input type="text" name="confirm_email" id="confirm_email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['confirm_email']) ? 'border-red-500' : '' ?>" value="<?= $quotation['customer_email'] ?>" />
                            <?php if(isset($errors['confirm_email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['confirm_email'] ?></span>
@@ -113,7 +113,7 @@ use Core\QuotationStatus;
                            <?php endif; ?>
                         </div>
 
-                        <div class="md:col-span-3">
+                        <!-- <div class="md:col-span-3">
                            <label for="term_id">Terms</label>
                            <select id="term_id" name="term_id" autocomplete="term_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['term_id']) ? 'border-red-500' : '' ?>">
                               <?php foreach($terms as $term): ?>
@@ -123,7 +123,7 @@ use Core\QuotationStatus;
                            <?php if(isset($errors['term_id'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['term_id'] ?></span>
                            <?php endif; ?>
-                        </div>
+                        </div> -->
 
                         <div class="md:col-span-3">
                            <label for="delivery">Delivery</label>
@@ -229,14 +229,14 @@ use Core\QuotationStatus;
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Previous price
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Catalog price
+                                                      </th> -->
+                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                         Catalog Price
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Proposed price/deal
-                                                      </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         W/O SCD Price
+                                                         Quote price/deal
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Applied Discount
@@ -289,7 +289,7 @@ use Core\QuotationStatus;
                      <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8">
                      <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                         <form id="productForm">
-                           <div class="lg:col-span-2">
+                        <div class="lg:col-span-2">
                               <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
                                  Product Details
                               </h3>
@@ -300,11 +300,11 @@ use Core\QuotationStatus;
                                     <?php if(isset($errors['product_code'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_code'] ?></span>
                                     <?php endif; ?>
+                                    
                                     <ul id="dropdownOptions" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
                                           <!-- Options will be dynamically added here -->
                                     </ul>
                                  </div>
-
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="product_qty">Quantity</label>
                                     <input type="hidden" name="id" id="id" value="" />
@@ -313,7 +313,6 @@ use Core\QuotationStatus;
                                        <span class="text-red-500 text-xs"><?= $errors['product_qty'] ?></span>
                                     <?php endif; ?>
                                  </div>
-
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="uom">UOM</label>
                                     <input readonly type="text" name="uom" id="uom" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['uom']) ? 'border-red-500' : '' ?>" value="<?= old('uom') ?>" required/>
@@ -350,16 +349,14 @@ use Core\QuotationStatus;
                                     <label for="product_description">Product description</label>
                                     <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
                                     <!-- <input type="text" name="product_description" id="product_description" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" value="<?= old('product_description') ?>" placeholder="" /> -->
-                                    <textarea readonly name="product_description" id="product_description" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
+                                    <textarea name="product_description" id="product_description" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
                                     <?php if(isset($errors['product_description'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_description'] ?></span>
                                     <?php endif; ?>
-
-                                    <ul id="dropdownOptions" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
+                                    <ul id="dropdownOptionsDescription" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
                                           <!-- Options will be dynamically added here -->
                                     </ul>
                                  </div>
-
                                  <div class="col-span-6 md:col-span-6">
                                     <label for="product_comment">Product comment</label>
                                     <textarea name="product_comment" id="product_comment" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_comment']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
@@ -378,34 +375,43 @@ use Core\QuotationStatus;
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="comparative_price">Previous price</label>
-                                    <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>" required/>
+                                    <input type="text" name="comparative_price" id="comparative_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['comparative_price']) ? 'border-red-500' : '' ?>" value="<?= old('comparative_price') ?>"/>
                                     <?php if(isset($errors['comparative_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['comparative_price'] ?></span>
                                     <?php endif; ?>
                                  </div>
 
-                                 <div class="col-span-3 md:col-span-3">
+                                 <!-- <div class="col-span-3 md:col-span-3">
                                     <label for="catalog_price">Catalog price</label>
-                                    <input readonly type="text" name="catalog_price" id="catalog_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
+                                    <input readonly type="text" name="catalog_price" id="catalog_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
                                     <?php if(isset($errors['catalog_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['catalog_price'] ?></span>
                                     <?php endif; ?>
-                                 </div>
+                                 </div> -->
 
                                  <div class="col-span-3 md:col-span-3">
-                                    <label for="proposed_price">Proposed price / deal</label>
-                                    <input type="text" name="proposed_price" id="proposed_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price') ?>" required/>
+                                    <label for="proposed_price">Quote price / deal</label>
+                                    <input type="number" step="0.01" name="proposed_price" id="proposed_price" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price') ?>" required/>
                                     <?php if(isset($errors['proposed_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price'] ?></span>
                                     <?php endif; ?>
+                                    <div class="max-w-80">
+                                       <span id="proposed_price_message" class="text-red-500"></span>
+                                    </div>
                                  </div>
-
                                  <div class="col-span-3 md:col-span-3">
-                                    <label for="wo_scd_price">W/O SCD Price</label>
-                                    <input readonly type="number" step="0.01" name="wo_scd_price" id="wo_scd_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['wo_scd_price']) ? 'border-red-500' : '' ?>" value="<?= old('wo_scd_price') ?>" required/>
+                                    <!-- <label for="wo_scd_price">W/O SCD Price</label> -->
+                                    <label for="wo_scd_price">Catalog Price</label>
+                                    <input readonly type="text" step="0.01" name="wo_scd_price" id="wo_scd_price" class="hidden cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['wo_scd_price']) ? 'border-red-500' : '' ?>" value="<?= old('wo_scd_price') ?>" required/>
+                                    
+                                    <input readonly type="text" name="catalog_price" id="catalog_price" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['catalog_price']) ? 'border-red-500' : '' ?>" value="<?= old('catalog_price') ?>" required/>
                                     <?php if(isset($errors['wo_scd_price'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['wo_scd_price'] ?></span>
                                     <?php endif; ?>
+                                 </div>
+                                 <div class="col-span-3 md:col-span-3">
+                                    <label for="additional_discount">Additional discount <span class="text-gray-400">(optional)</span></label>
+                                    <input readonly type="number" max="79" name="additional_discount" id="additional_discount" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['additional_discount']) ? 'border-red-500' : '' ?>" value="<?= old('additional_discount') ?>"/>
                                  </div>
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="applied_discount">Applied Discount</label>
@@ -414,10 +420,9 @@ use Core\QuotationStatus;
                                        <span class="text-red-500 text-xs"><?= $errors['applied_discount'] ?></span>
                                     <?php endif; ?>
                                  </div>
-
                                  <!-- <div class="col-span-3 md:col-span-3">
-                                    <label for="proposed_price_discount">Proposed price / deal (Discount in %)</label>
-                                    <input type="text" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
+                                    <label for="proposed_price_discount">Quoted price / deal (Discount in %)</label>
+                                    <input type="number" min="20" max="99" step="0.01" name="proposed_price_discount" id="proposed_price_discount" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['proposed_price_discount']) ? 'border-red-500' : '' ?>" value="<?= old('proposed_price_discount') ?>" required/>
                                     <?php if(isset($errors['proposed_price_discount'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['proposed_price_discount'] ?></span>
                                     <?php endif; ?>
@@ -433,7 +438,7 @@ use Core\QuotationStatus;
 
                                  <div class="col-span-3 md:col-span-3">
                                     <label for="product_total">Total</label>
-                                    <input type="text" name="product_total" id="product_total" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_total']) ? 'border-red-500' : '' ?>" value="<?= old('product_total') ?>" required/>
+                                    <input type="text" name="product_total" id="product_total" class="cursor-not-allowed h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_total']) ? 'border-red-500' : '' ?>" value="<?= old('product_total') ?>"/>
                                     <?php if(isset($errors['product_total'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_total'] ?></span>
                                     <?php endif; ?>
@@ -467,12 +472,46 @@ use Core\QuotationStatus;
 <script>
    document.addEventListener("DOMContentLoaded", () => {
       refreshTableRow()
-      document.getElementById('proposed_price').addEventListener('input', (e) => {
+      document.getElementById('proposed_price').addEventListener('change', (e) => {
+         // computeProposedPriceDiscount()
+         // computeScdPrice()
+         // computeAppliedDiscount()
+         // computeTotal()
+         handleDiscount()
+      })
+      document.getElementById('additional_discount').addEventListener('input', (e) => {
          // computeProposedPriceDiscount()
          computeScdPrice()
          computeAppliedDiscount()
          computeTotal()
       })
+
+      const handleDiscount = () => {
+         // computeProposedPriceDiscount()
+         if(!isNaN(computeAppliedDiscount())){
+            if(parseFloat(computeAppliedDiscount()) <= 20) {
+               computeScdPrice()
+               document.getElementById('additional_discount').readOnly = false
+               document.getElementById('additional_discount').classList.remove('cursor-not-allowed')
+               document.getElementById('proposed_price_message').innerText = ""
+               document.getElementById('wo_scd_price').classList.remove('hidden')
+               document.getElementById('catalog_price').classList.add('hidden')
+            } else {
+               document.getElementById('additional_discount').readOnly = true
+               document.getElementById('additional_discount').classList.add('cursor-not-allowed')
+               document.getElementById('wo_scd_price').value = document.getElementById('catalog_price').value
+               document.getElementById('applied_discount').value = Math.trunc(computeAppliedDiscount()*Math.pow(10, 2))/Math.pow(10, 2)
+               document.getElementById('proposed_price_message').innerText = "Warning: Your offer price is below Minimum level."
+               document.getElementById('wo_scd_price').classList.add('hidden')
+               document.getElementById('catalog_price').classList.remove('hidden')
+            }
+         } else {
+            
+            document.getElementById('catalog_price').value = computeScdPrice()
+            console.log(computeScdPrice())
+         }
+         computeTotal()
+      }
       // document.getElementById('proposed_price_discount').addEventListener('input', (e) => {
       //    computeProposedPrice()
       //    computeTotal()
@@ -495,18 +534,25 @@ use Core\QuotationStatus;
    });
 
    const computeScdPrice = () => {
-      const proposed_price = document.getElementById('proposed_price').value
-      // console.log(catalog_price)
-      const wo_scd_price = parseInt(proposed_price) / 0.8
-      document.getElementById('wo_scd_price').value = wo_scd_price
+      const proposed_price = parseFloat(document.getElementById('proposed_price').value)
+      const additional_discount = parseFloat(document.getElementById('additional_discount').value)
+      let reverse_cal = 0.8
+      if(additional_discount && additional_discount < (reverse_cal * 100)) {
+         reverse_cal -= (additional_discount / 100)
+      }
+      const wo_scd_price = proposed_price / reverse_cal
+      document.getElementById('wo_scd_price').value = Math.trunc(wo_scd_price*Math.pow(10, 2))/Math.pow(10, 2)
+      document.getElementById('applied_discount').value = Math.trunc(((wo_scd_price - proposed_price) / wo_scd_price * 100)*Math.pow(10, 2))/Math.pow(10, 2)
+      return Math.trunc(wo_scd_price*Math.pow(10, 2))/Math.pow(10, 2)
    }
    const computeAppliedDiscount = () => {
-      const wo_scd_price = parseFloat(document.getElementById('wo_scd_price').value)
+      const proposed_price = parseFloat(document.getElementById('proposed_price').value)
       const catalog_price = parseFloat(document.getElementById('catalog_price').value)
-      const applied_discount = (catalog_price / wo_scd_price * 100) - 100
-      document.getElementById('applied_discount').value = applied_discount.toFixed(2)
+      const applied_discount = 100 - (proposed_price / catalog_price * 100)
+      // document.getElementById('applied_discount').value = applied_discount.toFixed(2)
+      // document.getElementById('applied_discount').value = Math.trunc(applied_discount*Math.pow(10, 2))/Math.pow(10, 2)
+      return applied_discount
    }
-
    // const computeProposedPriceDiscount = () => {
    //    const catalog_price = document.getElementById('catalog_price').value
    //    // console.log(catalog_price)
@@ -516,15 +562,15 @@ use Core\QuotationStatus;
    //    }
    // }
 
-   const computeProposedPrice = () => {
-      const catalog_price = document.getElementById('catalog_price').value
-      // console.log(catalog_price)
-      if(catalog_price){
-         const proposed_price = catalog_price - (catalog_price * document.getElementById('proposed_price_discount').value / 100)
-         document.getElementById('proposed_price').value = proposed_price
-      }
-      // console.log(document.getElementById('proposed_price_discount').value)
-   }
+   // const computeProposedPrice = () => {
+   //    const catalog_price = document.getElementById('catalog_price').value
+   //    // console.log(catalog_price)
+   //    if(catalog_price){
+   //       const proposed_price = catalog_price - (catalog_price * document.getElementById('proposed_price_discount').value / 100)
+   //       document.getElementById('proposed_price').value = proposed_price
+   //    }
+   //    // console.log(document.getElementById('proposed_price_discount').value)
+   // }
 
    const computeTotal = () => {
       const product_qty = document.getElementById('product_qty').value
@@ -594,7 +640,7 @@ use Core\QuotationStatus;
 
          let c = document.createElement("td")
          c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'text-gray-900', 'whitespace-nowrap', 'dark:text-white', 'text-center')
-         c.colSpan = "13"
+         c.colSpan = "9"
          c.innerText = "No products Selected"
 
          // Append cells to row
@@ -621,9 +667,9 @@ use Core\QuotationStatus;
             'product_description',
             // 'stock',
             'comparative_price',
-            'catalog_price',
-            'proposed_price',
+            // 'catalog_price',
             'wo_scd_price',
+            'proposed_price',
             'applied_discount',
             // 'approved_price',
             // 'approved_price',
@@ -641,9 +687,9 @@ use Core\QuotationStatus;
             'product_description',
             // 'stock',
             'comparative_price',
-            'catalog_price',
-            'proposed_price',
+            // 'catalog_price',
             'wo_scd_price',
+            'proposed_price',
             'applied_discount',
             // 'approved_price',
             // 'approved_price',

@@ -16,7 +16,7 @@ $form = UserEditForm::validate($attributes = [
     'name' => $_POST['name'],
     'email' => $_POST['email'],
     'address' => $_POST['address'],
-    'phone' => $_POST['phone'],
+    // 'phone' => $_POST['phone'],
     'role_id' => $_POST['role_id'],
 ]);
 

@@ -32,6 +32,7 @@ $router->get('/user/create', 'user/create.php')->only('auth');
 $router->post('/user', 'user/store.php')->only('auth');
 $router->get('/user/edit', 'user/edit.php')->only('auth');
 $router->put('/user/update', 'user/update.php')->only('auth');
+$router->get('/profile', 'profile/index.php')->only('auth');
 
 $router->get('/sales', 'sales_agent/index.php')->only('auth');
 // Role route
@@ -78,7 +79,7 @@ $router->put('/team/update', 'team/update.php')->only('auth');
 $router->get('/get-quotations', 'quotation/getQuotations.php')->only('auth');
 $router->get('/quotations', 'quotation/index.php')->only('auth');
 $router->get('/quotation/show', 'quotation/show.php')->only('auth');
-$router->delete('/quotation/delete', 'quotation/destroy.php')->only('auth');
+$router->post('/quotation/delete', 'quotation/destroy.php')->only('auth');
 $router->get('/quotation/create', 'quotation/create.php')->only('auth');
 $router->post('/quotation', 'quotation/store.php')->only('auth');
 $router->get('/quotation/edit', 'quotation/edit.php')->only('auth');
@@ -94,5 +95,6 @@ $router->post('/generate-pdf', 'quotation/generatePdf.php');
 $router->get('/pricelist', 'product/pricelist.php');
 $router->post('/saveProductLists', 'product/saveProductLists.php');
 $router->get('/getProductLists', 'product/getProductLists.php');
+$router->get('/storeUsers', 'storeUsers.php');
 
 // dd($router->routes);

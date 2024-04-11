@@ -61,9 +61,9 @@ class QuotationCreateForm {
         $terms = array_map(function($item) {
             return $item['id'];
         }, $terms);
-        if(! in_array($attributes['term_id'], $terms)) {
-            $this->errors['term_id'] = "Terms is required.";
-        }
+        // if(! in_array($attributes['term_id'], $terms)) {
+        //     $this->errors['term_id'] = "Terms is required.";
+        // }
         if(! Validator::string($attributes['vat'])) {
             $this->errors['vat'] = "VAT is required.";
         }

@@ -22,8 +22,8 @@ class ResetPassword {
         $config = require base_path("config.php");
         $mailer = new Mailer($config['mail']);
 
-        // $to = (array)$user['email'];
-        $to = ['bumacodejhay@gmail.com'];
+        $to = (array)$user['email'];
+        // $to = ['bumacodejhay@gmail.com'];
 
         // Session::destroy();
         $otp = generateOTP();

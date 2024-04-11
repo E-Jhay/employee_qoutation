@@ -34,17 +34,18 @@ class Mailer
         $this->mailer->Password = $config['password'];
 
         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        // $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $this->mailer->SMTPSecure = 'ssl';
 
         // TCP port to connect to, use 587 for `PHPMailer::ENCRYPTION_STARTTLS`, 465 for `PHPMailer::ENCRYPTION_SMTPS`
         $this->mailer->Port = $config['port'];
-        $this->mailer->SMTPOptions = [
-            'ssl' => [
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true,
-            ],
-        ];
+        // $this->mailer->SMTPOptions = [
+        //     'ssl' => [
+        //         'verify_peer' => false,
+        //         'verify_peer_name' => false,
+        //         'allow_self_signed' => true,
+        //     ],
+        // ];
         //Recipients
         $this->mailer->setFrom($config['from'], $config['fromName']);
     }

@@ -9,7 +9,7 @@ use Http\Forms\QuotationCreateForm;
 require base_path("Core/Validator.php");
 $db = App::resolve('Core\Database');
 
-authorize((int)$_SESSION['user']['role_id'] == Role::SALES);
+// authorize((int)$_SESSION['user']['role_id'] == Role::SALES);
 
 // $form = QuotationCreateForm::validate($attributes = [
 //     'name' => $_POST['customer_name'],
@@ -33,7 +33,7 @@ $attributes = [
     // 'tel_no' => $_POST['tel_no'],
     // 'validity' => $_POST['validity'],
     // 'delivery' => $_POST['delivery'],
-    'term_id' => $_POST['term_id'],
+    // 'term_id' => $_POST['term_id'],
     'vat' => $_POST['vat'],
     'delivery' => $_POST['delivery'],
     'needed_at' => $_POST['needed_at'],
@@ -63,15 +63,20 @@ try {
     ]);
     $customerInsertedId = $db->connection()->lastInsertId();
 
+    
+    $status = QuotationStatus::PENDING;
+
     if($_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
         $team_id = $db->query("SELECT id FROM team WHERE manager_id = :id", [
             'id' => $_SESSION['user']['id']
         ])->find()['id'];
+        $status = QuotationStatus::INITIAL_APPROVED;
     } else {
         $team_id = $_SESSION['user']['team_id'];
+        $status = QuotationStatus::PENDING;
     }
 
-    $latestControlNo = $db->query("SELECT control_no FROM `quotation` ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-0';
+    $latestControlNo = $db->query("SELECT control_no FROM `quotation` WHERE YEAR(created_at) = YEAR(CURDATE()) ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-1179-' . substr(date('Y'), 2);
 
     
     $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find()['validity'];
@@ -83,8 +88,8 @@ try {
         // 'tel_no' => $_POST['tel_no'],
         'validity' => $validity,
         'delivery' => $_POST['delivery'],
-        'term_id' => $_POST['term_id'],
-        'status' => QuotationStatus::PENDING,
+        'term_id' => $_POST['term_id'] ?? NULL,
+        'status' => $status,
         'team_id' => $team_id,
         'vat' => $_POST['vat'],
         'region' => $_POST['region'],
@@ -155,18 +160,33 @@ try {
     
     $config = require base_path("config.php");
     $mailer = new Mailer($config['mail']);
-    $manager_email = (array)$db->query("SELECT email FROM team LEFT JOIN user ON team.manager_id = user.id WHERE team.id = :team_id", [
-        'team_id' => $_SESSION['user']['team_id'],
-    ])->find()['email'] ?? '';
-    $to = $manager_email;
-    // $to = ['bumacodejhay@gmail.com'];
+    
+    if($_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
+        $manager_email = (array)$db->query("SELECT email FROM user WHERE role_id = :role_id", [
+            'role_id' => Role::GENERAL_MANAGER,
+        ])->find()['email'] ?? '';
 
-    // Read HTML content from a file and replace placeholders with data
-    $htmlContent = getHtmlContent('../views/mail/storeQuotation.html', [
-        'APP_URL' => $config['server']['APP_URL'],
-        'created_by' => $_SESSION['user']['name'],
-        'id' => $quotationInsertId
-    ]);
+        // Read HTML content from a file and replace placeholders with data
+        $htmlContent = getHtmlContent('../views/mail/initiallyApprovedQuotation.html', [
+            'APP_URL' => $config['server']['APP_URL'],
+            'id' => $quotationInsertId
+        ]);
+    } else {
+        $manager_email = (array)$db->query("SELECT email FROM team LEFT JOIN user ON team.manager_id = user.id WHERE team.id = :team_id", [
+            'team_id' => $_SESSION['user']['team_id'],
+        ])->find()['email'] ?? '';
+        
+        // $to = ['bumacodejhay@gmail.com'];
+
+        // Read HTML content from a file and replace placeholders with data
+        $htmlContent = getHtmlContent('../views/mail/storeQuotation.html', [
+            'APP_URL' => $config['server']['APP_URL'],
+            'created_by' => $_SESSION['user']['name'],
+            'id' => $quotationInsertId
+        ]);
+    }
+    // $to = $manager_email;
+    $to = ['bumacodejhay@gmail.com'];
     // $mail->Body = $htmlContent;
 
     $mailer->sendMail($to, 'PMC Quotation ' . generateControlNumber($latestControlNo), $htmlContent);

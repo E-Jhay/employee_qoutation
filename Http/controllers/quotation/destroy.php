@@ -9,7 +9,7 @@ $db = App::resolve('Core\Database');
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Access the data
-$id = $data['id'];
+$id = $_POST['id'];
 
 try {
 

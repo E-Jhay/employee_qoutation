@@ -10,7 +10,7 @@ $db = App::resolve('Core\Database');
 // ])->get();
 $terms = $db->query("SELECT id, description FROM term")->get();
 
-authorize((int)$_SESSION['user']['role_id'] == Role::SALES);
+// authorize((int)$_SESSION['user']['role_id'] == Role::SALES);
 view("quotation/create.view.php", [
     'heading' => 'Create Quotation',
     'terms' => $terms,

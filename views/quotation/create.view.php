@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="md:col-span-3">
-                           <label for="email">Email</label>
+                           <label for="email">Customer Email</label>
                            <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= old('email') ?>" />
                            <?php if(isset($errors['email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="md:col-span-3">
-                           <label for="confirm_email">Confirm email</label>
+                           <label for="confirm_email">Customer Confirm email</label>
                            <input type="text" name="confirm_email" id="confirm_email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['confirm_email']) ? 'border-red-500' : '' ?>" value="<?= old('confirm_email') ?>" />
                            <?php if(isset($errors['confirm_email'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['confirm_email'] ?></span>
@@ -134,7 +134,7 @@
                               <span class="text-red-500 text-xs"><?= $errors['delivery'] ?></span>
                            <?php endif; ?>
                         </div> -->
-                        <div class="md:col-span-3">
+                        <!-- <div class="md:col-span-3">
                            <label for="term_id">Terms</label>
                            <select id="term_id" name="term_id" autocomplete="term_id-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['term_id']) ? 'border-red-500' : '' ?>">
                               <option value="" selected>-- Select term --</option >
@@ -145,7 +145,7 @@
                            <?php if(isset($errors['term_id'])): ?>
                               <span class="text-red-500 text-xs"><?= $errors['term_id'] ?></span>
                            <?php endif; ?>
-                        </div>
+                        </div> -->
                         <div class="md:col-span-3">
                            <label for="delivery">Delivery</label>
                            <select id="delivery" name="delivery" autocomplete="delivery-name" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['delivery']) ? 'border-red-500' : '' ?>">
@@ -179,7 +179,7 @@
                         </div>
                         <div class="col-span-full">
                            <label for="attachments">Upload Attachments</label>
-                           <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                           <!-- <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                               <div class="text-center">
                                  <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
@@ -189,11 +189,117 @@
                                        <span>Upload files</span>
                                        <input id="attachments" name="attachments[]" type="file" class="sr-only" multiple>
                                     </label>
-                                    <!-- <p class="pl-1">or drag and drop</p> -->
                                  </div>
                                  <p class="text-xs leading-5 text-gray-600">JPEG, IMG, PDF, EXCEL, PNG, JPG, GIF </p>
                               </div>
+                           </div> -->
+                           <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25">
+                              <main class="container mx-auto h-full">
+                                 <!-- file upload modal -->
+                                 <article aria-label="File Upload Modal" class="relative h-full flex flex-col bg-white shadow-xl rounded-md" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);">
+                                    <!-- overlay -->
+                                    <div id="overlay" class="w-full h-full absolute top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md">
+                                    <i>
+                                       <svg class="fill-current w-12 h-12 mb-3 text-blue-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                          <path d="M19.479 10.092c-.212-3.951-3.473-7.092-7.479-7.092-4.005 0-7.267 3.141-7.479 7.092-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h13c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408zm-7.479-1.092l4 4h-3v4h-2v-4h-3l4-4z" />
+                                       </svg>
+                                    </i>
+                                    <p class="text-lg text-blue-700">Drop files to upload</p>
+                                    </div>
+
+                                    <!-- scroll area -->
+                                    <section class="h-full overflow-auto p-8 w-full h-full flex flex-col">
+                                    <header class="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center">
+                                       <p class="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
+                                          <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
+                                       </p>
+                                       <input name="attachments[]" id="hidden-input" type="file" multiple class="hidden" />
+                                       <button type="button" id="button" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                                          Upload a file
+                                       </button>
+                                    </header>
+
+                                    <h1 class="pt-8 pb-3 font-semibold sm:text-lg text-gray-900">
+                                       To Upload
+                                    </h1>
+
+                                    <ul id="gallery" class="flex flex-1 flex-wrap -m-1">
+                                       <li id="empty" class="h-full w-full text-center flex flex-col items-center justify-center items-center">
+                                          <img class="mx-auto w-32" src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png" alt="no data" />
+                                          <span class="text-small text-gray-500">No files selected</span>
+                                       </li>
+                                    </ul>
+                                    </section>
+
+                                    <!-- sticky footer -->
+                                    <!-- <footer class="flex justify-end px-8 pb-8 pt-4">
+                                    <button type="button" id="submit" class="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none">
+                                       Upload now
+                                    </button>
+                                    <button type="button" id="cancel" class="ml-3 rounded-sm px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                                       Cancel
+                                    </button>
+                                    </footer> -->
+                                 </article>
+                              </main>
                            </div>
+
+                           <!-- using two similar templates for simplicity in js code -->
+                           <template id="file-template">
+                              <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
+                              <article tabindex="0" class="group w-full h-full rounded-md focus:outline-none focus:shadow-outline elative bg-gray-100 cursor-pointer relative shadow-sm">
+                                 <img alt="upload preview" class="img-preview hidden w-full h-full sticky object-cover rounded-md bg-fixed" />
+
+                                 <section class="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                                    <h1 class="flex-1 group-hover:text-blue-800"></h1>
+                                    <div class="flex">
+                                    <span class="p-1 text-blue-800">
+                                       <i>
+                                          <svg class="fill-current w-4 h-4 ml-auto pt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                          <path d="M15 2v5h5v15h-16v-20h11zm1-2h-14v24h20v-18l-6-6z" />
+                                          </svg>
+                                       </i>
+                                    </span>
+                                    <p class="p-1 size text-xs text-gray-700"></p>
+                                    <button class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md text-gray-800">
+                                       <svg class="pointer-events-none fill-current w-4 h-4 ml-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                          <path class="pointer-events-none" d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                                       </svg>
+                                    </button>
+                                    </div>
+                                 </section>
+                              </article>
+                              </li>
+                           </template>
+
+                           <template id="image-template">
+                              <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
+                              <article tabindex="0" class="group hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm">
+                                 <img alt="upload preview" class="img-preview w-full h-full sticky object-cover rounded-md bg-fixed" />
+
+                                 <section class="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                                    <h1 class="flex-1"></h1>
+                                    <div class="flex">
+                                    <span class="p-1">
+                                       <i>
+                                          <svg class="fill-current w-4 h-4 ml-auto pt-" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                          <path d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" />
+                                          </svg>
+                                       </i>
+                                    </span>
+
+                                    <p class="p-1 size text-xs"></p>
+                                    <button class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md">
+                                       <svg class="pointer-events-none fill-current w-4 h-4 ml-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                          <path class="pointer-events-none" d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                                       </svg>
+                                    </button>
+                                    </div>
+                                 </section>
+                              </article>
+                              </li>
+                           </template>
+
                         </div>
                         <div class="md:col-span-6 my-4">
                            <hr>
@@ -247,14 +353,14 @@
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Previous price
                                                       </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                      <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Catalog price
+                                                      </th> -->
+                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                         Catalog Price
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Quote price/deal
-                                                      </th>
-                                                      <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         W/O SCD Price
                                                       </th>
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Applied Discount
@@ -263,7 +369,7 @@
                                                          Approved price
                                                       </th> -->
                                                       <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                         Discounte Total
+                                                         Total
                                                       </th>
                                                       <!-- <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                          Deal equivalent
@@ -362,10 +468,13 @@
                                     <label for="product_description">Product description</label>
                                     <!-- <textarea class="h-10 border mt-1 rounded px-2 w-full bg-gray-50" name="" id="" cols="30" rows="10"></textarea> -->
                                     <!-- <input type="text" name="product_description" id="product_description" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" value="<?= old('product_description') ?>" placeholder="" /> -->
-                                    <textarea readonly name="product_description" id="product_description" class="cursor-not-allowed h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
+                                    <textarea name="product_description" id="product_description" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_description']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10" required></textarea>
                                     <?php if(isset($errors['product_description'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_description'] ?></span>
                                     <?php endif; ?>
+                                    <ul id="dropdownOptionsDescription" class="px-4 rounded h-auto max-h-48 overflow-y-scroll">
+                                          <!-- Options will be dynamically added here -->
+                                    </ul>
                                  </div>
                                  <div class="col-span-6 md:col-span-6">
                                     <label for="product_comment">Product comment</label>
@@ -481,10 +590,156 @@
 <!-- Footer -->
 <?php require base_path('views/partials/footer.php') ?>
 
+<style>
+   .hasImage:hover section {
+   background-color: rgba(5, 5, 5, 0.4);
+   }
+   .hasImage:hover button:hover {
+   background: rgba(5, 5, 5, 0.45);
+   }
+
+   #overlay p,
+   i {
+   opacity: 0;
+   }
+
+   #overlay.draggedover {
+   background-color: rgba(255, 255, 255, 0.7);
+   }
+   #overlay.draggedover p,
+   #overlay.draggedover i {
+   opacity: 1;
+   }
+
+   .group:hover .group-hover\:text-blue-800 {
+   color: #2b6cb0;
+   }
+</style>
+
+<script>
+   const fileTempl = document.getElementById("file-template"),
+   imageTempl = document.getElementById("image-template"),
+   empty = document.getElementById("empty");
+
+   // use to store pre selected files
+   let FILES = {};
+
+   // check if file is of type image and prepend the initialied
+   // template to the target element
+   function addFile(target, file) {
+   const isImage = file.type.match("image.*"),
+      objectURL = URL.createObjectURL(file);
+
+   const clone = isImage
+      ? imageTempl.content.cloneNode(true)
+      : fileTempl.content.cloneNode(true);
+
+   clone.querySelector("h1").textContent = file.name;
+   clone.querySelector("li").id = objectURL;
+   clone.querySelector(".delete").dataset.target = objectURL;
+   clone.querySelector(".size").textContent =
+      file.size > 1024
+         ? file.size > 1048576
+         ? Math.round(file.size / 1048576) + "mb"
+         : Math.round(file.size / 1024) + "kb"
+         : file.size + "b";
+
+   isImage &&
+      Object.assign(clone.querySelector("img"), {
+         src: objectURL,
+         alt: file.name
+      });
+
+   empty.classList.add("hidden");
+   target.prepend(clone);
+
+   FILES[objectURL] = file;
+   }
+
+   const gallery = document.getElementById("gallery"),
+   overlay = document.getElementById("overlay");
+
+   // click the hidden input of type file if the visible button is clicked
+   // and capture the selected files
+   const hidden = document.getElementById("hidden-input");
+   document.getElementById("button").onclick = () => hidden.click();
+   hidden.onchange = (e) => {
+   for (const file of e.target.files) {
+      addFile(gallery, file);
+   }
+   };
+
+   // use to check if a file is being dragged
+   const hasFiles = ({ dataTransfer: { types = [] } }) =>
+   types.indexOf("Files") > -1;
+
+   // use to drag dragenter and dragleave events.
+   // this is to know if the outermost parent is dragged over
+   // without issues due to drag events on its children
+   let counter = 0;
+
+   // reset counter and append file to gallery when file is dropped
+   function dropHandler(ev) {
+   ev.preventDefault();
+   for (const file of ev.dataTransfer.files) {
+      addFile(gallery, file);
+      overlay.classList.remove("draggedover");
+      counter = 0;
+   }
+   }
+
+   // only react to actual files being dragged
+   function dragEnterHandler(e) {
+   e.preventDefault();
+   if (!hasFiles(e)) {
+      return;
+   }
+   ++counter && overlay.classList.add("draggedover");
+   }
+
+   function dragLeaveHandler(e) {
+   1 > --counter && overlay.classList.remove("draggedover");
+   }
+
+   function dragOverHandler(e) {
+   if (hasFiles(e)) {
+      e.preventDefault();
+   }
+   }
+
+   // event delegation to caputre delete events
+   // fron the waste buckets in the file preview cards
+   gallery.onclick = ({ target }) => {
+   if (target.classList.contains("delete")) {
+      const ou = target.dataset.target;
+      document.getElementById(ou).remove(ou);
+      gallery.children.length === 1 && empty.classList.remove("hidden");
+      delete FILES[ou];
+   }
+   };
+
+   // print all selected files
+   // document.getElementById("submit").onclick = () => {
+   //   alert(`Submitted Files:\n${JSON.stringify(FILES)}`);
+   //   console.log(FILES);
+   // };
+
+   // // clear entire selection
+   // document.getElementById("cancel").onclick = () => {
+   //   while (gallery.children.length > 0) {
+   //     gallery.lastChild.remove();
+   //   }
+   //   FILES = {};
+   //   empty.classList.remove("hidden");
+   //   gallery.append(empty);
+   // };
+
+</script>
+
 <script>
    document.addEventListener("DOMContentLoaded", () => {
       refreshTableRow()
-      document.getElementById('proposed_price').addEventListener('input', (e) => {
+      document.getElementById('proposed_price').addEventListener('change', (e) => {
          // computeProposedPriceDiscount()
          // computeScdPrice()
          // computeAppliedDiscount()
@@ -517,6 +772,10 @@
                document.getElementById('wo_scd_price').classList.add('hidden')
                document.getElementById('catalog_price').classList.remove('hidden')
             }
+         } else {
+            
+            document.getElementById('catalog_price').value = computeScdPrice()
+            console.log(computeScdPrice())
          }
          computeTotal()
       }
@@ -551,6 +810,7 @@
       const wo_scd_price = proposed_price / reverse_cal
       document.getElementById('wo_scd_price').value = Math.trunc(wo_scd_price*Math.pow(10, 2))/Math.pow(10, 2)
       document.getElementById('applied_discount').value = Math.trunc(((wo_scd_price - proposed_price) / wo_scd_price * 100)*Math.pow(10, 2))/Math.pow(10, 2)
+      return Math.trunc(wo_scd_price*Math.pow(10, 2))/Math.pow(10, 2)
    }
    const computeAppliedDiscount = () => {
       const proposed_price = parseFloat(document.getElementById('proposed_price').value)
@@ -651,7 +911,7 @@
 
          let c = document.createElement("td")
          c.classList.add('py-4', 'px-6', 'text-sm', 'font-medium', 'text-gray-900', 'whitespace-nowrap', 'dark:text-white', 'text-center')
-         c.colSpan = "13"
+         c.colSpan = "9"
          c.innerText = "No products Selected"
 
          // Append cells to row
@@ -676,9 +936,9 @@
          'product_description',
          // 'stock',
          'comparative_price',
-         'catalog_price',
-         'proposed_price',
+         // 'catalog_price',
          'wo_scd_price',
+         'proposed_price',
          'applied_discount',
          // 'approved_price',
          'product_total',
@@ -777,7 +1037,9 @@
       e.preventDefault()
       const formData = new FormData(quotationForm)
       formData.append("products", JSON.stringify(productLists))
-
+      // for (const pair of formData.entries()) {
+      //    console.log(pair[0], pair[1]);
+      // }
       sendData(formData)
    })
 
@@ -913,6 +1175,8 @@
 
 const searchInput = document.getElementById("product_code");
 const dropdownOptions = document.getElementById("dropdownOptions");
+const searchInputDescription = document.getElementById("product_description");
+const dropdownOptionsDescription = document.getElementById("dropdownOptionsDescription");
 
 const getProductLists = async () => {
 try{
@@ -940,6 +1204,22 @@ searchInput.addEventListener("input", async function () {
       console.error(error);
    }
 });
+// Event listener for input changes
+searchInputDescription.addEventListener("input", async function () {
+   const searchTerm = searchInputDescription.value.toLowerCase();
+   try {
+      const data = await getProductLists();
+      
+      const filteredOptions = data.filter(option =>
+         option.description.toLowerCase().includes(searchTerm)
+      );
+
+      // Update the dropdown with filtered options
+      renderOptionsDescription(filteredOptions);
+   } catch (error) {
+      console.error(error);
+   }
+});
 
 function renderOptions(options) {
    // Clear existing options
@@ -950,21 +1230,30 @@ function renderOptions(options) {
    options.forEach(option => {
       const li = document.createElement("li");
       li.textContent = option.code;
-      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500'
+      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500 py-1'
 
       // Event listener for option click
       li.addEventListener("click", function () {
             searchInput.value = option.code
             document.getElementById('product_description').value  = option.description
             document.getElementById('uom').value  = option.uom
-            if(region !== 'manila'){
-               document.getElementById('catalog_price').value  = option.manila_price ?? ''
-               document.getElementById('wo_scd_price').value  = option.manila_price ?? ''
+            let price
+            if(region === 'manila'){
+               price = option.manila_price ?? ''
+               // document.getElementById('catalog_price').value  = price = option.manila_price ?? ''
+               // document.getElementById('wo_scd_price').value  = price = option.manila_price ?? ''
             }
             else{
-               document.getElementById('catalog_price').value  = option.province_price ?? ''
-               document.getElementById('wo_scd_price').value  = option.province_price ?? ''
+               price = option.province_price ?? ''
+               // document.getElementById('catalog_price').value  = price = option.province_price ?? ''
+               // document.getElementById('wo_scd_price').value  = price = option.province_price ?? ''
             }
+            document.getElementById('catalog_price').value  = price
+            document.getElementById('wo_scd_price').value  = price
+            // if(price == '' || price == null) {
+               document.getElementById('applied_discount').value  = ''
+               document.getElementById('proposed_price').value  = ''
+            // }
             // Additional action when an option is selected
 
             // Close the dropdown
@@ -979,11 +1268,60 @@ function renderOptions(options) {
    // Show or hide the dropdown based on the number of filtered options
    dropdownOptions.style.display = options.length > 0 ? "block" : "none";
 }
+function renderOptionsDescription(options) {
+   // Clear existing options
+   dropdownOptionsDescription.innerHTML = "";
+   const region = document.getElementById('region').value
+
+   // Render filtered options
+   options.forEach(option => {
+      const li = document.createElement("li");
+      li.textContent = option.description;
+      li.className = 'text-gray-900 text-lg cursor-pointer hover:text-blue-500 py-1'
+
+      // Event listener for option click
+      li.addEventListener("click", function () {
+            searchInputDescription.value = option.description
+            document.getElementById('product_code').value  = option.code
+            document.getElementById('uom').value  = option.uom
+            let price
+            
+            if(region === 'manila'){
+               price = option.manila_price ?? ''
+               // document.getElementById('catalog_price').value  = price = option.manila_price ?? ''
+               // document.getElementById('wo_scd_price').value  = price = option.manila_price ?? ''
+            }
+            else{
+               price = option.province_price ?? ''
+               // document.getElementById('catalog_price').value  = price = option.province_price ?? ''
+               // document.getElementById('wo_scd_price').value  = price = option.province_price ?? ''
+            }
+            document.getElementById('catalog_price').value  = price
+            document.getElementById('wo_scd_price').value  = price
+            // if(price == '' || price == null) {
+               document.getElementById('applied_discount').value  = ''
+               document.getElementById('proposed_price').value  = ''
+            // }
+            // Additional action when an option is selected
+
+            // Close the dropdown
+            dropdownOptionsDescription.style.display = "none";
+            // computeScdPrice()
+            // computeAppliedDiscount()
+      });
+
+      dropdownOptionsDescription.appendChild(li);
+   });
+
+   // Show or hide the dropdown based on the number of filtered options
+   dropdownOptionsDescription.style.display = options.length > 0 ? "block" : "none";
+}
 
 // Close dropdown when clicking outside
 document.addEventListener("click", function (event) {
    if (!event.target.closest(".searchable-dropdown")) {
       dropdownOptions.style.display = "none";
+      dropdownOptionsDescription.style.display = "none";
    }
 });
 </script>
