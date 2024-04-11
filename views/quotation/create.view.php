@@ -1238,7 +1238,7 @@ function renderOptions(options) {
             document.getElementById('product_description').value  = option.description
             document.getElementById('uom').value  = option.uom
             let price
-            if(region !== 'manila'){
+            if(region === 'manila'){
                price = option.manila_price ?? ''
                // document.getElementById('catalog_price').value  = price = option.manila_price ?? ''
                // document.getElementById('wo_scd_price').value  = price = option.manila_price ?? ''
@@ -1285,7 +1285,8 @@ function renderOptionsDescription(options) {
             document.getElementById('product_code').value  = option.code
             document.getElementById('uom').value  = option.uom
             let price
-            if(region !== 'manila'){
+            
+            if(region === 'manila'){
                price = option.manila_price ?? ''
                // document.getElementById('catalog_price').value  = price = option.manila_price ?? ''
                // document.getElementById('wo_scd_price').value  = price = option.manila_price ?? ''
