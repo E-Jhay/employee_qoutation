@@ -390,7 +390,8 @@
                         </div>
                   
                         <div class="mt-4 md:col-span-6 text-left">
-                           <div class="inline-flex items-end">
+                           <div class="inline-flex items-end gap-2">
+                              <button id="draftButton" type="submit" class="w-32 font-bold bg-gray-400 text-white active:bg-gray-700 hover:bg-gray-700 px-4 py-2 rounded-md">Save as draft</button>
                               <button id="submitButton" type="submit" class="w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white">Submit</button>
                            </div>
                         </div>
@@ -1033,13 +1034,37 @@
 
    
    const quotationForm = document.getElementById('quotationForm')
-   quotationForm.addEventListener('submit', (e) => {
+   // quotationForm.addEventListener('submit', (e) => {
+   //    e.preventDefault()
+   //    const formData = new FormData(quotationForm)
+   //    formData.append("products", JSON.stringify(productLists))
+   //    // for (const pair of formData.entries()) {
+   //    //    console.log(pair[0], pair[1]);
+   //    // }
+   //    sendData(formData)
+   // })
+
+   const draftButton = document.getElementById('draftButton')
+   const submitButton = document.getElementById('submitButton')
+
+   draftButton.addEventListener('click', (e) => {
       e.preventDefault()
       const formData = new FormData(quotationForm)
       formData.append("products", JSON.stringify(productLists))
-      // for (const pair of formData.entries()) {
-      //    console.log(pair[0], pair[1]);
-      // }
+      formData.append("mode", "draft");
+      for (const pair of formData.entries()) {
+         console.log(pair[0], pair[1]);
+      }
+      sendData(formData)
+   })
+   submitButton.addEventListener('click', (e) => {
+      e.preventDefault()
+      const formData = new FormData(quotationForm)
+      formData.append("products", JSON.stringify(productLists))
+      formData.append("mode", "save");
+      for (const pair of formData.entries()) {
+         console.log(pair[0], pair[1]);
+      }
       sendData(formData)
    })
 

@@ -271,8 +271,13 @@ use Core\QuotationStatus;
                         </div>
                   
                         <div class="mt-4 md:col-span-6 text-left">
-                           <div class="inline-flex items-end">
-                              <button id="submitButton" type="submit" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
+                           <div class="inline-flex items-end gap-2">
+                              <?php if($quotation['status'] != QuotationStatus::DRAFT) : ?>
+                                 <button id="submitButton" type="button" onclick="submitForm('<?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 'requote' : 'save' ?>')" class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"><?= $quotation['status'] == QuotationStatus::DISAPPROVED ? 'Re-Qoute' : 'Save' ?></button>
+                              <?php else: ?>
+                                 <button id="draftButton" type="button" onclick="submitForm('save')" class="w-32 font-bold bg-gray-400 text-white active:bg-gray-700 hover:bg-gray-700 px-4 py-2 rounded-md">Save as draft</button>
+                                 <button id="submitButton" type="button" onclick="submitForm('store')" class="w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white">Submit</button>
+                              <?php endif; ?>
                            </div>
                         </div>
 
@@ -798,13 +803,21 @@ use Core\QuotationStatus;
 
    
    const quotationForm = document.getElementById('quotationForm')
-   quotationForm.addEventListener('submit', (e) => {
-      e.preventDefault()
+   // quotationForm.addEventListener('submit', (e) => {
+   //    e.preventDefault()
+   //    const formData = new FormData(quotationForm)
+   //    formData.append("products", JSON.stringify(productLists))
+
+   //    sendData(formData)
+   // })
+   const submitForm = (mode = 'save') => {
+      // e.preventDefault()
       const formData = new FormData(quotationForm)
       formData.append("products", JSON.stringify(productLists))
+      formData.append("mode", mode)
 
       sendData(formData)
-   })
+   }
 
    async function sendData(formData) {
       const successPanel = document.querySelector('.success-panel')
@@ -812,8 +825,10 @@ use Core\QuotationStatus;
       const successMessage = document.querySelector('.successMessage')
       const errorMessage = document.querySelector('.errorMessage')
       const submitButton = document.getElementById('submitButton')
+      // const draftButton = document.getElementById('draftButton')
       try {
          // hideMessage()
+         // draftButton.classList.add('hidden');
          submitButton.className = '';
          submitButton.className = 'w-32 bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50';
          submitButton.disabled = true;
@@ -827,6 +842,7 @@ use Core\QuotationStatus;
             successPanel.classList.remove('hidden')
             successMessage.innerText = data.message
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' })
+            // draftButton.classList.remove('hidden');
             submitButton.className = '';
             submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
             submitButton.disabled = false;
@@ -852,11 +868,15 @@ use Core\QuotationStatus;
             errorMessage.appendChild(ul)
             errorPanel.classList.remove('hidden')
             document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' })
+            // draftButton.classList.remove('hidden');
             submitButton.className = '';
             submitButton.className = 'w-32 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded-md text-white';
             submitButton.disabled = false;
             submitButton.innerText = 'Save'
          }
+         setTimeout(() => {
+            location.reload();
+         }, 1300)
          // resetQuotationForm()
          // productLists = []
          // refreshTableRow()

@@ -328,7 +328,7 @@ use Core\Role;
                         <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                      </div>
                   <?php endif; ?>
-                  <?php if(($quotation['status'] == QuotationStatus::PENDING || $quotation['status'] == QuotationStatus::DISAPPROVED) && (int)$_SESSION['user']['role_id'] == Role::SALES) : ?>
+                  <?php if(($quotation['status'] == QuotationStatus::PENDING || $quotation['status'] == QuotationStatus::DISAPPROVED || $quotation['status'] == QuotationStatus::DRAFT) && (int)$_SESSION['user']['role_id'] !== Role::ADMIN) : ?>
                   <div class="flex justify-end gap-2 mt-4">
                      <a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
                      <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->

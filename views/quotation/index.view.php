@@ -34,10 +34,11 @@ use Core\Role;
                   <ul id="tabs" class="inline-flex w-full flex-wrap px-1 pt-2 ">
                      <?php if((int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER) : ?>
                         <li class="active px-4 py-2 text-sm sm:text-base -mb-px font-semibold text-gray-800 border-b-2 border-blue-400 rounded-t"><button id="<?= QuotationStatus::PENDING ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::PENDING ?>)">Pending</button></li>
-                     <?php endif; ?>
-                     <li class="<?= (int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER ? '' : 'active border-b-2 border-blue-400 rounded-t ' ?>px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::INITIAL_APPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::INITIAL_APPROVED ?>)"><?= (int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER ? 'Initially Approved' : 'Pending' ?></button></li>
-                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::APPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::APPROVED ?>)">Approved</button></li>
-                     <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::DISAPPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::DISAPPROVED ?>)">Disapproved</button></li>
+                        <?php endif; ?>
+                        <li class="<?= (int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER ? '' : 'active border-b-2 border-blue-400 rounded-t ' ?>px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::INITIAL_APPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::INITIAL_APPROVED ?>)"><?= (int)$_SESSION['user']['role_id'] != \Core\Role::GENERAL_MANAGER ? 'Initially Approved' : 'Pending' ?></button></li>
+                        <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::APPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::APPROVED ?>)">Approved</button></li>
+                        <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::DISAPPROVED ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::DISAPPROVED ?>)">Disapproved</button></li>
+                        <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="<?= QuotationStatus::DRAFT ?>" type="button" onclick="filterBystatus(this, <?= QuotationStatus::DRAFT ?>)">Drafts</button></li>
                      <li class="px-4 py-2 text-sm sm:text-base font-semibold text-gray-800 rounded-t"><button id="all" type="button" onclick="filterBystatus(this, 'all')">All</button></li>
                   </ul>
 
@@ -287,7 +288,7 @@ use Core\Role;
                if(cell == 'status_name') {
                   const span = document.createElement('span')
                   let status_color = 'amber'
-                  quotation['status'] == <?= QuotationStatus::APPROVED ?> ? status_color = 'green' : (quotation['status'] == <?= QuotationStatus::DISAPPROVED ?> ? status_color = 'red' : status_color = 'amber');
+                  quotation['status'] == <?= QuotationStatus::APPROVED ?> ? status_color = 'green' : (quotation['status'] == <?= QuotationStatus::DISAPPROVED ?> ? status_color = 'red' : (quotation['status'] == <?= QuotationStatus::DRAFT ?> ? status_color = 'gray' : status_color = 'amber'));
                   span.className = `px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${status_color}-200 text-${status_color}-800`
                   span.innerText = quotation[cell]
                   td.appendChild(span)
@@ -304,7 +305,7 @@ use Core\Role;
                editBtn.href = `/quotation/show?id=${quotation['id']}`
                td.appendChild(editBtn)
                
-               if (<?= (int)$_SESSION['user']['role_id'] == Role::SALES ? 1 : 0 ?> && quotation['status'] == <?= QuotationStatus::PENDING ?>) {
+               if (<?= (int)$_SESSION['user']['role_id'] == Role::SALES ? 1 : 0 ?> && (quotation['status'] == <?= QuotationStatus::PENDING ?> || quotation['status'] == <?= QuotationStatus::DRAFT ?>)) {
                   let deleteBtn = document.createElement("a")
 
                   deleteBtn.classList.add('text-red-600', 'dark:text-red-500', 'hover:underline', 'cursor-pointer', 'mb-2', 'mr-2')

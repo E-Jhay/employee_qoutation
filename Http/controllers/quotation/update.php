@@ -111,7 +111,7 @@ try {
         ]);
     }
 
-    if($quotation['status'] == QuotationStatus::DISAPPROVED) {
+    if($_POST['mode'] != 'save') {
         $db->query("UPDATE quotation SET status = :status WHERE id = :id", [
             'id' => $quotation['id'],
             'status' => QuotationStatus::PENDING,
@@ -119,18 +119,33 @@ try {
 
         $config = require base_path("config.php");
         $mailer = new Mailer($config['mail']);
-        $manager_email = (array)$db->query("SELECT email FROM team LEFT JOIN user ON team.manager_id = user.id WHERE team.id = :team_id", [
-            'team_id' => $_SESSION['user']['team_id'],
-        ])->find()['email'] ?? '';
+        if($_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
+            $manager_email = (array)$db->query("SELECT email FROM user WHERE role_id = :role_id", [
+                'role_id' => Role::GENERAL_MANAGER,
+            ])->find()['email'] ?? '';
+    
+            // Read HTML content from a file and replace placeholders with data
+            $htmlContent = getHtmlContent('../views/mail/initiallyApprovedQuotation.html', [
+                'APP_URL' => $config['server']['APP_URL'],
+                'id' => $quotation['id']
+            ]);
+        } else {
+            $manager_email = (array)$db->query("SELECT email FROM team LEFT JOIN user ON team.manager_id = user.id WHERE team.id = :team_id", [
+                'team_id' => $_SESSION['user']['team_id'],
+            ])->find()['email'] ?? '';
+            
+            // $to = ['bumacodejhay@gmail.com'];
+    
+            // Read HTML content from a file and replace placeholders with data
+            $htmlContent = getHtmlContent('../views/mail/storeQuotation.html', [
+                'APP_URL' => $config['server']['APP_URL'],
+                'created_by' => $_SESSION['user']['name'],
+                'id' => $quotation['id']
+            ]);
+        }
+        
         $to = $manager_email;
         // $to = ['bumacodejhay@gmail.com'];
-
-        // Read HTML content from a file and replace placeholders with data
-        $htmlContent = getHtmlContent('../views/mail/initiallyApprovedQuotation.html', [
-            'APP_URL' => $config['server']['APP_URL'],
-            // 'created_by' => $_SESSION['user']['name'],
-            'id' => $quotation['id']
-        ]);
         // $mail->Body = $htmlContent;
 
         $mailer->sendMail($to, 'PMC Quotation ' . $quotation['control_no'], $htmlContent);

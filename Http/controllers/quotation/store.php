@@ -76,6 +76,11 @@ try {
         $status = QuotationStatus::PENDING;
     }
 
+    // check if the button clicked is draft
+    if($_POST['mode'] == 'draft') {
+        $status = QuotationStatus::DRAFT;
+    }
+
     $latestControlNo = $db->query("SELECT control_no FROM `quotation` WHERE YEAR(created_at) = YEAR(CURDATE()) ORDER BY id DESC LIMIT 1")->find()['control_no'] ?? 'Q-1179-' . substr(date('Y'), 2);
 
     
@@ -185,15 +190,20 @@ try {
             'id' => $quotationInsertId
         ]);
     }
-    $to = $manager_email;
-    //$to = ['bumacodejhay@gmail.com'];
+    // $to = $manager_email;
+    $to = ['bumacodejhay@gmail.com'];
     // $mail->Body = $htmlContent;
 
-    $mailer->sendMail($to, 'PMC Quotation ' . generateControlNumber($latestControlNo), $htmlContent);
+    $message = 'Quotation save as draft.';
+    // check if the button clicked is draft
+    if($_POST['mode'] !== 'draft') {
+        $mailer->sendMail($to, 'PMC Quotation ' . generateControlNumber($latestControlNo), $htmlContent);
+        $message = 'Quotation added.';
+    }
 
     $db->commit();
 
-    $response = array('success' => true, 'message' => 'Quotation added');
+    $response = array('success' => true, 'message' => $message);
     echo json_encode($response);
 } catch(Exception $e) {
     // An error occurred, rollback the transaction
