@@ -99,6 +99,14 @@ try {
         
         $cc = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
 
+        $teamId = $db->query("SELECT team_id FROM quotation WHERE id = :id", ['id' => $id])->find()['team_id'];
+        $managerId = $db->query("SELECT manager_id FROM team WHERE id = :id", ['id' => $teamId])->find()['manager_id'];
+
+        array_push($cc, $db->query("SELECT email FROM user WHERE role_id = :role_id", ['role_id' => Role::GENERAL_MANAGER])->find()['email']);
+        array_push($cc, $db->query("SELECT email FROM user WHERE id = :id", ['id' => $managerId])->find()['email']);
+        array_push($cc, 'homer.lim@pmc.ph');
+        // dd($cc);
+
         // // Read HTML content from a file and replace placeholders with data
         $htmlContent = getHtmlContent('../views/mail/approvedQuotation.html', [
             'APP_URL' => $config['server']['APP_URL'],
@@ -106,7 +114,7 @@ try {
         ]);
         // // $mail->Body = $htmlContent;
 
-        $mailer->sendMail($to, 'PMC Quotation', $htmlContent, ['homer.lim@pmc.ph']);
+        $mailer->sendMail($to, 'PMC Quotation', $htmlContent, $cc);
     } else {
         $to = (array)$db->query("SELECT email FROM user WHERE role_id = :role_id", ['role_id' => Role::GENERAL_MANAGER])->find()['email'];
         // $to = ['bumacodejhay@gmail.com'];
@@ -119,7 +127,7 @@ try {
         
         $mailer->sendMail($to, 'PMC Quotation', $htmlContent, ['homer.lim@pmc.ph']);
     }
-    $db->commit();
+    // $db->commit();
     $response = array('success' => true, 'message' => "Quotation {$_POST['mode']}d");
     echo json_encode($response);
 } catch(Exception $e) {
