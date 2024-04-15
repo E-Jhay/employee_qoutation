@@ -313,7 +313,7 @@ use Core\Role;
                      <?php endif; ?>
                   </div>
 
-                  <?php if(($quotation['status'] == QuotationStatus::PENDING) && (int)$_SESSION['user']['role_id'] != Role::SALES) : ?>
+                  <?php if((($quotation['status'] == QuotationStatus::PENDING) && (int)$_SESSION['user']['role_id'] == Role::SALES_MANAGER) || (($quotation['status'] == QuotationStatus::INITIAL_APPROVED) && (int)$_SESSION['user']['role_id'] == Role::GENERAL_MANAGER)) : ?>
                      <div id="remarksField" class="col-span-6 md:col-span-6">
                         <label for="remarks">Comments</label>
                         <input type="hidden" id="current_status" value="<?= $quotation['status_name'] ?>">
