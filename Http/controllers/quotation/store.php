@@ -85,7 +85,7 @@ try {
 
     
     $validity = $db->query("SELECT * FROM validity ORDER BY id DESC LIMIT 1")->find()['validity'];
-    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, delivery, term_id, validity, vat, region, status, team_id, needed_at, expired_at) VALUES(:control_no, :created_by, :customer_id, :delivery, :term_id, :validity, :vat, :region, :status, :team_id, :needed_at, :expired_at)", [
+    $db->query("INSERT INTO quotation (control_no, created_by, customer_id, delivery, term_id, validity, vat, region, status, team_id, created_at, needed_at, expired_at) VALUES(:control_no, :created_by, :customer_id, :delivery, :term_id, :validity, :vat, :region, :status, :team_id, :created_at, :needed_at, :expired_at)", [
         'control_no' => generateControlNumber($latestControlNo),
         'created_by' => $_SESSION['user']['id'],
         'customer_id' => $customerInsertedId,
@@ -99,6 +99,7 @@ try {
         'vat' => $_POST['vat'],
         'region' => $_POST['region'],
         'needed_at' => $_POST['needed_at'],
+        'created_at' => date('Y-m-d H:i:s'),
         'expired_at' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). " + {$validity} days")),
     ]);
     $quotationInsertId = $db->connection()->lastInsertId();
