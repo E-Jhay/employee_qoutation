@@ -52,14 +52,14 @@ try {
     $db->beginTransaction();
 
     $db->query("INSERT INTO customer (name, address_line_1, address_line_2, city, province, contact_person, position, email) VALUES(:name, :address_line_1, :address_line_2, :city, :province, :contact_person, :position, :email)", [
-        'name' => $_POST['customer_name'],
+        'name' => strtolower($_POST['customer_name']),
         'email' => $_POST['email'],
-        'address_line_1' => $_POST['address_line_1'],
-        'address_line_2' => $_POST['address_line_2'],
-        'city' => $_POST['city'],
-        'province' => $_POST['province'],
-        'contact_person' => $_POST['contact_person'],
-        'position' => $_POST['position'],
+        'address_line_1' => strtolower($_POST['address_line_1']),
+        'address_line_2' => strtolower($_POST['address_line_2']),
+        'city' => strtolower($_POST['city']),
+        'province' => strtolower($_POST['province']),
+        'contact_person' => strtolower($_POST['contact_person']),
+        'position' => strtolower($_POST['position']),
     ]);
     $customerInsertedId = $db->connection()->lastInsertId();
 
