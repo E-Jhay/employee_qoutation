@@ -110,23 +110,23 @@ use Core\Role;
                Quotation for :
             </p>
             <p class="text-gray-500 max-w-52 sm:text-[1rem] text-[.7rem]">
-               <?= $quotation['customer_name'] ?>
+               <?= ucwords($quotation['customer_name']) ?>
                <br />
-               <?= $quotation['customer_address_line_1'] ?>
-               <?= $quotation['customer_address_line_2'] ?>
+               <?= ucwords($quotation['customer_address_line_1']) ?>
+               <?= ucwords($quotation['customer_address_line_2']) ?>
                <!-- <br />
                <?= $quotation['tel_no'] ?> -->
             </p>
             <p class="text-gray-500 max-w-52 sm:text-[1rem] text-[.7rem]">
-               <?= $quotation['customer_city'] ?>
-               <?= $quotation['customer_province'] ?>
+               <?= ucwords($quotation['customer_city']) ?>,
+               <?= ucwords($quotation['customer_province']) ?>
             </p>
             <div class="mt-2">
                <p class="font-semibold text-gray-800 sm:text-[1.2rem] text-[1rem]">
-                  <?= $quotation['customer_contact_person'] ?>
+                  <?= ucwords($quotation['customer_contact_person']) ?>
                </p>
                <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
-                  <?= $quotation['customer_position'] ?>
+                  <?= ucwords($quotation['customer_position']) ?>
                </p>
                <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                   <?= $quotation['customer_email'] ?>
@@ -320,7 +320,7 @@ use Core\Role;
                <?= $company['address_line_1'] ?>
                <?= $company['address_line_2'] ?>
                </br>
-               <?= $company['city'] ?>
+               <?= $company['city'] ?>,
                <?= $company['province'] ?>
             </p>
             <p class="text-gray-500 text-sm">
@@ -579,7 +579,7 @@ use Core\Role;
                      <?= $company['address_line_1'] ?>
                      <?= $company['address_line_2'] ?>
                      </br>
-                     <?= $company['city'] ?>
+                     <?= $company['city'] ?>,
                      <?= $company['province'] ?>
                   </p>
                   <p class="text-gray-500 text-sm">
