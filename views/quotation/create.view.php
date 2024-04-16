@@ -478,10 +478,17 @@
                                     </ul>
                                  </div>
                                  <div class="col-span-6 md:col-span-6">
-                                    <label for="product_comment">Product comment</label>
+                                    <label for="product_comment">Product comment <span class="text-gray-400">( will appear in quotation )</span></label>
                                     <textarea name="product_comment" id="product_comment" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['product_comment']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
                                     <?php if(isset($errors['product_comment'])): ?>
                                        <span class="text-red-500 text-xs"><?= $errors['product_comment'] ?></span>
+                                    <?php endif; ?>
+                                 </div>
+                                 <div class="col-span-6 md:col-span-6">
+                                    <label for="internal_comment">Internal comment <span class="text-gray-400">( will NOT appear in quotation )</span></label>
+                                    <textarea name="internal_comment" id="internal_comment" class="h-14 border mt-1 rounded p-2 w-full bg-gray-50 <?= isset($errors['internal_comment']) ? 'border-red-500' : '' ?>" name="" id="" cols="30" rows="10"></textarea>
+                                    <?php if(isset($errors['internal_comment'])): ?>
+                                       <span class="text-red-500 text-xs"><?= $errors['internal_comment'] ?></span>
                                     <?php endif; ?>
                                  </div>
                                  

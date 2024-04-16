@@ -177,6 +177,7 @@ use Core\Role;
                                     <div class="mt-1 text-gray-500"><?= $product['code'] ?></div>
                                     <?php if($product['comment']): ?>
                                        <div class="mt-1 text-gray-500">( <?= $product['comment'] ?> )</div>
+                                       <div class="mt-1 text-gray-500">( <?= $product['internal_comment'] ?> )</div>
                                     <?php endif; ?>
                                  </td>
                                  <td class="px-3 py-5 text-center text-sm text-gray-500"><?= $product['quantity'] ?></td>
