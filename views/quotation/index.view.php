@@ -283,7 +283,7 @@ use Core\Role;
                if(cell === 'id'){
                   td.className = "hidden px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                }else {
-                  td.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                  td.className = "px-6 py-4 whitespace-nowrap text-sm text-gray-900 capitalize"
                }
                if(cell == 'status_name') {
                   const span = document.createElement('span')
@@ -293,7 +293,8 @@ use Core\Role;
                   span.innerText = quotation[cell]
                   td.appendChild(span)
                } else {
-                  td.innerText = quotation[cell]
+                  td.innerText = typeof(quotation[cell]) === 'string' ? quotation[cell].toLowerCase() : quotation[cell]
+                  // console.log(typeof(quotation[cell]) === 'string' ? quotation[cell].toLowerCase() : quotation[cell])
                }
             }
             else {
