@@ -17,7 +17,7 @@ $quotationCreatedBy = $db->query("SELECT created_by FROM quotation WHERE id = :i
     'id' => $_POST['quotation_id']
 ])->find()['created_by'];
 // dd($quotationCreatedBy);
-authorize((int)$_SESSION['user']['role_id'] == Role::SALES && $_SESSION['user']['id'] == $quotationCreatedBy);
+authorize($_SESSION['user']['id'] == $quotationCreatedBy);
 
 $attributes = [
     'name' => $_POST['customer_name'],
@@ -113,9 +113,20 @@ try {
     }
 
     if($_POST['mode'] != 'save') {
+
+        if($_SESSION['user']['role_id'] == Role::SALES_MANAGER) {
+            $team_id = $db->query("SELECT id FROM team WHERE manager_id = :id", [
+                'id' => $_SESSION['user']['id']
+            ])->find()['id'];
+            $status = QuotationStatus::INITIAL_APPROVED;
+        } else {
+            $team_id = $_SESSION['user']['team_id'];
+            $status = QuotationStatus::PENDING;
+        }
+
         $db->query("UPDATE quotation SET status = :status WHERE id = :id", [
             'id' => $quotation['id'],
-            'status' => QuotationStatus::PENDING,
+            'status' => $status,
         ]);
 
         $config = require base_path("config.php");
