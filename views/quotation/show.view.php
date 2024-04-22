@@ -177,6 +177,8 @@ use Core\Role;
                                     <div class="mt-1 text-gray-500"><?= $product['code'] ?></div>
                                     <?php if($product['comment']): ?>
                                        <div class="mt-1 text-gray-500">( <?= $product['comment'] ?> )</div>
+                                    <?php endif; ?>
+                                    <?php if($product['internal_comment']): ?>
                                        <div class="mt-1 text-gray-500">( <?= $product['internal_comment'] ?> )</div>
                                     <?php endif; ?>
                                  </td>
@@ -329,7 +331,7 @@ use Core\Role;
                         <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
                      </div>
                   <?php endif; ?>
-                  <?php if(($quotation['status'] == QuotationStatus::PENDING || $quotation['status'] == QuotationStatus::DISAPPROVED || $quotation['status'] == QuotationStatus::DRAFT) && ((int)$_SESSION['user']['role_id'] === Role::SALES || (int)$_SESSION['user']['role_id'] === Role::SALES_MANAGER)) : ?>
+                  <?php if(($quotation['status'] == QuotationStatus::PENDING || $quotation['status'] == QuotationStatus::DISAPPROVED || $quotation['status'] == QuotationStatus::DRAFT) && ((int)$_SESSION['user']['id'] === (int)$quotation['created_by_id'])) : ?>
                   <div class="flex justify-end gap-2 mt-4">
                      <a href="/quotation/edit?id=<?= $quotation['id'] ?>" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Modify</a>
                      <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
