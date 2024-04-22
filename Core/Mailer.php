@@ -50,7 +50,7 @@ class Mailer
         $this->mailer->setFrom($config['from'], $config['fromName']);
     }
 
-    public function sendMail($to, $subject, $body, $cc = [])
+    public function sendMail($to, $subject, $body, $cc = [], $bcc = [])
     {
         try {
             //Recipients
@@ -73,6 +73,16 @@ class Mailer
                     }
                 } else {
                     $this->mailer->addCC($cc);
+                }
+            }
+            // Add CC recipients
+            if (!empty($bcc)) {
+                if (is_array($bcc)) {
+                    foreach ($bcc as $bccRecipient) {
+                        $this->mailer->addBCC($bccRecipient);
+                    }
+                } else {
+                    $this->mailer->addBCC($bcc);
                 }
             }
 

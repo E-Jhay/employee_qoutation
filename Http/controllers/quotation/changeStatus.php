@@ -97,14 +97,14 @@ try {
 
         $to = (array)$db->query("SELECT customer.email as customer_email FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE quotation.id = :id", ['id' => $id])->find()['customer_email'];
         
-        $cc = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
+        $bcc = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
 
         $teamId = $db->query("SELECT team_id FROM quotation WHERE id = :id", ['id' => $id])->find()['team_id'];
         $managerId = $db->query("SELECT manager_id FROM team WHERE id = :id", ['id' => $teamId])->find()['manager_id'];
 
-        array_push($cc, $db->query("SELECT email FROM user WHERE role_id = :role_id", ['role_id' => Role::GENERAL_MANAGER])->find()['email']);
-        array_push($cc, $db->query("SELECT email FROM user WHERE id = :id", ['id' => $managerId])->find()['email']);
-        array_push($cc, 'homer.lim@pmc.ph');
+        array_push($bcc, $db->query("SELECT email FROM user WHERE role_id = :role_id", ['role_id' => Role::GENERAL_MANAGER])->find()['email']);
+        array_push($bcc, $db->query("SELECT email FROM user WHERE id = :id", ['id' => $managerId])->find()['email']);
+        array_push($bcc, 'info@pmc.ph');
         // dd($cc);
 
         // // Read HTML content from a file and replace placeholders with data
@@ -114,7 +114,7 @@ try {
         ]);
         // // $mail->Body = $htmlContent;
 
-        $mailer->sendMail($to, 'PMC Quotation', $htmlContent, $cc);
+        $mailer->sendMail($to, 'PMC Quotation', $htmlContent, [], $bcc);
     } else {
         $to = (array)$db->query("SELECT email FROM user WHERE role_id = :role_id", ['role_id' => Role::GENERAL_MANAGER])->find()['email'];
         // $to = ['bumacodejhay@gmail.com'];
