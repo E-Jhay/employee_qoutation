@@ -86,14 +86,14 @@ use Core\Role;
       <div class="grid grid-cols-2 items-center mb-4">
          <div>
             <!--  Company logo  -->
-            <img class="w-80" src="../images/logo.png" alt="company-logo">
+            <img class="w-60" src="../images/logo.png" alt="company-logo">
             <img class="hidden" src="../images/pmc-logo.png" alt="company-logo" height="150" width="250">
          </div>
-         <div class="place-self-end grid grid-cols-2 max-w-28 items-center justify-items-end gap-2">
-            <img class="max-w-12" src="../images/1.jpg" alt="">
-            <img class="max-w-12" src="../images/2.jpg" alt="">
-            <div class="col-span-2 justify-self-end text-[6px] font-semibold">
-               <p>
+         <div class="place-self-end grid grid-cols-2 max-w-24 items-center justify-items-end gap-y-2">
+            <img class="max-w-12 mr-2 h-8" src="../images/1.jpg" alt="">
+            <img class="max-w-12 mr-2 h-8" src="../images/2.jpg" alt="">
+            <div class="col-span-2 justify-self-end text-[6px] font-semibold overflow-hidden">
+               <p class="text-wrap max-w-24 text-center">
                   The first ISO 9001:2015 certified <br>
                   Healthcare Products Distribution Company <br>
                   in the Philippines
@@ -103,10 +103,7 @@ use Core\Role;
       </div>
       <div class="grid grid-cols-2 mb-4">
          <div class="col-span-2 text-right">
-            <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">Quotation</h1>
-            <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">
-               <?= $quotation['control_no'] ?>
-            </h1>
+            <h1 class="font-bold text-gray-800 sm:text-[1.2rem] text-[1rem]">Quotation</h1>
          </div>
          <div>
             <p class="font-bold">
@@ -139,6 +136,9 @@ use Core\Role;
 
          <div class="text-right">
             <div>
+               <h1 class="font-bold text-gray-800">
+                  <?= $quotation['control_no'] ?>
+               </h1>
                <p class="">
                   <span class="font-bold">Quote created by:</span>
                   <br>
@@ -376,7 +376,7 @@ use Core\Role;
                   <div class="place-self-end grid grid-cols-2 max-w-20 items-center justify-items-end gap-y-2">
                      <img class="max-w-12 h-8" src="../images/1.jpg" alt="">
                      <img class="max-w-12 h-8" src="../images/2.jpg" alt="">
-                     <div class="col-span-2 justify-self-end text-[6px] font-semibold">
+                     <div class="col-span-2 justify-self-end text-[4px] font-semibold">
                         <p class="text-nowrap max-w-20">
                            The first ISO 9001:2015 certified <br>
                            Healthcare Products Distribution Company <br>
@@ -393,10 +393,7 @@ use Core\Role;
             <td colspan="7">
             <div class="grid grid-cols-2 mb-4">
                <div class="col-span-2 text-right">
-                  <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">Quotation</h1>
-                  <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">
-                     <?= $quotation['control_no'] ?>
-                  </h1>
+                  <h1 class="font-bold text-gray-800 sm:text-[1.2rem] text-[1rem]">Quotation</h1>
                </div>
                <div>
                   <p class="font-bold">
@@ -429,6 +426,9 @@ use Core\Role;
 
                <div class="text-right">
                   <div>
+                     <h1 class="font-bold text-gray-800">
+                        <?= $quotation['control_no'] ?>
+                     </h1>
                      <p class="">
                         <span class="font-bold">Quote created by:</span>
                         <br>
@@ -625,7 +625,7 @@ use Core\Role;
 
          <div class="text-right">
             <p class="text-blue-900 font-bold text-lg">
-               www.pmc.ph
+               pmc.ph
             </p>
          </div>
       </footer>
