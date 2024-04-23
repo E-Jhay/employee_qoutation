@@ -41,6 +41,9 @@ use Core\Role;
             section {
                padding-bottom: 0 !important;
                padding-inline: 24px !important;
+               margin: 0 !important;
+               /* position: relative; */
+               min-width: 100% !important;
                /* background-color: blue; */
             }
             .top-space {
@@ -59,8 +62,8 @@ use Core\Role;
                right: 0;
                width: 100%;
                margin: 0 auto;
-               padding-inline: 36px;
-               padding-bottom: 16px
+               padding-inline: 28px;
+               padding-bottom: 16px;
             }
             /* html, body {
                width: 210mm;
@@ -100,13 +103,13 @@ use Core\Role;
       </div>
       <div class="grid grid-cols-2 mb-4">
          <div class="col-span-2 text-right">
-            <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Quotation</h1>
+            <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">Quotation</h1>
             <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">
                <?= $quotation['control_no'] ?>
             </h1>
          </div>
          <div>
-            <p class="font-bold text-gray-800 sm:text-[1.2rem] text-[1rem]">
+            <p class="font-bold">
                Quotation for :
             </p>
             <p class="text-gray-500 max-w-52 sm:text-[1rem] text-[.7rem]">
@@ -122,7 +125,7 @@ use Core\Role;
                <?= ucwords($quotation['customer_province']) ?>
             </p>
             <div class="mt-2">
-               <p class="font-semibold text-gray-800 sm:text-[1.2rem] text-[1rem]">
+               <p class="font-bold">
                   <?= ucwords($quotation['customer_contact_person']) ?>
                </p>
                <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
@@ -137,7 +140,7 @@ use Core\Role;
          <div class="text-right">
             <div>
                <p class="">
-                  <span class="font-bold sm:text-[1.2rem] text-[1rem]">Quote created by:</span>
+                  <span class="font-bold">Quote created by:</span>
                   <br>
                   <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                      <?= $quotation['created_by'] ?>
@@ -155,7 +158,7 @@ use Core\Role;
             </div>
             <div class="text-right mt-2">
                <p>
-                  <span class="font-bold sm:text-[1.2rem] text-[1rem]">On: </span>
+                  <span class="font-bold">On: </span>
                   <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                      <?= $quotation['updated_at'] != NULL ? date('m-d-Y',strtotime($quotation['updated_at'])) : date('m-d-Y') ?>
                   </span>
@@ -165,7 +168,7 @@ use Core\Role;
                      <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
                   </span> -->
                   <br />
-                  <span class="font-bold sm:text-[1.2rem] text-[1rem]">Expires:</span>
+                  <span class="font-bold">Expires:</span>
                   <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                      <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
                   </span>
@@ -367,14 +370,14 @@ use Core\Role;
                <div id="header" class="grid grid-cols-2 items-center mb-4">
                   <div>
                      <!--  Company logo  -->
-                     <img class="w-80" src="../images/logo.png" alt="company-logo">
+                     <img class="w-60" src="../images/logo.png" alt="company-logo">
                      <img class="hidden" src="../images/pmc-logo.png" alt="company-logo" height="150" width="250">
                   </div>
-                  <div class="place-self-end grid grid-cols-2 max-w-28 items-center justify-items-end gap-2">
-                     <img class="max-w-12" src="../images/1.jpg" alt="">
-                     <img class="max-w-12" src="../images/2.jpg" alt="">
+                  <div class="place-self-end grid grid-cols-2 max-w-20 items-center justify-items-end gap-y-2">
+                     <img class="max-w-12 h-8" src="../images/1.jpg" alt="">
+                     <img class="max-w-12 h-8" src="../images/2.jpg" alt="">
                      <div class="col-span-2 justify-self-end text-[6px] font-semibold">
-                        <p>
+                        <p class="text-nowrap max-w-20">
                            The first ISO 9001:2015 certified <br>
                            Healthcare Products Distribution Company <br>
                            in the Philippines
@@ -390,13 +393,13 @@ use Core\Role;
             <td colspan="7">
             <div class="grid grid-cols-2 mb-4">
                <div class="col-span-2 text-right">
-                  <h1 class="font-bold text-gray-900 sm:text-4xl text-xl">Quotation</h1>
+                  <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">Quotation</h1>
                   <h1 class="font-bold text-gray-900 sm:text-[1.2rem] text-[1rem]">
                      <?= $quotation['control_no'] ?>
                   </h1>
                </div>
                <div>
-                  <p class="font-bold text-gray-800 sm:text-[1.2rem] text-[1rem]">
+                  <p class="font-bold">
                      Quotation for :
                   </p>
                   <p class="text-gray-500 max-w-52 sm:text-[1rem] text-[.7rem]">
@@ -412,7 +415,7 @@ use Core\Role;
                      <?= ucwords($quotation['customer_province']) ?>
                   </p>
                   <div class="mt-2">
-                     <p class="font-semibold text-gray-800 sm:text-[1.2rem] text-[1rem]">
+                     <p class="font-bold">
                         <?= ucwords($quotation['customer_contact_person']) ?>
                      </p>
                      <p class="text-gray-500 sm:text-[1rem] text-[.7rem]">
@@ -427,7 +430,7 @@ use Core\Role;
                <div class="text-right">
                   <div>
                      <p class="">
-                        <span class="font-bold sm:text-[1.2rem] text-[1rem]">Quote created by:</span>
+                        <span class="font-bold">Quote created by:</span>
                         <br>
                         <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                            <?= $quotation['created_by'] ?>
@@ -445,7 +448,7 @@ use Core\Role;
                   </div>
                   <div class="text-right mt-2">
                      <p>
-                        <span class="font-bold sm:text-[1.2rem] text-[1rem]">On: </span>
+                        <span class="font-bold">On: </span>
                         <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                            <?= $quotation['updated_at'] != NULL ? date('m-d-Y',strtotime($quotation['updated_at'])) : date('m-d-Y') ?>
                         </span>
@@ -455,7 +458,7 @@ use Core\Role;
                            <?= date('m-d-Y',strtotime($quotation['updated_at'])) ?? date('m-d-Y') ?>
                         </span> -->
                         <br />
-                        <span class="font-bold sm:text-[1.2rem] text-[1rem]">Expires:</span>
+                        <span class="font-bold">Expires:</span>
                         <span class="text-gray-500 sm:text-[1rem] text-[.7rem]">
                            <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
                         </span>
