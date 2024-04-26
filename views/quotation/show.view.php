@@ -110,6 +110,7 @@ use Core\Role;
                               <?= date('m-d-Y',strtotime($quotation['expired_at'])) ?? date('m-d-Y') ?>
                            </span>
                         </p>
+                        <p class="text-gray-500 sm:text-[1rem] text-[.7rem]"><?= $approversName ?></p>
                      </div>
                   </div>
                </div>

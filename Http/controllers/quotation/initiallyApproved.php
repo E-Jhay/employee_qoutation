@@ -7,6 +7,10 @@ $quotation = $db->query("SELECT quotation.*, customer.name as customer_name, cus
     'id' => $_GET['id']
 ])->find();
 
+$approversName = $db->query("SELECT user.name as approversName FROM team LEFT JOIN user ON user.id = team.manager_id WHERE team.id = :id", [
+    'id' => $quotation['team_id']
+])->find()['approversName'];
+
 $products = $db->query("SELECT * FROM product_quotation WHERE quotation_id = :id", [
     'id' => $_GET['id']
 ])->get();
@@ -38,4 +42,5 @@ view("quotation/initiallyApproved.view.php", [
     'attachments' => $attachments,
     'comments' => $comments,
     'company' => $company,
+    'approversName' => $approversName,
 ]);
