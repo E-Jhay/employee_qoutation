@@ -96,5 +96,6 @@ $router->get('/pricelist', 'product/pricelist.php');
 $router->post('/saveProductLists', 'product/saveProductLists.php');
 $router->get('/getProductLists', 'product/getProductLists.php');
 $router->get('/storeUsers', 'storeUsers.php');
+$router->get('/quotation/pdfQuotation', 'quotation/pdfQuotation.php');
 
 // dd($router->routes);
