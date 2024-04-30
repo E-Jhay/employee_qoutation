@@ -218,7 +218,7 @@ class MYPDF extends TCPDF {
         foreach ($products as $product) {
             // Set the width and height of the cell
             $cellWidth = $columnWidths[0]; // Set the width according to your column width
-            $cellHeight = 16; // Set the height according to your content
+            $cellHeight = 18; // Set the height according to your content
             $this->SetFont('dejavusans', '', 8); // Set font to regular
             $this->SetDrawColor(200, 200, 200); // Set lighter color (adjust RGB values as needed)
 
@@ -229,18 +229,18 @@ class MYPDF extends TCPDF {
             $this->writeHTMLCell($cellWidth, $cellHeight, '', '', $content, 'B', 0, false, true, 'L');
             
             $this->SetFont('dejavusans', '', 8); // Set font to regular
-            $this->Cell($columnWidths[1], 16, $product['quantity'], 'B', 0, 'C', false);
-            $this->Cell($columnWidths[2], 16, $product['uom'], 'B', 0, 'C', false);
-            $this->Cell($columnWidths[3], 16, "₱" . number_format($product['wo_scd_price'], 2), 'B', 0, 'C', false);
-            $this->Cell($columnWidths[4], 16, "₱" . number_format($product['proposed_price'], 2), 'B', 0, 'C', false);
+            $this->Cell($columnWidths[1], 18, $product['quantity'], 'B', 0, 'C', false);
+            $this->Cell($columnWidths[2], 18, $product['uom'], 'B', 0, 'C', false);
+            $this->Cell($columnWidths[3], 18, "₱" . number_format($product['wo_scd_price'], 2), 'B', 0, 'C', false);
+            $this->Cell($columnWidths[4], 18, "₱" . number_format($product['proposed_price'], 2), 'B', 0, 'C', false);
             
             // Content for the cell
             $discount = "₱" . number_format($product['wo_scd_price'] - $product['proposed_price'], 2) .
             "<br>(" . number_format(($product['wo_scd_price'] - $product['proposed_price']) / $product['wo_scd_price'] * 100 , 2) . "%)";
 
             // Output the cell with HTML-formatted content
-            $this->writeHTMLCell($columnWidths[5], 16, '', '', $discount, 'B', 0, false, true, 'C', 'M');
-            $this->Cell($columnWidths[6], 16, "₱" . number_format($product['total'], 2), 'B', 1, 'R', false);
+            $this->writeHTMLCell($columnWidths[5], 18, '', '', $discount, 'B', 0, false, true, 'C', 'M');
+            $this->Cell($columnWidths[6], 18, "₱" . number_format($product['total'], 2), 'B', 1, 'R', false);
             $this->Ln(4); // Move to the next line to create a gap
         }
     
