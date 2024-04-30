@@ -39,20 +39,25 @@
                            <?php endif; ?>
                         </div>
 
-                        <div class="md:col-span-3">
-                           <label for="email">Customer Email</label>
-                           <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= old('email') ?>" />
-                           <?php if(isset($errors['email'])): ?>
-                              <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
-                           <?php endif; ?>
-                        </div>
-
-                        <div class="md:col-span-3">
-                           <label for="confirm_email">Customer Confirm email</label>
-                           <input type="text" name="confirm_email" id="confirm_email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['confirm_email']) ? 'border-red-500' : '' ?>" value="<?= old('confirm_email') ?>" />
-                           <?php if(isset($errors['confirm_email'])): ?>
-                              <span class="text-red-500 text-xs"><?= $errors['confirm_email'] ?></span>
-                           <?php endif; ?>
+                        <div class="md:col-span-6 grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-6" id="emailComponent">
+                           <div class="md:col-span-3">
+                              <label for="email">Customer PRIMARY Email</label>
+                              <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>" value="<?= old('email') ?>" />
+                              <?php if(isset($errors['email'])): ?>
+                                 <span class="text-red-500 text-xs"><?= $errors['email'] ?></span>
+                              <?php endif; ?>
+                           </div>
+                           <div class="md:col-span-3">
+                              <label for="confirm_email">Customer PRIMARY Confirm Email</label>
+                              <div class="flex gap-2">
+                                 <input type="text" name="confirm_email" id="confirm_email" class="h-10 border mt-1 rounded px-2 w-full bg-gray-50 <?= isset($errors['confirm_email']) ? 'border-red-500' : '' ?>" value="<?= old('confirm_email') ?>" />
+                                 <?php if(isset($errors['confirm_email'])): ?>
+                                    <span class="text-red-500 text-xs"><?= $errors['confirm_email'] ?></span>
+                                 <?php endif; ?>
+                           
+                                 <button type="button" onclick="addEmail()" class="w-32 h-10 mt-1 font-bold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 rounded-md text-white">Add email</button>
+                              </div>
+                           </div>
                         </div>
 
                         <div class="md:col-span-3">
@@ -632,6 +637,33 @@
 </style>
 
 <script>
+
+   const addEmail = () => {
+      const emailComponent = document.getElementById('emailComponent')
+      const cc_email = document.querySelectorAll('.cc_email')
+      // console.log(cc_email.length)
+      // console.log(emailComponent)
+      // emailComponent.inner(`<button>AAAA</button>`)
+      if(cc_email.length < 3){
+         let count = cc_email.length + 1
+         emailComponent.insertAdjacentHTML('beforeend', `
+         <div class="md:col-span-3">
+            <label>Customer CC'd Email ${count}</label>
+            <input type="text" name="cc_email[]" class="cc_email h-10 border mt-1 rounded px-2 w-full bg-gray-50" />
+         </div>
+         <div class="md:col-span-3">
+            <label>Customer Confirm CC'd Email ${count}</label>
+            <input type="text" name="cc_confirm_email[]" class="cc_confirm_email h-10 border mt-1 rounded px-2 w-full bg-gray-50"/>
+         </div>`)
+      } else {
+         const additionalEmailError = document.getElementById('additionalEmailError')
+         if(!additionalEmailError){
+            emailComponent.insertAdjacentHTML('beforeend', `
+            <span id="additionalEmailError" class="md:col-span-6 text-red-500 text-xs text-right">Only 3 additional emails allowed</span>`)
+         }
+         // console.log('Only 3 additional emails allowed')
+      }
+   }
    const fileTempl = document.getElementById("file-template"),
    imageTempl = document.getElementById("image-template"),
    empty = document.getElementById("empty");

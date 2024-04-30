@@ -25,6 +25,13 @@ class QuotationCreateForm {
             $this->errors['confirm_email'] = "Email doesn't match.";
         }
 
+        foreach($attributes['cc_email'] as $key => $value){
+            if(! Validator::emailConfirmed($attributes['cc_email'][$key], $attributes['cc_confirm_email'][$key])) {
+                $count = $key + 2;
+                $this->errors['confirm_email'] = "Email {$count} doesn't match.";
+            }
+        }
+
         if(! Validator::string($attributes['address_line_1'])) {
             $this->errors['address_line_1'] = "Address line 1 is required.";
         }

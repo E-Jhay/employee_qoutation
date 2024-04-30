@@ -23,6 +23,8 @@ $attributes = [
     'name' => $_POST['customer_name'],
     'email' => $_POST['email'],
     'confirm_email' => $_POST['confirm_email'],
+    'cc_email' => $_POST['cc_email'],
+    'cc_confirm_email' => $_POST['cc_confirm_email'],
     'address_line_1' => $_POST['address_line_1'],
     'city' => $_POST['city'],
     'province' => $_POST['province'],
@@ -103,6 +105,15 @@ try {
         'expired_at' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). " + {$validity} days")),
     ]);
     $quotationInsertId = $db->connection()->lastInsertId();
+
+    if(isset($_POST['cc_email'])) {
+        foreach($_POST['cc_email'] as $email){
+            $db->query("INSERT INTO cc_email (quotation_id, email) VALUES(:quotation_id, :email)", [
+                'quotation_id' => $quotationInsertId,
+                'email' => $email,
+            ]);
+        }
+    }
     
     $products = json_decode($_POST['products'], true);
 

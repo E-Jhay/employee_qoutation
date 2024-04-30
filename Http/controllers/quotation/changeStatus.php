@@ -96,6 +96,13 @@ try {
         // $to = ['bumacodejhay@gmail.com'];
 
         $to = (array)$db->query("SELECT customer.email as customer_email FROM quotation LEFT JOIN customer ON quotation.customer_id = customer.id WHERE quotation.id = :id", ['id' => $id])->find()['customer_email'];
+
+        
+        $ccMulti = $db->query("SELECT email FROM cc_email WHERE quotation_id = :id", ['id' => $id])->get();
+        $cc = [];
+        foreach($ccMulti as $subArray){
+            $cc[] = $subArray["email"];
+        }
         
         $bcc = (array)$db->query("SELECT user.email as created_by_email FROM quotation LEFT JOIN user ON quotation.created_by = user.id WHERE quotation.id = :id", ['id' => $id])->find()['created_by_email'];
 
@@ -114,7 +121,7 @@ try {
         ]);
         // // $mail->Body = $htmlContent;
 
-        $mailer->sendMail($to, 'PMC Quotation', $htmlContent, [], $bcc);
+        $mailer->sendMail($to, 'PMC Quotation', $htmlContent, $cc, $bcc);
     } else {
         $to = (array)$db->query("SELECT email FROM user WHERE role_id = :role_id", ['role_id' => Role::GENERAL_MANAGER])->find()['email'];
         // $to = ['bumacodejhay@gmail.com'];

@@ -72,9 +72,9 @@ use Core\Role;
 
          }
          @page {
-            size: A4 portrait !important;
+            /* size: A4 portrait !important; */
             /* padding: 0 !important; */
-            margin: 0 !important;
+            /* margin: 0 !important; */
          }
       </style>
 </head>
@@ -352,7 +352,7 @@ use Core\Role;
       
       <div id="actionButtons" class="flex justify-end gap-2 mt-4">
          <button type="button" onclick="generatePdf('print')" title="Print" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Print</button>
-         <!-- <button type="button" onclick="generatePdf('download')" title="Download" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Download</button> -->
+         <a target="__blank" href="/quotation/pdfQuotation?id=<?= $_GET['id'] ?>" title="Download" class="bg-gray-300 px-4 py-2 rounded-md font-semibold">Download</a>
          <!-- <button type="button" title="Disapprove" onclick="toggleModal('quotationModal', 'Disapprove')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded text-sm">Disapprove</button> -->
          <!-- <button title="Create" href="/quotation/create" class="bg-green-500 hover:bg-green-700 text-white py-1 px-2 rounded text-sm"><i class="ri-add-line"></i></button> -->
       </div>
